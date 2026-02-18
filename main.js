@@ -1,4 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Initialize Theme
+    const toggleBtn = document.getElementById('theme-toggle');
+    const storedTheme = localStorage.getItem('theme');
+    const systemPreference = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    
+    // Set initial theme
+    const currentTheme = storedTheme || systemPreference;
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updateToggleIcon(currentTheme);
+
+    // Toggle Theme
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const target = current === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', target);
+            localStorage.setItem('theme', target);
+            updateToggleIcon(target);
+        });
+    }
+
+    // Load Data
     fetch('data.json')
         .then(response => response.json())
         .then(data => {
@@ -9,6 +32,13 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => console.error('Data Load Error:', err));
 });
+
+function updateToggleIcon(theme) {
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+        btn.textContent = theme === 'light' ? '☀️' : '🌙';
+    }
+}
 
 function loadProfile(data) {
     const p = data.profile;
@@ -24,11 +54,14 @@ function loadProfile(data) {
     ).join('');
 
     document.getElementById('interest-list').innerHTML = p.interests.map(i => `<li>📖 ${i}</li>`).join('');
-    document.getElementById('edu-list').innerHTML = p.education.map(e => `<li>🎓 <b>${e.degree}</b>, ${e.year}<br><small style="color:#aaa">${e.school}</small></li>`).join('');
+    document.getElementById('edu-list').innerHTML = p.education.map(e => `<li>🎓 <b>${e.degree}</b>, ${e.year}<br><small style="color:var(--text-secondary)">${e.school}</small></li>`).join('');
 
     const renderSkill = (item, cls) => `
         <div class="skill-item">
-            <div style="font-weight:bold; margin-bottom:5px;">${item.icon} ${item.name}</div>
+            <div class="skill-header">
+                <span>${item.icon} ${item.name}</span>
+                <span>${item.percent}%</span>
+            </div>
             <div class="progress-bg"><div class="progress-fill ${cls}" style="width:${item.percent}%"></div></div>
         </div>`;
     document.getElementById('tech-list').innerHTML = data.skills.technical.map(s => renderSkill(s, 'fill-tech')).join('');
@@ -40,8 +73,8 @@ function loadProjects(data) {
         <div class="project-card">
             <h3>${proj.title}</h3>
             <div style="margin-bottom:15px;">${proj.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
-            <p style="color:#aaa; font-size:0.9rem;">${proj.period}</p>
-            <p>${proj.description}</p>
+            <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">${proj.period}</p>
+            <p style="color:var(--text-primary);">${proj.description}</p>
         </div>
     `).join('');
 }
@@ -61,7 +94,10 @@ function loadContact(data) {
     document.getElementById('contact-intro').textContent = data.contact.intro;
     document.getElementById('contact-email').innerHTML = `<a href="mailto:${data.contact.email}">${data.contact.email}</a>`;
     document.getElementById('contact-links').innerHTML = data.contact.links.map(l => 
-        `<li style="margin-top:15px;">${l.icon} <b>${l.label}:</b> <a href="${l.url}" target="_blank">${l.url}</a></li>`
+        `<li style="margin-top:15px; display:flex; align-items:center; gap:10px;">
+            <span style="font-size:1.5rem;">${l.icon}</span> 
+            <b>${l.label}:</b> 
+            <a href="${l.url}" target="_blank">${l.url}</a>
+        </li>`
     ).join('');
-
 }
