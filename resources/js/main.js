@@ -30,11 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Load Data
-    // Use relative path to resources from view/
-    fetch('../resources/data.json')
+    // Determine path prefix based on current location
+    const isInViewDir = window.location.pathname.includes('/view/');
+    const resourcePrefix = isInViewDir ? '../' : '';
+
+    fetch(resourcePrefix + 'resources/data.json')
         .then(response => response.json())
         .then(data => {
-            if (document.getElementById('profile-section')) loadProfile(data);
+            if (document.getElementById('profile-section')) loadProfile(data, resourcePrefix);
             if (document.getElementById('project-list')) loadProjects(data);
             if (document.getElementById('resume-section')) loadResume(data);
             if (document.getElementById('contact-section')) loadContact(data);
@@ -49,10 +52,9 @@ function updateToggleIcon(theme) {
     }
 }
 
-function loadProfile(data) {
+function loadProfile(data, prefix) {
     const p = data.profile;
-    document.getElementById('p-img').src = p.image; // Path is correct as is (in resources, but src needs to be correct)
-    // Wait, if p.image is "../resources/images/myImage.png", it will work.
+    document.getElementById('p-img').src = (prefix || '') + p.image;
 
     document.getElementById('p-name').textContent = p.name;
     document.getElementById('p-role').textContent = p.role;
