@@ -32,7 +32,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Load Data
     // Determine path prefix based on current location
     const isInViewDir = window.location.pathname.includes('/view/');
-    const resourcePrefix = isInViewDir ? '../' : '';
+    const isInProjectDir = window.location.pathname.includes('/view/project/');
+
+    // If in project dir (depth 2), resources are at '../../'
+    // If in view dir (depth 1), resources are at '../'
+    // Else (root), resources are at ''
+    let resourcePrefix = '';
+    if (isInProjectDir) {
+        resourcePrefix = '../../';
+    } else if (isInViewDir) {
+        resourcePrefix = '../';
+    }
 
     fetch(resourcePrefix + 'resources/data.json')
         .then(response => response.json())
@@ -40,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (document.getElementById('profile-section')) loadProfile(data, resourcePrefix);
             if (document.getElementById('project-list')) loadProjects(data);
             if (document.getElementById('resume-section')) loadResume(data);
+            if (document.getElementById('project-detail')) loadProjectDetail(data);
             if (document.getElementById('contact-section')) loadContact(data);
         })
         .catch(err => console.error('Data Load Error:', err));
@@ -82,14 +93,53 @@ function loadProfile(data, prefix) {
 }
 
 function loadProjects(data) {
+    const isInViewDir = window.location.pathname.includes('/view/');
+    // If in view dir, link is project/${id}.html
+    // If in root, link is view/project/${id}.html
+    const linkPrefix = isInViewDir ? 'project/' : 'view/project/';
+
     document.getElementById('project-list').innerHTML = data.projects.map(proj => `
         <div class="project-card">
-            <h3>${proj.title}</h3>
+            <h3><a href="${linkPrefix}${proj.id}.html">${proj.title}</a></h3>
             <div style="margin-bottom:15px;">${proj.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
             <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">${proj.period}</p>
             <p style="color:var(--text-primary);">${proj.description}</p>
         </div>
     `).join('');
+}
+
+function loadProjectDetail(data) {
+    let id;
+    // Check if we are in 'view/project/' directory
+    if (window.location.pathname.includes('/view/project/')) {
+        // Extract filename without extension
+        const parts = window.location.pathname.split('/');
+        const filename = parts[parts.length - 1];
+        id = filename.replace('.html', '');
+    } else {
+        // Fallback
+        const params = new URLSearchParams(window.location.search);
+        id = params.get('id');
+    }
+
+    const project = data.projects.find(p => p.id === id);
+
+    if (!project) {
+        document.getElementById('project-detail').innerHTML = '<p>Project not found.</p>';
+        return;
+    }
+
+    document.getElementById('project-detail').innerHTML = `
+        <div class="detail-header">
+            <h1>${project.title}</h1>
+            <div class="detail-tags">${project.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
+            <p class="detail-period">${project.period}</p>
+        </div>
+        <div class="detail-content">
+            <p>${project.description}</p>
+            <p>更多 details content can be added here from JSON if available.</p>
+        </div>
+    `;
 }
 
 function loadResume(data) {

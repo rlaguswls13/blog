@@ -69,6 +69,7 @@
   },
   "projects": [
     {
+      "id": "enterprise-email",
       "title": "엔터프라이즈 이메일 시스템 SSO 연동 및 DB 마이그레이션",
       "period": "2025.08 - ",
       "tags": [
@@ -80,9 +81,10 @@
         "RedHat"
       ],
       "description": "자체 SSO Agent와 Spring Security를 연동하여 솔루션 내 맞춤형 권한(Authorization) 체계를 구축했습니다. Oracle에서 MySQL로의 DB 전환 간 데이터 정합성 검증 및 마이그레이션을 수행하고, 별도의 인증 전용 이메일 발송 채널을 신규 개발했습니다.",
-      "link": "#"
+      "link": "view/project/enterprise-email.html"
     },
     {
+      "id": "messaging-sso",
       "title": "메세징 관리 시스템 Okta SSO 연동 및 접근 제어 고도화",
       "period": "2024.08 - 2025.02",
       "tags": [
@@ -94,9 +96,10 @@
         "Maven"
       ],
       "description": "Okta API 기반의 SSO/SLO 필터 서비스를 개발하고, 고객사 인사 정보와 솔루션 계정 간의 동기화(Sync) 로직을 구현하여 사용자 관리를 자동화했습니다. 또한 Interceptor를 활용한 메뉴별 접근 제어(RBAC) 기능을 구현하여 보안성을 강화했습니다.",
-      "link": "#"
+      "link": "view/project/messaging-sso.html"
     },
     {
+      "id": "enterprise-support",
       "title": "대규모 엔터프라이즈 솔루션 기술 지원 및 유지보수",
       "period": "2023.03 - 2024.08",
       "tags": [
@@ -106,9 +109,10 @@
         "Troubleshooting"
       ],
       "description": "56여 개 주요 기업 고객사(금융, 통신, 항공 등)의 기술 이슈에 대응하고 버그 픽스를 전담했습니다. Jira와 Confluence를 활용해 이슈 트래킹 및 기술 문서를 자산화하고, 레거시 시스템 마이그레이션 지원을 통해 서비스 안정성을 확보했습니다.",
-      "link": "#"
+      "link": "view/project/enterprise-support.html"
     },
     {
+      "id": "integrated-support",
       "title": "사내 통합지원시스템 고도화",
       "period": "2023.03 - 2024.02",
       "tags": [
@@ -118,9 +122,10 @@
         "Legacy Migration"
       ],
       "description": "Legacy(Java 1.6, JSP) 시스템을 최신 스택(Java 15, React)으로 전환. 업무/인사/사업관리 메뉴를 신규 개발하고 유저 데이터를 마이그레이션하여 업무 효율성을 증대시켰습니다.",
-      "link": "#"
+      "link": "view/project/integrated-support.html"
     },
     {
+      "id": "cloud-migration",
       "title": "통합관리시스템 클라우드 이전",
       "period": "2023.09 - 2023.10",
       "tags": [
@@ -130,9 +135,10 @@
         "Migration"
       ],
       "description": "Private VM 서버를 Azure 클라우드 환경으로 이관 구축. 보안 인증서 적용, 네트워크 접근 제어(IP/Port), 컨테이너 기반 포털 구성을 통해 안정성과 보안성을 강화했습니다.",
-      "link": "#"
+      "link": "view/project/cloud-migration.html"
     },
     {
+      "id": "devops-portal",
       "title": "DevOps 포털 개발 및 유지보수",
       "period": "2021.09 - 2024.02",
       "tags": [
@@ -142,7 +148,7 @@
         "MSA"
       ],
       "description": "VMware/K8s 기반 DevOps 포털의 모놀리식 구조를 MSA 지향 구조로 리팩토링. 도메인 주도 설계(DDD) 도입 및 코드 가독성을 개선하고, Docker 컨테이너 배포 프로세스를 최적화했습니다.",
-      "link": "#"
+      "link": "view/project/devops-portal.html"
     }
   ],
   "resume": {
