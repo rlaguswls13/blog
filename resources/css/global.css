@@ -187,6 +187,61 @@ ul {
 
 .grid-2 {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 40px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 40px 15px;
+        /* Reduced side padding */
+    }
+
+    /* Stack Navigation */
+    nav {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 0;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 15px;
+    }
+
+    .nav-brand {
+        margin-bottom: 5px;
+    }
+
+    /* Adjust Type Size */
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    /* Theme Toggle Position */
+    .theme-toggle {
+        top: auto;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        background-color: var(--accent-primary);
+        color: white;
+        /* Make it pop on mobile */
+        border: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Ensure content isn't hidden by bottom toggle */
+    body {
+        padding-bottom: 80px;
+    }
 }

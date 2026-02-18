@@ -2,8 +2,28 @@
 .profile-section {
     display: flex;
     flex-wrap: wrap;
-    gap: 60px;
+    gap: 40px;
+    /* Reduced gap for smaller screens */
     align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+    .profile-section {
+        flex-direction: column-reverse;
+        /* Put content above image on mobile? Or standard stack */
+        gap: 30px;
+    }
+
+    .profile-card {
+        width: 100%;
+        /* Full width */
+        min-width: auto;
+    }
+
+    .bio-content {
+        width: 100%;
+        min-width: auto;
+    }
 }
 
 .profile-card {
