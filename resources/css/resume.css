@@ -1,0 +1,39 @@
+/* resume.css - Styles for Resume page */
+.timeline-item {
+    border-left: 3px solid var(--accent-primary);
+    padding-left: 30px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 6px;
+    width: 15px;
+    height: 15px;
+    background: var(--bg-primary);
+    border: 3px solid var(--accent-primary);
+    border-radius: 50%;
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.timeline-item:hover::before {
+    background: var(--accent-primary);
+}
+
+.date {
+    color: var(--accent-secondary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.timeline-item h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
