@@ -1,0 +1,44 @@
+[
+    {
+        "id": "1",
+        "project_id": "enterprise-email",
+        "content": "",
+        "reference": "",
+        "flow_diagram": ""
+    },
+    {
+        "id": "2",
+        "project_id": "messaging-sso",
+        "content": "",
+        "reference": "",
+        "flow_diagram": ""
+    },
+    {
+        "id": "3",
+        "project_id": "enterprise-support",
+        "content": "",
+        "reference": "",
+        "flow_diagram": ""
+    },
+    {
+        "id": "4",
+        "project_id": "integrated-support",
+        "content": "",
+        "reference": "",
+        "flow_diagram": ""
+    },
+    {
+        "id": "5",
+        "project_id": "cloud-migration",
+        "content": "",
+        "reference": "",
+        "flow_diagram": ""
+    },
+    {
+        "id": "6",
+        "project_id": "devops-portal",
+        "content": "",
+        "reference": "",
+        "flow_diagram": ""
+    }
+]

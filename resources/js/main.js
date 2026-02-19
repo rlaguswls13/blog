@@ -1,14 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Initialize Theme
     const storedTheme = localStorage.getItem('theme');
     const systemPreference = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 
-    // Set initial theme
     const currentTheme = storedTheme || systemPreference;
     document.documentElement.setAttribute('data-theme', currentTheme);
     updateToggleIcon(currentTheme);
 
-    // Create Toggle Button (if not exists) and Append to Body (outside nav)
     let toggleBtn = document.getElementById('theme-toggle');
     if (!toggleBtn) {
         toggleBtn = document.createElement('button');
@@ -19,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
         updateToggleIcon(currentTheme);
     }
 
-    // Toggle Theme
     toggleBtn.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme');
         const target = current === 'light' ? 'dark' : 'light';
@@ -29,14 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
         updateToggleIcon(target);
     });
 
-    // Load Data
-    // Determine path prefix based on current location
     const isInViewDir = window.location.pathname.includes('/view/');
     const isInProjectDir = window.location.pathname.includes('/view/project/');
 
-    // If in project dir (depth 2), resources are at '../../'
-    // If in view dir (depth 1), resources are at '../'
-    // Else (root), resources are at ''
     let resourcePrefix = '';
     if (isInProjectDir) {
         resourcePrefix = '../../';
@@ -94,8 +85,6 @@ function loadProfile(data, prefix) {
 
 function loadProjects(data) {
     const isInViewDir = window.location.pathname.includes('/view/');
-    // If in view dir, link is project/${id}.html
-    // If in root, link is view/project/${id}.html
     const linkPrefix = isInViewDir ? 'project/' : 'view/project/';
 
     document.getElementById('project-list').innerHTML = data.projects.map(proj => `
@@ -122,24 +111,101 @@ function loadProjectDetail(data) {
         id = params.get('id');
     }
 
-    const project = data.projects.find(p => p.id === id);
-
-    if (!project) {
-        document.getElementById('project-detail').innerHTML = '<p>Project not found.</p>';
+    if (!id) {
+        document.getElementById('project-detail').innerHTML = '<p>No project ID specified.</p>';
         return;
     }
 
-    document.getElementById('project-detail').innerHTML = `
-        <div class="detail-header">
-            <h1>${project.title}</h1>
-            <div class="detail-tags">${project.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
-            <p class="detail-period">${project.period}</p>
-        </div>
-        <div class="detail-content">
-            <p>${project.description}</p>
-            <p>更多 details content can be added here from JSON if available.</p>
-        </div>
-    `;
+    // Determine path to project-detail.json based on current location
+    const isInViewDir = window.location.pathname.includes('/view/');
+    const isInProjectDir = window.location.pathname.includes('/view/project/');
+    let resourcePrefix = '';
+    if (isInProjectDir) {
+        resourcePrefix = '../../';
+    } else if (isInViewDir) {
+        resourcePrefix = '../';
+    }
+    const detailResourcePath = resourcePrefix + 'resources/project-detail.json';
+
+    fetch(detailResourcePath)
+        .then(res => res.json())
+        .then(detailsData => {
+            // 1. Find basic info from data.json (passed as 'data')
+            const basicProject = data.projects.find(p => p.id === id);
+
+            // 2. Find detailed info from project-detail.json
+            const detailProject = detailsData.find(p => p.project_id === id);
+
+            if (!basicProject) {
+                document.getElementById('project-detail').innerHTML = '<p>Project not found (basic data).</p>';
+                return;
+            }
+
+            const content = detailProject ? detailProject.content : '';
+            const flowDiagram = detailProject ? detailProject.flow_diagram : '';
+            const references = detailProject ? detailProject.reference : '';
+
+            // Render Layout
+            const tagsHtml = basicProject.tags.map(t => `<span class="tech-tag">${t}</span>`).join('');
+
+            let flowHtml = '';
+            if (flowDiagram) {
+                flowHtml = `
+                    <hr class="section-divider">
+                    <div class="logic-flow-section">
+                        <div class="mermaid">${flowDiagram}</div>
+                    </div>
+                `;
+            }
+
+            let contentHtml = '';
+            if (content) {
+                contentHtml = `
+                    <hr class="section-divider">
+                    <div class="detail-content">
+                        ${content}
+                    </div>
+                `;
+            }
+
+            let refHtml = '';
+            if (references) {
+                refHtml = `
+                    <hr class="section-divider">
+                    <div class="reference-section">
+                        ${references}
+                    </div>
+                `;
+            }
+
+            document.getElementById('project-detail').innerHTML = `
+                <div class="detail-header">
+                    <h1>${basicProject.title}</h1>
+                </div>
+                
+                <hr class="section-divider">
+                
+                <div class="detail-meta">
+                    <span class="detail-period">${basicProject.period}</span>
+                    <div class="detail-tags">${tagsHtml}</div>
+                </div>
+
+                ${flowHtml}
+                ${contentHtml}
+                ${refHtml}
+            `;
+
+            // Trigger Mermaid
+            if (flowDiagram && window.mermaid) {
+                window.mermaid.run({
+                    nodes: [document.querySelector('.mermaid')]
+                });
+            }
+        })
+        .catch(err => {
+            console.error('Error loading project details:', err);
+            document.getElementById('project-detail').innerHTML = '<p>Error loading project details.</p>';
+        });
 }
 
 function loadResume(data) {
