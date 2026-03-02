@@ -8,27 +8,36 @@
     <link rel="stylesheet" href="../../resources/css/global.css">
     <script src="../../resources/js/main.js"></script>
     <style>
-        .detail-header {
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .back-link {
-            display: inline-block;
+        .detail-header h1 {
             margin-bottom: 1rem;
-            font-size: 0.9rem;
-            font-weight: 500;
         }
 
-        .detail-tags {
-            margin: 1rem 0;
+        .section-divider {
+            border: 0;
+            height: 1px;
+            background: var(--border-color);
+            margin: 2rem 0;
+        }
+
+        .detail-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .detail-period {
+            font-weight: 500;
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
+        }
+
+        .detail-tags {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .logic-flow-section {
+            margin: 2rem 0;
+            text-align: center;
         }
 
         .detail-content {
@@ -36,7 +45,35 @@
             line-height: 1.8;
             color: var(--text-primary);
         }
+
+        .reference-section {
+            text-align: left;
+        }
+
+        .ref-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ref-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .mermaid {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            /* Center the SVG */
+            display: flex;
+            justify-content: center;
+        }
     </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: false, theme: 'default' });
+        window.mermaid = mermaid;
+    </script>
 </head>
 
 <body>
@@ -45,14 +82,16 @@
             <div class="nav-brand">My Portfolio</div>
             <div class="nav-links">
                 <a href="../../index.html">About</a>
-                <a href="../projects.html">Projects</a>
+                <a href="../projects.html" class="active">Projects</a>
                 <a href="../resume.html">Resume</a>
                 <a href="../contact.html">Contact</a>
             </div>
         </nav>
+
         <div id="detail-container">
             <a href="../projects.html" class="back-link">← Back to Projects</a>
             <div id="project-detail">
+                <!-- Content will be loaded here -->
             </div>
         </div>
     </div>
