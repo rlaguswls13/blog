@@ -146,12 +146,11 @@
     },
     {
       "id": "devops-portal",
-      "title": "클라우드 관리 포털(CMP) 개발 및 DevOps 배포 자동화 체계 구축",
+      "title": "클라우드 관리 포털 개발 및 DevOps 배포 자동화 체계 구축",
       "periods": [
         "2024.03 - 2024.08"
       ],
       "tags": [
-        "CMP",
         "DevOps",
         "CI/CD",
         "Optimization"

@@ -202,6 +202,24 @@ function loadProjectDetail(data) {
                 </div>
                 <hr class="section-divider">
                 ${detailsBodyHtml}
+
+                ${(detailProject.reference || detailProject.flow_diagram) ? `
+                    <div class="detail-footer">
+                        ${detailProject.flow_diagram ? `
+                            <div class="flow-diagram-section">
+                                <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Flow Diagram</h3>
+                                <img src="${detailProject.flow_diagram}" alt="Project Flow" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border-color);">
+                            </div>
+                        ` : ''}
+                        ${detailProject.reference ? `
+                            <hr class="section-divider">
+                            <div class="reference-section">
+                                <h3 style="margin-bottom: 0.5rem; color: var(--text-primary);">Reference</h3>
+                                <p style="color: var(--text-secondary);">${detailProject.reference}</p>
+                            </div>
+                        ` : ''}
+                    </div>
+                ` : ''}
             `;
 
             if (hasTabs) {
