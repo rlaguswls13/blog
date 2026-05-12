@@ -134,7 +134,7 @@ function loadProjects(data) {
             <div class="project-card">
                 <h3><a href="${linkPrefix}${proj.id}.html">${proj.title}</a></h3>
                 <div style="margin-bottom:15px;">${proj.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
-                <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">${periodsText} <small>${totalDuration}</small></p>
+                <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">${periodsText}<br><small>${totalDuration}</small></p>
                 <p style="color:var(--text-primary);">${proj.description}</p>
             </div>
         `;
@@ -167,6 +167,20 @@ function loadProjectDetail(data) {
             const tagsHtml = basicProject.tags.map(t => `<span class="tech-tag">${t}</span>`).join('');
             const hasTabs = detailProject.tabs && detailProject.tabs.length > 0;
 
+            // Helper for Flow Diagram HTML with placeholder
+            const getFlowHtml = (diagramPath) => {
+                if (diagramPath) {
+                    return `<div class="logic-flow-section"><img src="${diagramPath}" alt="Flow Diagram" style="max-width:100%; border-radius:8px; border:1px solid var(--border-color);"></div>`;
+                } else {
+                    return `
+                        <div class="logic-flow-section">
+                            <div class="img-placeholder" style="width: 100%; height: 200px; background-color: var(--bg-tertiary); border: 2px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 500;">
+                                설계 이미지 준비중입니다.
+                            </div>
+                        </div>`;
+                }
+            };
+
             let detailsBodyHtml = '';
             if (hasTabs) {
                 let tabsHeaderHtml = '<div class="tabs-container"><div class="tabs-header">';
@@ -177,7 +191,7 @@ function loadProjectDetail(data) {
                     tabsHeaderHtml += `<button class="tab-btn ${activeClass}" data-tab="tab-${index}">${tab.title}</button>`;
 
                     const contentBody = tab.sections ? renderSections(tab.sections) : (tab.content || '');
-                    const flowHtml = tab.flow_diagram ? `<div class="logic-flow-section"><img src="${tab.flow_diagram}" alt="Flow" style="max-width:100%; border-radius:8px;"></div>` : '';
+                    const flowHtml = getFlowHtml(tab.flow_diagram);
 
                     tabsContentHtml += `
                         <div class="tab-content ${activeClass}" id="tab-${index}">
@@ -190,43 +204,42 @@ function loadProjectDetail(data) {
                 detailsBodyHtml = tabsHeaderHtml + '</div>' + tabsContentHtml + '</div></div>';
             } else {
                 const contentBody = detailProject.sections ? renderSections(detailProject.sections) : (detailProject.content || '');
-                const flowHtml = detailProject.flow_diagram ? `<div class="logic-flow-section"><img src="${detailProject.flow_diagram}" alt="Flow" style="max-width:100%; border-radius:8px;"></div>` : '';
-                detailsBodyHtml = flowHtml + (flowHtml ? '<hr class="section-divider">' : '') + `<div class="detail-content">${contentBody}</div>` + (detailProject.reference ? `<hr class="section-divider"><div class="reference-section">${detailProject.reference}</div>` : '');
+                const flowHtml = getFlowHtml(detailProject.flow_diagram);
+                detailsBodyHtml = flowHtml + '<hr class="section-divider">' + `<div class="detail-content">${contentBody}</div>` + (detailProject.reference ? `<hr class="section-divider"><div class="reference-section">${detailProject.reference}</div>` : '');
             }
 
             document.getElementById('project-detail').innerHTML = `
                 <div class="detail-header"><h1>${basicProject.title}</h1></div>
                 <div class="detail-meta">
-                    <span class="detail-period">${periodsText} <small>${totalDuration}</small></span>
+                    <span class="detail-period">${periodsText}<br><small>${totalDuration}</small></span>
                     <div class="detail-tags">${tagsHtml}</div>
                 </div>
                 <hr class="section-divider">
                 ${detailsBodyHtml}
 
-                ${(detailProject.reference || detailProject.flow_diagram) ? `
-                    <div class="detail-footer">
-                        ${detailProject.flow_diagram ? `
-                            <div class="flow-diagram-section">
-                                <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Flow Diagram</h3>
-                                <img src="${detailProject.flow_diagram}" alt="Project Flow" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border-color);">
-                            </div>
-                        ` : ''}
-                        ${detailProject.reference ? `
-                            <hr class="section-divider">
-                            <div class="reference-section">
-                                <h3 style="margin-bottom: 0.5rem; color: var(--text-primary);">Reference</h3>
-                                <p style="color: var(--text-secondary);">${detailProject.reference}</p>
-                            </div>
-                        ` : ''}
+                <div class="detail-footer">
+                    <div class="flow-diagram-section">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Flow Diagram</h3>
+                        ${detailProject.flow_diagram ? 
+                            `<img src="${detailProject.flow_diagram}" alt="Project Flow" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border-color);">` :
+                            `<div class="img-placeholder" style="width: 100%; height: 200px; background-color: var(--bg-tertiary); border: 2px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 500;">설계 이미지 준비중입니다.</div>`
+                        }
                     </div>
-                ` : ''}
+                    ${detailProject.reference ? `
+                        <hr class="section-divider">
+                        <div class="reference-section">
+                            <h3 style="margin-bottom: 0.5rem; color: var(--text-primary);">Reference</h3>
+                            <p style="color: var(--text-secondary);">${detailProject.reference}</p>
+                        </div>
+                    ` : ''}
+                </div>
             `;
 
             if (hasTabs) {
                 const tabBtns = document.querySelectorAll('.tab-btn');
                 const tabContents = document.querySelectorAll('.tab-content');
                 const periodDisplay = document.querySelector('.detail-period');
-                const originalPeriodText = `${periodsText} <small>${totalDuration}</small>`;
+                const originalPeriodText = `${periodsText}<br><small>${totalDuration}</small>`;
 
                 tabBtns.forEach((btn, index) => {
                     btn.addEventListener('click', () => {
@@ -238,7 +251,7 @@ function loadProjectDetail(data) {
                         const tabData = detailProject.tabs[index];
                         const tabPeriod = (tabData && tabData.period) || (basicProject.periods && basicProject.periods[index]);
                         if (tabPeriod && basicProject.periods.length > 1) {
-                            periodDisplay.innerHTML = `${tabPeriod} <small>(해당 탭 활동 기간)</small>`;
+                            periodDisplay.innerHTML = `${tabPeriod}<br><small>(해당 탭 활동 기간)</small>`;
                         } else {
                             periodDisplay.innerHTML = originalPeriodText;
                         }
