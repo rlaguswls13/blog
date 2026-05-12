@@ -141,42 +141,93 @@ function loadProjectDetail(data) {
                 return;
             }
 
-            const content = detailProject ? detailProject.content : '';
-            const flowDiagram = detailProject ? detailProject.flow_diagram : '';
-            const references = detailProject ? detailProject.reference : '';
+            // Check if tabs exist
+            const hasTabs = detailProject && detailProject.tabs && detailProject.tabs.length > 0;
 
-            // Render Layout
+            let detailsBodyHtml = '';
+
+            if (hasTabs) {
+                let tabsHeaderHtml = '<div class="tabs-container"><div class="tabs-header">';
+                let tabsContentHtml = '<div class="tabs-body">';
+
+                detailProject.tabs.forEach((tab, index) => {
+                    const activeClass = index === 0 ? 'active' : '';
+                    tabsHeaderHtml += `<button class="tab-btn ${activeClass}" data-tab="tab-${index}">${tab.title}</button>`;
+
+                    let flowImageSrc = tab.flow_diagram ? tab.flow_diagram : '';
+                    let tabFlowHtml = '';
+                    if (flowImageSrc) {
+                        tabFlowHtml = `<div class="logic-flow-section"><img src="${flowImageSrc}" alt="Flow Diagram" style="max-width: 100%; height: auto; border-radius: 8px;"></div>`;
+                    } else {
+                        tabFlowHtml = `<div class="logic-flow-section"><div class="img-placeholder" style="width: 100%; height: 300px; background-color: var(--bg-tertiary); border: 2px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 500;">설계 이미지 준비중입니다.</div></div>`;
+                    }
+                    let tabContentHtml = tab.content ? `<div class="detail-content">${tab.content}</div>` : '';
+                    let tabRefHtml = tab.reference ? `<div class="reference-section">${tab.reference}</div>` : '';
+                    let separatorHtml = (tab.flow_diagram && tab.content) ? '<hr class="section-divider">' : '';
+
+                    tabsContentHtml += `
+                        <div class="tab-content ${activeClass}" id="tab-${index}">
+                            ${tabFlowHtml}
+                            ${separatorHtml}
+                            ${tabContentHtml}
+                            ${tabRefHtml}
+                        </div>
+                     `;
+                });
+                tabsHeaderHtml += '</div>';
+                tabsContentHtml += '</div></div>';
+
+                detailsBodyHtml = tabsHeaderHtml + tabsContentHtml;
+
+            } else {
+                // Original logic for single content
+                const content = detailProject ? detailProject.content : '';
+                const flowDiagram = detailProject ? detailProject.flow_diagram : '';
+                const references = detailProject ? detailProject.reference : '';
+
+                let flowImageSrc = flowDiagram ? flowDiagram : '';
+                let flowHtml = '';
+                if (flowImageSrc) {
+                    flowHtml = `
+                        <div class="logic-flow-section">
+                            <img src="${flowImageSrc}" alt="Flow Diagram" style="max-width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+                    `;
+                } else {
+                    flowHtml = `
+                        <div class="logic-flow-section">
+                            <div class="img-placeholder" style="width: 100%; height: 300px; background-color: var(--bg-tertiary); border: 2px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 500;">
+                                설계 이미지 준비중입니다.
+                            </div>
+                        </div>
+                    `;
+                }
+
+                let contentHtml = '';
+                if (content) {
+                    contentHtml = `
+                        <div class="detail-content">
+                            ${content}
+                        </div>
+                    `;
+                }
+
+                let refHtml = '';
+                if (references) {
+                    refHtml = `
+                        <hr class="section-divider">
+                        <div class="reference-section">
+                            ${references}
+                        </div>
+                    `;
+                }
+
+                let separatorHtml = (flowDiagram && content) ? '<hr class="section-divider">' : '';
+                detailsBodyHtml = flowHtml + separatorHtml + contentHtml + refHtml;
+            }
+
+            // Render tags
             const tagsHtml = basicProject.tags.map(t => `<span class="tech-tag">${t}</span>`).join('');
-
-            let flowHtml = '';
-            if (flowDiagram) {
-                flowHtml = `
-                    <hr class="section-divider">
-                    <div class="logic-flow-section">
-                        <div class="mermaid">${flowDiagram}</div>
-                    </div>
-                `;
-            }
-
-            let contentHtml = '';
-            if (content) {
-                contentHtml = `
-                    <hr class="section-divider">
-                    <div class="detail-content">
-                        ${content}
-                    </div>
-                `;
-            }
-
-            let refHtml = '';
-            if (references) {
-                refHtml = `
-                    <hr class="section-divider">
-                    <div class="reference-section">
-                        ${references}
-                    </div>
-                `;
-            }
 
             document.getElementById('project-detail').innerHTML = `
                 <div class="detail-header">
@@ -190,15 +241,41 @@ function loadProjectDetail(data) {
                     <div class="detail-tags">${tagsHtml}</div>
                 </div>
 
-                ${flowHtml}
-                ${contentHtml}
-                ${refHtml}
+                <hr class="section-divider">
+
+                ${detailsBodyHtml}
             `;
 
             // Trigger Mermaid
-            if (flowDiagram && window.mermaid) {
-                window.mermaid.run({
-                    nodes: [document.querySelector('.mermaid')]
+            if (window.mermaid) {
+                // Wait a tick to ensure elements are in DOM
+                setTimeout(() => {
+                    try {
+                        window.mermaid.run({
+                            nodes: document.querySelectorAll('.mermaid')
+                        });
+                    } catch (e) {
+                        console.error("Mermaid error:", e);
+                    }
+                }, 100);
+            }
+
+            // Add tab click events
+            if (hasTabs) {
+                const tabBtns = document.querySelectorAll('.tab-btn');
+                const tabContents = document.querySelectorAll('.tab-content');
+
+                tabBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        // Remove active class from all
+                        tabBtns.forEach(b => b.classList.remove('active'));
+                        tabContents.forEach(c => c.classList.remove('active'));
+
+                        // Add active class to clicked
+                        btn.classList.add('active');
+                        const tabId = btn.getAttribute('data-tab');
+                        document.getElementById(tabId).classList.add('active');
+                    });
                 });
             }
         })

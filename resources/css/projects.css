@@ -20,6 +20,11 @@
 .project-card h3 {
     margin-top: 0;
     color: var(--accent-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Optional: Ensure the line height matches the text so no clipping happens vertically */
+    line-height: 1.2;
 }
 
 .tech-tag {
