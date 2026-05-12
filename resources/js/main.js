@@ -196,14 +196,12 @@ function loadProjectDetail(data) {
 
             document.getElementById('project-detail').innerHTML = `
                 <div class="detail-header"><h1>${basicProject.title}</h1></div>
-                <hr class="section-divider">
                 <div class="detail-meta">
                     <span class="detail-period">${periodsText} <small>${totalDuration}</small></span>
                     <div class="detail-tags">${tagsHtml}</div>
                 </div>
                 <hr class="section-divider">
                 ${detailsBodyHtml}
-                <div style="margin-top:2rem;"><a href="../../index.html#projects" class="back-link">← Back to Projects</a></div>
             `;
 
             if (hasTabs) {
