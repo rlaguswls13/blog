@@ -161,9 +161,18 @@ function loadProjectDetail(data) {
                     } else {
                         tabFlowHtml = `<div class="logic-flow-section"><div class="img-placeholder" style="width: 100%; height: 300px; background-color: var(--bg-tertiary); border: 2px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 500;">설계 이미지 준비중입니다.</div></div>`;
                     }
-                    let tabContentHtml = tab.content ? `<div class="detail-content">${tab.content}</div>` : '';
+
+                    // Render sections or fallback to content
+                    let contentBody = '';
+                    if (tab.sections) {
+                        contentBody = renderSections(tab.sections);
+                    } else {
+                        contentBody = tab.content || '';
+                    }
+
+                    let tabContentHtml = contentBody ? `<div class="detail-content">${contentBody}</div>` : '';
                     let tabRefHtml = tab.reference ? `<div class="reference-section">${tab.reference}</div>` : '';
-                    let separatorHtml = (tab.flow_diagram && tab.content) ? '<hr class="section-divider">' : '';
+                    let separatorHtml = (tab.flow_diagram && contentBody) ? '<hr class="section-divider">' : '';
 
                     tabsContentHtml += `
                         <div class="tab-content ${activeClass}" id="tab-${index}">
@@ -181,7 +190,6 @@ function loadProjectDetail(data) {
 
             } else {
                 // Original logic for single content
-                const content = detailProject ? detailProject.content : '';
                 const flowDiagram = detailProject ? detailProject.flow_diagram : '';
                 const references = detailProject ? detailProject.reference : '';
 
@@ -203,11 +211,19 @@ function loadProjectDetail(data) {
                     `;
                 }
 
+                // Render sections or fallback to content
+                let contentBody = '';
+                if (detailProject && detailProject.sections) {
+                    contentBody = renderSections(detailProject.sections);
+                } else if (detailProject && detailProject.content) {
+                    contentBody = detailProject.content;
+                }
+
                 let contentHtml = '';
-                if (content) {
+                if (contentBody) {
                     contentHtml = `
                         <div class="detail-content">
-                            ${content}
+                            ${contentBody}
                         </div>
                     `;
                 }
@@ -222,7 +238,7 @@ function loadProjectDetail(data) {
                     `;
                 }
 
-                let separatorHtml = (flowDiagram && content) ? '<hr class="section-divider">' : '';
+                let separatorHtml = (flowDiagram && contentBody) ? '<hr class="section-divider">' : '';
                 detailsBodyHtml = flowHtml + separatorHtml + contentHtml + refHtml;
             }
 
@@ -309,4 +325,19 @@ function loadContact(data) {
             <a href="${l.url}" target="_blank">${l.url}</a>
         </li>`
     ).join('');
+}
+
+function renderSections(sections) {
+    if (!sections || !Array.isArray(sections)) return '';
+    return sections.map(sec => `
+        <div style="margin-bottom:1.5rem;">
+            <h4 style="color:var(--accent-primary); margin-bottom:0.5rem;">${sec.title}</h4>
+            ${sec.body ? `<p>${sec.body}</p>` : ''}
+            ${sec.list ? `
+                <ul class="ref-list" style="margin-left:5px; margin-top:10px;">
+                    ${sec.list.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            ` : ''}
+        </div>
+    `).join('');
 }
