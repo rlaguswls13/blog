@@ -54,10 +54,50 @@ function updateToggleIcon(theme) {
     }
 }
 
+// Helper: Calculate total duration from periods array
+function calculateTotalPeriod(periods) {
+    if (!periods || !Array.isArray(periods) || periods.length === 0) return '';
+
+    let totalMonths = 0;
+    periods.forEach(p => {
+        const parts = p.split(' - ');
+        if (parts.length === 2) {
+            const start = parseDate(parts[0]);
+            const end = parseDate(parts[1]);
+            if (start && end) {
+                const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth()) + 1;
+                totalMonths += months;
+            }
+        }
+    });
+
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+
+    let result = '총 ';
+    if (years > 0) result += `${years}년 `;
+    if (months > 0) result += `${months}개월`;
+    if (years === 0 && months === 0) return '';
+    return `(${result.trim()})`;
+}
+
+function parseDate(dateStr) {
+    if (!dateStr) return null;
+    const cleanStr = dateStr.trim();
+    if (cleanStr === '현재') return new Date();
+
+    const parts = cleanStr.split('.');
+    if (parts.length === 2) {
+        const year = parseInt(parts[0]);
+        const month = parseInt(parts[1]) - 1;
+        return new Date(year, month);
+    }
+    return null;
+}
+
 function loadProfile(data, prefix) {
     const p = data.profile;
     document.getElementById('p-img').src = (prefix || '') + p.image;
-
     document.getElementById('p-name').textContent = p.name;
     document.getElementById('p-role').textContent = p.role;
     document.getElementById('p-org').textContent = p.organization;
@@ -87,65 +127,47 @@ function loadProjects(data) {
     const isInViewDir = window.location.pathname.includes('/view/');
     const linkPrefix = isInViewDir ? 'project/' : 'view/project/';
 
-    document.getElementById('project-list').innerHTML = data.projects.map(proj => `
-        <div class="project-card">
-            <h3><a href="${linkPrefix}${proj.id}.html">${proj.title}</a></h3>
-            <div style="margin-bottom:15px;">${proj.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
-            <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">${proj.period}</p>
-            <p style="color:var(--text-primary);">${proj.description}</p>
-        </div>
-    `).join('');
+    document.getElementById('project-list').innerHTML = data.projects.map(proj => {
+        const periodsText = proj.periods ? proj.periods.join(' / ') : '';
+        const totalDuration = calculateTotalPeriod(proj.periods);
+        return `
+            <div class="project-card">
+                <h3><a href="${linkPrefix}${proj.id}.html">${proj.title}</a></h3>
+                <div style="margin-bottom:15px;">${proj.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
+                <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">${periodsText} <small>${totalDuration}</small></p>
+                <p style="color:var(--text-primary);">${proj.description}</p>
+            </div>
+        `;
+    }).join('');
 }
 
 function loadProjectDetail(data) {
     let id;
-    // Check if we are in 'view/project/' directory
     if (window.location.pathname.includes('/view/project/')) {
-        // Extract filename without extension
         const parts = window.location.pathname.split('/');
-        const filename = parts[parts.length - 1];
-        id = filename.replace('.html', '');
+        id = parts[parts.length - 1].replace('.html', '');
     } else {
-        // Fallback
-        const params = new URLSearchParams(window.location.search);
-        id = params.get('id');
+        id = new URLSearchParams(window.location.search).get('id');
     }
 
-    if (!id) {
-        document.getElementById('project-detail').innerHTML = '<p>No project ID specified.</p>';
-        return;
-    }
+    if (!id) return;
 
-    // Determine path to project-detail.json based on current location
-    const isInViewDir = window.location.pathname.includes('/view/');
     const isInProjectDir = window.location.pathname.includes('/view/project/');
-    let resourcePrefix = '';
-    if (isInProjectDir) {
-        resourcePrefix = '../../';
-    } else if (isInViewDir) {
-        resourcePrefix = '../';
-    }
-    const detailResourcePath = resourcePrefix + 'resources/project-detail.json';
+    const resourcePrefix = isInProjectDir ? '../../' : (window.location.pathname.includes('/view/') ? '../' : '');
 
-    fetch(detailResourcePath)
+    fetch(resourcePrefix + 'resources/project-detail.json')
         .then(res => res.json())
         .then(detailsData => {
-            // 1. Find basic info from data.json (passed as 'data')
             const basicProject = data.projects.find(p => p.id === id);
-
-            // 2. Find detailed info from project-detail.json
             const detailProject = detailsData.find(p => p.project_id === id);
+            if (!basicProject || !detailProject) return;
 
-            if (!basicProject) {
-                document.getElementById('project-detail').innerHTML = '<p>Project not found (basic data).</p>';
-                return;
-            }
-
-            // Check if tabs exist
-            const hasTabs = detailProject && detailProject.tabs && detailProject.tabs.length > 0;
+            const periodsText = basicProject.periods ? basicProject.periods.join(' / ') : '';
+            const totalDuration = calculateTotalPeriod(basicProject.periods);
+            const tagsHtml = basicProject.tags.map(t => `<span class="tech-tag">${t}</span>`).join('');
+            const hasTabs = detailProject.tabs && detailProject.tabs.length > 0;
 
             let detailsBodyHtml = '';
-
             if (hasTabs) {
                 let tabsHeaderHtml = '<div class="tabs-container"><div class="tabs-header">';
                 let tabsContentHtml = '<div class="tabs-body">';
@@ -154,150 +176,63 @@ function loadProjectDetail(data) {
                     const activeClass = index === 0 ? 'active' : '';
                     tabsHeaderHtml += `<button class="tab-btn ${activeClass}" data-tab="tab-${index}">${tab.title}</button>`;
 
-                    let flowImageSrc = tab.flow_diagram ? tab.flow_diagram : '';
-                    let tabFlowHtml = '';
-                    if (flowImageSrc) {
-                        tabFlowHtml = `<div class="logic-flow-section"><img src="${flowImageSrc}" alt="Flow Diagram" style="max-width: 100%; height: auto; border-radius: 8px;"></div>`;
-                    } else {
-                        tabFlowHtml = `<div class="logic-flow-section"><div class="img-placeholder" style="width: 100%; height: 300px; background-color: var(--bg-tertiary); border: 2px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 500;">설계 이미지 준비중입니다.</div></div>`;
-                    }
-
-                    // Render sections or fallback to content
-                    let contentBody = '';
-                    if (tab.sections) {
-                        contentBody = renderSections(tab.sections);
-                    } else {
-                        contentBody = tab.content || '';
-                    }
-
-                    let tabContentHtml = contentBody ? `<div class="detail-content">${contentBody}</div>` : '';
-                    let tabRefHtml = tab.reference ? `<div class="reference-section">${tab.reference}</div>` : '';
-                    let separatorHtml = (tab.flow_diagram && contentBody) ? '<hr class="section-divider">' : '';
+                    const contentBody = tab.sections ? renderSections(tab.sections) : (tab.content || '');
+                    const flowHtml = tab.flow_diagram ? `<div class="logic-flow-section"><img src="${tab.flow_diagram}" alt="Flow" style="max-width:100%; border-radius:8px;"></div>` : '';
 
                     tabsContentHtml += `
                         <div class="tab-content ${activeClass}" id="tab-${index}">
-                            ${tabFlowHtml}
-                            ${separatorHtml}
-                            ${tabContentHtml}
-                            ${tabRefHtml}
-                        </div>
-                     `;
+                            ${flowHtml}
+                            ${flowHtml ? '<hr class="section-divider">' : ''}
+                            <div class="detail-content">${contentBody}</div>
+                            ${tab.reference ? `<div class="reference-section">${tab.reference}</div>` : ''}
+                        </div>`;
                 });
-                tabsHeaderHtml += '</div>';
-                tabsContentHtml += '</div></div>';
-
-                detailsBodyHtml = tabsHeaderHtml + tabsContentHtml;
-
+                detailsBodyHtml = tabsHeaderHtml + '</div>' + tabsContentHtml + '</div></div>';
             } else {
-                // Original logic for single content
-                const flowDiagram = detailProject ? detailProject.flow_diagram : '';
-                const references = detailProject ? detailProject.reference : '';
-
-                let flowImageSrc = flowDiagram ? flowDiagram : '';
-                let flowHtml = '';
-                if (flowImageSrc) {
-                    flowHtml = `
-                        <div class="logic-flow-section">
-                            <img src="${flowImageSrc}" alt="Flow Diagram" style="max-width: 100%; height: auto; border-radius: 8px;">
-                        </div>
-                    `;
-                } else {
-                    flowHtml = `
-                        <div class="logic-flow-section">
-                            <div class="img-placeholder" style="width: 100%; height: 300px; background-color: var(--bg-tertiary); border: 2px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 500;">
-                                설계 이미지 준비중입니다.
-                            </div>
-                        </div>
-                    `;
-                }
-
-                // Render sections or fallback to content
-                let contentBody = '';
-                if (detailProject && detailProject.sections) {
-                    contentBody = renderSections(detailProject.sections);
-                } else if (detailProject && detailProject.content) {
-                    contentBody = detailProject.content;
-                }
-
-                let contentHtml = '';
-                if (contentBody) {
-                    contentHtml = `
-                        <div class="detail-content">
-                            ${contentBody}
-                        </div>
-                    `;
-                }
-
-                let refHtml = '';
-                if (references) {
-                    refHtml = `
-                        <hr class="section-divider">
-                        <div class="reference-section">
-                            ${references}
-                        </div>
-                    `;
-                }
-
-                let separatorHtml = (flowDiagram && contentBody) ? '<hr class="section-divider">' : '';
-                detailsBodyHtml = flowHtml + separatorHtml + contentHtml + refHtml;
+                const contentBody = detailProject.sections ? renderSections(detailProject.sections) : (detailProject.content || '');
+                const flowHtml = detailProject.flow_diagram ? `<div class="logic-flow-section"><img src="${detailProject.flow_diagram}" alt="Flow" style="max-width:100%; border-radius:8px;"></div>` : '';
+                detailsBodyHtml = flowHtml + (flowHtml ? '<hr class="section-divider">' : '') + `<div class="detail-content">${contentBody}</div>` + (detailProject.reference ? `<hr class="section-divider"><div class="reference-section">${detailProject.reference}</div>` : '');
             }
-
-            // Render tags
-            const tagsHtml = basicProject.tags.map(t => `<span class="tech-tag">${t}</span>`).join('');
 
             document.getElementById('project-detail').innerHTML = `
-                <div class="detail-header">
-                    <h1>${basicProject.title}</h1>
-                </div>
-                
+                <div class="detail-header"><h1>${basicProject.title}</h1></div>
                 <hr class="section-divider">
-                
                 <div class="detail-meta">
-                    <span class="detail-period">${basicProject.period}</span>
+                    <span class="detail-period">${periodsText} <small>${totalDuration}</small></span>
                     <div class="detail-tags">${tagsHtml}</div>
                 </div>
-
                 <hr class="section-divider">
-
                 ${detailsBodyHtml}
+                <div style="margin-top:2rem;"><a href="../../index.html#projects" class="back-link">← Back to Projects</a></div>
             `;
 
-            // Trigger Mermaid
-            if (window.mermaid) {
-                // Wait a tick to ensure elements are in DOM
-                setTimeout(() => {
-                    try {
-                        window.mermaid.run({
-                            nodes: document.querySelectorAll('.mermaid')
-                        });
-                    } catch (e) {
-                        console.error("Mermaid error:", e);
-                    }
-                }, 100);
-            }
-
-            // Add tab click events
             if (hasTabs) {
                 const tabBtns = document.querySelectorAll('.tab-btn');
                 const tabContents = document.querySelectorAll('.tab-content');
+                const periodDisplay = document.querySelector('.detail-period');
+                const originalPeriodText = `${periodsText} <small>${totalDuration}</small>`;
 
-                tabBtns.forEach(btn => {
+                tabBtns.forEach((btn, index) => {
                     btn.addEventListener('click', () => {
-                        // Remove active class from all
                         tabBtns.forEach(b => b.classList.remove('active'));
                         tabContents.forEach(c => c.classList.remove('active'));
-
-                        // Add active class to clicked
                         btn.classList.add('active');
-                        const tabId = btn.getAttribute('data-tab');
-                        document.getElementById(tabId).classList.add('active');
+                        document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+
+                        const tabData = detailProject.tabs[index];
+                        const tabPeriod = (tabData && tabData.period) || (basicProject.periods && basicProject.periods[index]);
+                        if (tabPeriod && basicProject.periods.length > 1) {
+                            periodDisplay.innerHTML = `${tabPeriod} <small>(해당 탭 활동 기간)</small>`;
+                        } else {
+                            periodDisplay.innerHTML = originalPeriodText;
+                        }
                     });
                 });
             }
-        })
-        .catch(err => {
-            console.error('Error loading project details:', err);
-            document.getElementById('project-detail').innerHTML = '<p>Error loading project details.</p>';
+
+            if (window.mermaid) {
+                setTimeout(() => { try { window.mermaid.run({ nodes: document.querySelectorAll('.mermaid') }); } catch (e) { } }, 100);
+            }
         });
 }
 
@@ -333,11 +268,7 @@ function renderSections(sections) {
         <div style="margin-bottom:1.5rem;">
             <h4 style="color:var(--accent-primary); margin-bottom:0.5rem;">${sec.title}</h4>
             ${sec.body ? `<p>${sec.body}</p>` : ''}
-            ${sec.list ? `
-                <ul class="ref-list" style="margin-left:5px; margin-top:10px;">
-                    ${sec.list.map(item => `<li>${item}</li>`).join('')}
-                </ul>
-            ` : ''}
+            ${sec.list ? `<ul class="ref-list" style="margin-left:5px; margin-top:10px;">${sec.list.map(item => `<li>${item}</li>`).join('')}</ul>` : ''}
         </div>
     `).join('');
 }
