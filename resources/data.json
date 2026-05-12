@@ -162,24 +162,14 @@
     ],
     "education": [
       {
-        "title": "서울사이버대학교 (컴퓨터공학과)",
+        "title": "Python & Elasticsearch 기반 금융솔루션 개발자 과정",
+        "date": "2026.05 - 현재 | KH정보교육원",
+        "description": "Python, Java, SQL을 활용한 빅데이터 금융솔루션 개발 과정"
+      },
+      {
+        "title": "서울사이버대학교 (컴퓨터공학과|빅데이터·정보보호학과)",
         "date": "2024.03 - 2026.02 | 졸업",
         "description": "컴퓨터 공학 심화 학습 진행 중"
-      },
-      {
-        "title": "ADsP (데이터분석 준전문가) 취득",
-        "date": "2024.06 | 한국데이터산업진흥원",
-        "description": "데이터 이해, 데이터 분석 기획, 데이터 분석 역량 검증 [자격번호: ADsP-041003058]"
-      },
-      {
-        "title": "SQLD (SQL 개발자) 취득",
-        "date": "2024.04 | 한국데이터산업진흥원",
-        "description": "데이터 모델링, SQL 기본 및 활용 능력 검증 [자격번호: SQLD-052008412]"
-      },
-      {
-        "title": "CKA (Certified Kubernetes Administrator)",
-        "date": "2023.04 | CNCF",
-        "description": "쿠버네티스 관리자 자격 인증 [Cert ID: LF-b2czca9bdo]"
       },
       {
         "title": "UI/UX 웹 콘텐츠 융합 응용 SW 개발자 과정",
@@ -190,6 +180,28 @@
         "title": "서울과학기술대학교 (신소재공학과)",
         "date": "2012.03 - 2018.02 | 졸업",
         "description": "공학사 학위 취득"
+      }
+    ],
+    "certification": [
+      {
+        "title": "정보처리기사",
+        "date": "2026.05 | 필기합격 (2026.07 실기 예정)",
+        "description": ""
+      },
+      {
+        "title": "ADsP (데이터분석 준전문가)",
+        "date": "2024.06 | 취득 | 한국데이터산업진흥원",
+        "description": "데이터 이해, 데이터 분석 기획, 데이터 분석 역량 검증 [자격번호: ADsP-041003058]"
+      },
+      {
+        "title": "SQLD (SQL 개발자) 취득",
+        "date": "2024.04 | 취득 | 한국데이터산업진흥원",
+        "description": "데이터 모델링, SQL 기본 및 활용 능력 검증 [자격번호: SQLD-052008412]"
+      },
+      {
+        "title": "CKA (Certified Kubernetes Administrator)",
+        "date": "2023.04 | 2026.04 만료 | CNCF",
+        "description": "쿠버네티스 관리자 자격 인증 [Cert ID: LF-b2czca9bdo]"
       }
     ]
   },

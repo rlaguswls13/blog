@@ -294,6 +294,9 @@ function loadResume(data) {
         </div>`;
     document.getElementById('work-list').innerHTML = data.resume.work.map(render).join('');
     document.getElementById('edu-timeline').innerHTML = data.resume.education.map(render).join('');
+    if (document.getElementById('cert-list')) {
+        document.getElementById('cert-list').innerHTML = data.resume.certification.map(render).join('');
+    }
 }
 
 function loadContact(data) {
