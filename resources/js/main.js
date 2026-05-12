@@ -217,22 +217,15 @@ function loadProjectDetail(data) {
                 <hr class="section-divider">
                 ${detailsBodyHtml}
 
-                <div class="detail-footer">
-                    <div class="flow-diagram-section">
-                        <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Flow Diagram</h3>
-                        ${detailProject.flow_diagram ? 
-                            `<img src="${detailProject.flow_diagram}" alt="Project Flow" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border-color);">` :
-                            `<div class="img-placeholder" style="width: 100%; height: 200px; background-color: var(--bg-tertiary); border: 2px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 500;">설계 이미지 준비중입니다.</div>`
-                        }
-                    </div>
-                    ${detailProject.reference ? `
+                ${detailProject.reference ? `
+                    <div class="detail-footer">
                         <hr class="section-divider">
                         <div class="reference-section">
                             <h3 style="margin-bottom: 0.5rem; color: var(--text-primary);">Reference</h3>
                             <p style="color: var(--text-secondary);">${detailProject.reference}</p>
                         </div>
-                    ` : ''}
-                </div>
+                    </div>
+                ` : ''}
             `;
 
             if (hasTabs) {
