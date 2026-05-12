@@ -54,12 +54,20 @@ function updateToggleIcon(theme) {
     }
 }
 
-// Helper: Calculate total duration from periods array
-function calculateTotalPeriod(periods) {
+// Helper: Format periods array with ellipsis if too long
+function formatPeriods(periods) {
     if (!periods || !Array.isArray(periods) || periods.length === 0) return '';
+    if (periods.length <= 2) return periods.join(' / ');
+    return `${periods[0]} / ... / ${periods[periods.length - 1]}`;
+}
 
+// Helper: Calculate total duration from periods (can be array or string)
+function calculateTotalPeriod(periods) {
+    const periodArray = Array.isArray(periods) ? periods : (periods ? [periods] : []);
+    if (periodArray.length === 0) return '';
+    
     let totalMonths = 0;
-    periods.forEach(p => {
+    periodArray.forEach(p => {
         const parts = p.split(' - ');
         if (parts.length === 2) {
             const start = parseDate(parts[0]);
@@ -73,7 +81,7 @@ function calculateTotalPeriod(periods) {
 
     const years = Math.floor(totalMonths / 12);
     const months = totalMonths % 12;
-
+    
     let result = '총 ';
     if (years > 0) result += `${years}년 `;
     if (months > 0) result += `${months}개월`;
@@ -128,7 +136,7 @@ function loadProjects(data) {
     const linkPrefix = isInViewDir ? 'project/' : 'view/project/';
 
     document.getElementById('project-list').innerHTML = data.projects.map(proj => {
-        const periodsText = proj.periods ? proj.periods.join(' / ') : '';
+        const periodsText = formatPeriods(proj.periods);
         const totalDuration = calculateTotalPeriod(proj.periods);
         return `
             <div class="project-card">
@@ -244,7 +252,8 @@ function loadProjectDetail(data) {
                         const tabData = detailProject.tabs[index];
                         const tabPeriod = (tabData && tabData.period) || (basicProject.periods && basicProject.periods[index]);
                         if (tabPeriod && basicProject.periods.length > 1) {
-                            periodDisplay.innerHTML = `${tabPeriod}<br><small>(해당 탭 활동 기간)</small>`;
+                            const duration = calculateTotalPeriod(tabPeriod);
+                            periodDisplay.innerHTML = `${tabPeriod}<br><small>${duration}</small>`;
                         } else {
                             periodDisplay.innerHTML = originalPeriodText;
                         }
