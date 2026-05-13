@@ -1,4 +1,6 @@
 /* global.css */
+@import url('project-detail.css');
+
 :root {
     /* Base Colors - Dark Mode (Default) */
     --bg-primary: #121212;

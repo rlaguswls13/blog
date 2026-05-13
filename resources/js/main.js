@@ -179,8 +179,8 @@ function loadProjectDetail(data) {
             const getFlowHtml = (diagramPath) => {
                 if (!diagramPath) {
                     return `
-                        <div class="logic-flow-section">
-                            <div class="img-placeholder" style="width: 100%; height: 200px; background-color: var(--bg-tertiary); border: 2px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 500;">
+                        <div class="diagram-container">
+                            <div class="img-placeholder">
                                 설계 이미지 준비중입니다.
                             </div>
                         </div>`;
@@ -189,19 +189,19 @@ function loadProjectDetail(data) {
                 if (diagramPath.trim().endsWith('.html')) {
                     const fullPath = resourcePrefix + diagramPath;
                     return `
-                        <div class="logic-flow-section" style="display: flex; justify-content: center; width: 100%; margin: 0.5rem 0; overflow: hidden;">
+                        <div class="diagram-container">
                             <iframe src="${fullPath}" 
-                                    style="width: 100%; max-width: 1200px; border: none; overflow: hidden; height: 0;" 
-                                    onload="const iframe = this; setTimeout(() => { iframe.style.height = (iframe.contentWindow.document.documentElement.scrollHeight + 10) + 'px'; }, 100);">
+                                    class="diagram-iframe" 
+                                    onload="this.style.height = (this.contentWindow.document.documentElement.scrollHeight + 20) + 'px';">
                             </iframe>
                         </div>`;
                 }
 
                 if (diagramPath.trim().startsWith('<')) {
-                    return `<div class="logic-flow-section html-diagram" style="display: flex; justify-content: center; margin: 2rem 0;">${diagramPath}</div>`;
+                    return `<div class="html-diagram-wrapper">${diagramPath}</div>`;
                 }
 
-                return `<div class="logic-flow-section" style="text-align: center; margin: 2rem 0;"><img src="${diagramPath}" alt="Flow Diagram" style="max-width:100%; border-radius:8px; border:1px solid var(--border-color); display: inline-block;"></div>`;
+                return `<div class="diagram-container"><img src="${diagramPath}" alt="Flow Diagram" class="logic-flow-image"></div>`;
             };
 
             let detailsBodyHtml = '';
@@ -244,8 +244,8 @@ function loadProjectDetail(data) {
                     <div class="detail-footer">
                         <hr class="section-divider">
                         <div class="reference-section">
-                            <h3 style="margin-bottom: 0.5rem; color: var(--text-primary);">Reference</h3>
-                            <p style="color: var(--text-secondary);">${detailProject.reference}</p>
+                            <h3>Reference</h3>
+                            <p class="reference-p">${detailProject.reference}</p>
                         </div>
                     </div>
                 ` : ''}
@@ -311,10 +311,10 @@ function loadContact(data) {
 function renderSections(sections) {
     if (!sections || !Array.isArray(sections)) return '';
     return sections.map(sec => `
-        <div style="margin-bottom:1.5rem;">
-            <h4 style="color:var(--accent-primary); margin-bottom:0.5rem;">${sec.title}</h4>
+        <div class="tech-section-item">
+            <h4 class="tech-section-title">${sec.title}</h4>
             ${sec.body ? `<p>${sec.body}</p>` : ''}
-            ${sec.list ? `<ul class="ref-list" style="margin-left:5px; margin-top:10px;">${sec.list.map(item => `<li>${item}</li>`).join('')}</ul>` : ''}
+            ${sec.list ? `<ul class="ref-list tech-section-list">${sec.list.map(item => `<li>${item}</li>`).join('')}</ul>` : ''}
         </div>
     `).join('');
 }
