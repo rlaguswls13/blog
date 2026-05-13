@@ -186,31 +186,25 @@ function loadProjectDetail(data) {
                         </div>`;
                 }
 
-                // Check if it's an external HTML file (isolated rendering via iframe)
                 if (diagramPath.trim().endsWith('.html')) {
                     const fullPath = resourcePrefix + diagramPath;
                     return `
-                        <div class="logic-flow-section" style="display: flex; justify-content: center; width: 100%;">
+                        <div class="logic-flow-section" style="display: flex; justify-content: center; width: 100%; margin: 2rem 0;">
                             <iframe src="${fullPath}" 
-                                    style="width: 100%; max-width: 1200px; border: none; overflow: hidden;" 
-                                    onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px';">
+                                    style="width: 100%; max-width: 1200px; border: none; overflow: hidden; min-height: 500px;" 
+                                    onload="try { this.style.height = this.contentWindow.document.body.scrollHeight + 'px'; } catch(e) { console.warn('Iframe resize failed:', e); }">
                             </iframe>
                         </div>`;
                 }
 
-                // Check if the diagramPath is actually HTML content
                 if (diagramPath.trim().startsWith('<')) {
-                    return `<div class="logic-flow-section html-diagram" style="display: flex; justify-content: center;">${diagramPath}</div>`;
+                    return `<div class="logic-flow-section html-diagram" style="display: flex; justify-content: center; margin: 2rem 0;">${diagramPath}</div>`;
                 }
 
-                // Otherwise treat as image path
-                return `<div class="logic-flow-section" style="text-align: center;"><img src="${diagramPath}" alt="Flow Diagram" style="max-width:100%; border-radius:8px; border:1px solid var(--border-color); display: inline-block;"></div>`;
+                return `<div class="logic-flow-section" style="text-align: center; margin: 2rem 0;"><img src="${diagramPath}" alt="Flow Diagram" style="max-width:100%; border-radius:8px; border:1px solid var(--border-color); display: inline-block;"></div>`;
             };
 
             let detailsBodyHtml = '';
-            // Post-rendering step removed as iframe handles its own loading
-
-            // (The rest of the script follows)
             if (hasTabs) {
                 let tabsHeaderHtml = '<div class="tabs-container"><div class="tabs-header">';
                 let tabsContentHtml = '<div class="tabs-body">';
@@ -218,14 +212,14 @@ function loadProjectDetail(data) {
                 detailProject.tabs.forEach((tab, index) => {
                     const activeClass = index === 0 ? 'active' : '';
                     tabsHeaderHtml += `<button class="tab-btn ${activeClass}" data-tab="tab-${index}">${tab.title}</button>`;
-
+                    
                     const contentBody = tab.sections ? renderSections(tab.sections) : (tab.content || '');
                     const flowHtml = getFlowHtml(tab.flow_diagram);
-
+                    
                     tabsContentHtml += `
                         <div class="tab-content ${activeClass}" id="tab-${index}">
                             ${flowHtml}
-                            ${flowHtml ? '<hr class="section-divider">' : ''}
+                            <hr class="section-divider">
                             <div class="detail-content">${contentBody}</div>
                             ${tab.reference ? `<div class="reference-section">${tab.reference}</div>` : ''}
                         </div>`;
@@ -234,7 +228,7 @@ function loadProjectDetail(data) {
             } else {
                 const contentBody = detailProject.sections ? renderSections(detailProject.sections) : (detailProject.content || '');
                 const flowHtml = getFlowHtml(detailProject.flow_diagram);
-                detailsBodyHtml = flowHtml + '<hr class="section-divider">' + `<div class="detail-content">${contentBody}</div>` + (detailProject.reference ? `<hr class="section-divider"><div class="reference-section">${detailProject.reference}</div>` : '');
+                detailsBodyHtml = flowHtml + '<hr class="section-divider">' + `<div class="detail-content">${contentBody}</div>` + (detailProject.reference ? '<hr class="section-divider">' + `<div class="reference-section">${detailProject.reference}</div>` : '');
             }
 
             document.getElementById('project-detail').innerHTML = `
@@ -270,7 +264,6 @@ function loadProjectDetail(data) {
                         btn.classList.add('active');
                         document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
 
-                        // Tab switching logic (duration update)
                         const tabData = detailProject.tabs[index];
                         const tabPeriod = (tabData && tabData.period) || (basicProject.periods && basicProject.periods[index]);
                         if (tabPeriod && basicProject.periods.length > 1) {
