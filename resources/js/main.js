@@ -177,9 +177,7 @@ function loadProjectDetail(data) {
 
             // Helper for Flow Diagram HTML with placeholder
             const getFlowHtml = (diagramPath) => {
-                if (diagramPath) {
-                    return `<div class="logic-flow-section"><img src="${diagramPath}" alt="Flow Diagram" style="max-width:100%; border-radius:8px; border:1px solid var(--border-color);"></div>`;
-                } else {
+                if (!diagramPath) {
                     return `
                         <div class="logic-flow-section">
                             <div class="img-placeholder" style="width: 100%; height: 200px; background-color: var(--bg-tertiary); border: 2px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 500;">
@@ -187,9 +185,48 @@ function loadProjectDetail(data) {
                             </div>
                         </div>`;
                 }
+
+                // Check if it's an external HTML file
+                if (diagramPath.trim().endsWith('.html')) {
+                    return `<div class="logic-flow-section html-diagram-loader" data-src="${diagramPath}">
+                                <div class="text-center p-8 text-slate-400">다이어그램 로딩 중...</div>
+                            </div>`;
+                }
+
+                // Check if the diagramPath is actually HTML content
+                if (diagramPath.trim().startsWith('<')) {
+                    return `<div class="logic-flow-section html-diagram">${diagramPath}</div>`;
+                }
+
+                // Otherwise treat as image path
+                return `<div class="logic-flow-section"><img src="${diagramPath}" alt="Flow Diagram" style="max-width:100%; border-radius:8px; border:1px solid var(--border-color);"></div>`;
             };
 
             let detailsBodyHtml = '';
+            // ... (previous tabs logic) ...
+            // (Note: The multi-replace tool will handle the surrounding lines)
+            
+            // Post-rendering: Load external HTML diagrams
+            const loadExternalDiagrams = () => {
+                const loaders = document.querySelectorAll('.html-diagram-loader');
+                loaders.forEach(loader => {
+                    const src = loader.getAttribute('data-src');
+                    if (src) {
+                        fetch(resourcePrefix + src)
+                            .then(response => response.text())
+                            .then(html => {
+                                loader.innerHTML = html;
+                                // If the loaded content has classes that need Tailwind, it will work because Tailwind CDN is active
+                            })
+                            .catch(err => {
+                                console.error('Error loading diagram:', err);
+                                loader.innerHTML = '<div class="text-red-500 p-4">다이어그램을 불러오지 못했습니다.</div>';
+                            });
+                    }
+                });
+            };
+
+            // (The rest of the script follows)
             if (hasTabs) {
                 let tabsHeaderHtml = '<div class="tabs-container"><div class="tabs-header">';
                 let tabsContentHtml = '<div class="tabs-body">';
@@ -257,9 +294,15 @@ function loadProjectDetail(data) {
                         } else {
                             periodDisplay.innerHTML = originalPeriodText;
                         }
+
+                        // Load diagrams for the selected tab
+                        loadExternalDiagrams();
                     });
                 });
             }
+
+            // Load external diagrams after initial render
+            loadExternalDiagrams();
 
             if (window.mermaid) {
                 setTimeout(() => { try { window.mermaid.run({ nodes: document.querySelectorAll('.mermaid') }); } catch (e) { } }, 100);

@@ -99,7 +99,7 @@
                     }
                 ],
                 "reference": "",
-                "flow_diagram": ""
+                "flow_diagram": "resources/diagrams/rbac-flow.html"
             }
         ]
     },
