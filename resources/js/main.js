@@ -186,45 +186,29 @@ function loadProjectDetail(data) {
                         </div>`;
                 }
 
-                // Check if it's an external HTML file
+                // Check if it's an external HTML file (isolated rendering via iframe)
                 if (diagramPath.trim().endsWith('.html')) {
-                    return `<div class="logic-flow-section html-diagram-loader" data-src="${diagramPath}">
-                                <div class="text-center p-8 text-slate-400">다이어그램 로딩 중...</div>
-                            </div>`;
+                    const fullPath = resourcePrefix + diagramPath;
+                    return `
+                        <div class="logic-flow-section" style="display: flex; justify-content: center; width: 100%;">
+                            <iframe src="${fullPath}" 
+                                    style="width: 100%; max-width: 1200px; border: none; overflow: hidden;" 
+                                    onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px';">
+                            </iframe>
+                        </div>`;
                 }
 
                 // Check if the diagramPath is actually HTML content
                 if (diagramPath.trim().startsWith('<')) {
-                    return `<div class="logic-flow-section html-diagram">${diagramPath}</div>`;
+                    return `<div class="logic-flow-section html-diagram" style="display: flex; justify-content: center;">${diagramPath}</div>`;
                 }
 
                 // Otherwise treat as image path
-                return `<div class="logic-flow-section"><img src="${diagramPath}" alt="Flow Diagram" style="max-width:100%; border-radius:8px; border:1px solid var(--border-color);"></div>`;
+                return `<div class="logic-flow-section" style="text-align: center;"><img src="${diagramPath}" alt="Flow Diagram" style="max-width:100%; border-radius:8px; border:1px solid var(--border-color); display: inline-block;"></div>`;
             };
 
             let detailsBodyHtml = '';
-            // ... (previous tabs logic) ...
-            // (Note: The multi-replace tool will handle the surrounding lines)
-            
-            // Post-rendering: Load external HTML diagrams
-            const loadExternalDiagrams = () => {
-                const loaders = document.querySelectorAll('.html-diagram-loader');
-                loaders.forEach(loader => {
-                    const src = loader.getAttribute('data-src');
-                    if (src) {
-                        fetch(resourcePrefix + src)
-                            .then(response => response.text())
-                            .then(html => {
-                                loader.innerHTML = html;
-                                // If the loaded content has classes that need Tailwind, it will work because Tailwind CDN is active
-                            })
-                            .catch(err => {
-                                console.error('Error loading diagram:', err);
-                                loader.innerHTML = '<div class="text-red-500 p-4">다이어그램을 불러오지 못했습니다.</div>';
-                            });
-                    }
-                });
-            };
+            // Post-rendering step removed as iframe handles its own loading
 
             // (The rest of the script follows)
             if (hasTabs) {
@@ -288,21 +272,18 @@ function loadProjectDetail(data) {
 
                         const tabData = detailProject.tabs[index];
                         const tabPeriod = (tabData && tabData.period) || (basicProject.periods && basicProject.periods[index]);
+                        // Tab switching logic (duration update)
+                        const tabData = detailProject.tabs[index];
+                        const tabPeriod = (tabData && tabData.period) || (basicProject.periods && basicProject.periods[index]);
                         if (tabPeriod && basicProject.periods.length > 1) {
                             const duration = calculateTotalPeriod(tabPeriod);
                             periodDisplay.innerHTML = `${tabPeriod}<br><small>${duration}</small>`;
                         } else {
                             periodDisplay.innerHTML = originalPeriodText;
                         }
-
-                        // Load diagrams for the selected tab
-                        loadExternalDiagrams();
                     });
                 });
             }
-
-            // Load external diagrams after initial render
-            loadExternalDiagrams();
 
             if (window.mermaid) {
                 setTimeout(() => { try { window.mermaid.run({ nodes: document.querySelectorAll('.mermaid') }); } catch (e) { } }, 100);
