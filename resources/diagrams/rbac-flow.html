@@ -145,5 +145,15 @@
             </div>
         </div>
     </div>
+    <script>
+        function sendHeight() {
+            const height = document.documentElement.scrollHeight;
+            window.parent.postMessage({ type: 'resize-iframe', height: height }, '*');
+        }
+        window.addEventListener('load', sendHeight);
+        window.addEventListener('resize', sendHeight);
+        // 즉시 한 번 실행
+        setTimeout(sendHeight, 100);
+    </script>
 </body>
 </html>

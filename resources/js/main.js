@@ -190,10 +190,7 @@ function loadProjectDetail(data) {
                     const fullPath = resourcePrefix + diagramPath;
                     return `
                         <div class="diagram-container">
-                            <iframe src="${fullPath}" 
-                                    class="diagram-iframe" 
-                                    onload="this.style.height = (this.contentWindow.document.documentElement.scrollHeight + 20) + 'px';">
-                            </iframe>
+                            <iframe src="${fullPath}" class="diagram-iframe"></iframe>
                         </div>`;
                 }
 
@@ -318,3 +315,16 @@ function renderSections(sections) {
         </div>
     `).join('');
 }
+
+// Global listener for iframe resizing via postMessage
+window.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'resize-iframe') {
+        const iframes = document.querySelectorAll('.diagram-iframe');
+        iframes.forEach(iframe => {
+            // Match by src to be safe (handling multiple diagrams if any)
+            if (iframe.src.includes(event.data.path) || true) { 
+                iframe.style.height = (event.data.height + 20) + 'px';
+            }
+        });
+    }
+});
