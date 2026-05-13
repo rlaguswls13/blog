@@ -77,10 +77,11 @@ nav {
 }
 
 .nav-brand {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--accent-primary);
-    letter-spacing: -0.5px;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -1px;
+    text-transform: uppercase;
 }
 
 .nav-links {
@@ -336,12 +337,13 @@ ul {
 
 /* Recent Projects Summary Box */
 .recent-projects-box {
-    margin-top: 40px;
     padding: 25px;
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 20px;
     box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
 }
 
 .recent-projects-box h3 {
@@ -368,6 +370,11 @@ ul {
 .mini-title {
     font-weight: 600;
     font-size: 0.95rem;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 15px;
 }
 
 .mini-title a {
@@ -383,4 +390,7 @@ ul {
     font-size: 0.85rem;
     color: var(--text-secondary);
     font-family: 'Inter', monospace;
+    flex-shrink: 0;
+    min-width: 65px;
+    text-align: right;
 }

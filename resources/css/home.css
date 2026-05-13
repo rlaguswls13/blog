@@ -1,40 +1,42 @@
 /* home.css - Styles for About/Profile page */
 .profile-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-    /* Reduced gap for smaller screens */
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 320px 1fr 400px;
+    gap: 30px;
+    align-items: stretch;
+    margin-bottom: 60px;
+}
+
+@media (max-width: 1200px) {
+    .profile-section {
+        grid-template-columns: 300px 1fr;
+    }
+    .recent-projects-box {
+        grid-column: span 2;
+    }
 }
 
 @media (max-width: 768px) {
     .profile-section {
-        flex-direction: column-reverse;
-        /* Put content above image on mobile? Or standard stack */
+        display: flex;
+        flex-direction: column;
         gap: 30px;
     }
 
-    .profile-card {
+    .profile-card, .bio-content, .recent-projects-box {
         width: 100%;
-        /* Full width */
-        min-width: auto;
-    }
-
-    .bio-content {
-        width: 100%;
-        min-width: auto;
     }
 }
 
 .profile-card {
-    flex: 1;
-    min-width: 280px;
-    text-align: center;
     background-color: var(--bg-secondary);
     padding: 40px 30px;
     border-radius: 20px;
     box-shadow: var(--card-shadow);
-    transition: transform var(--transition-speed);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .profile-card:hover {

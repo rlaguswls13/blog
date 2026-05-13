@@ -59,13 +59,20 @@ export function loadProfile(data, prefix) {
     // Recent Projects Summary (Top 3) in Profile
     const profileSection = document.getElementById('profile-section');
     if (profileSection) {
-        const sorted = sortProjects(data.projects);
-        const recentProjectsHtml = sorted.slice(0, 3).map(proj => `
+    const sorted = sortProjects(data.projects);
+    const recentProjectsHtml = sorted.slice(0, 5).map(proj => {
+        // 제목 25자 이상이면 줄임표 처리
+        const truncatedTitle = proj.title.length > 25 ? proj.title.substring(0, 25) + '...' : proj.title;
+        // 날짜는 최초 시작 날짜만 표기 (예: 2025.08 - 2026.02 -> 2025.08)
+        const startDate = proj.periods[0].split(' - ')[0];
+        
+        return `
             <div class="recent-project-mini">
-                <span class="mini-title"><a href="${(prefix || '') + (prefix ? 'project/' : 'view/project/')}${proj.id}.html">${proj.title}</a></span>
-                <span class="mini-period">${proj.periods[proj.periods.length - 1].split(' - ')[0]}</span>
+                <span class="mini-title"><a href="${(prefix || '') + (prefix ? 'project/' : 'view/project/')}${proj.id}.html" title="${proj.title}">${truncatedTitle}</a></span>
+                <span class="mini-period">${startDate}</span>
             </div>
-        `).join('');
+        `;
+    }).join('');
         
         const recentBox = document.createElement('div');
         recentBox.className = 'recent-projects-box';
