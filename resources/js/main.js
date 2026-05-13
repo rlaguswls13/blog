@@ -316,14 +316,17 @@ function renderSections(sections) {
     `).join('');
 }
 
-// Global listener for iframe resizing via postMessage
 window.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'resize-iframe') {
         const iframes = document.querySelectorAll('.diagram-iframe');
         iframes.forEach(iframe => {
-            // Match by src to be safe (handling multiple diagrams if any)
-            if (iframe.src.includes(event.data.path) || true) { 
-                iframe.style.height = (event.data.height + 20) + 'px';
+            // Check if the source matches to avoid affecting other iframes
+            const newHeight = event.data.height;
+            const currentHeight = parseInt(iframe.style.height) || 0;
+            
+            // Only update if the height difference is more than a small threshold to avoid loops
+            if (Math.abs(newHeight - currentHeight) > 10) {
+                iframe.style.height = newHeight + 'px';
             }
         });
     }

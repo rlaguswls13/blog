@@ -147,12 +147,19 @@
     </div>
     <script>
         function sendHeight() {
-            const height = document.documentElement.scrollHeight;
-            window.parent.postMessage({ type: 'resize-iframe', height: height }, '*');
+            const area = document.getElementById('capture-area');
+            if (area) {
+                // 패딩 40px * 2 = 80px을 더해 정밀 측정
+                const height = area.offsetHeight + 80;
+                window.parent.postMessage({ type: 'resize-iframe', height: height }, '*');
+            }
         }
         window.addEventListener('load', sendHeight);
-        window.addEventListener('resize', sendHeight);
-        // 즉시 한 번 실행
+        // 부모의 리사이즈에 의한 루프 방지를 위해 resize 이벤트 대신 필요할 때만 호출하거나 디바운싱 고려
+        window.addEventListener('resize', () => {
+            clearTimeout(window.resizeTimer);
+            window.resizeTimer = setTimeout(sendHeight, 200);
+        });
         setTimeout(sendHeight, 100);
     </script>
 </body>
