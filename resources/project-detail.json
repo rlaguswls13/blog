@@ -28,7 +28,7 @@
                     }
                 ],
                 "reference": "",
-                "flow_diagram": ""
+                "flow_diagram": "resources/diagrams/email-large-scale.html"
             },
             {
                 "title": "성능 최적화 기반의 하이브리드 환경 및 운영 자동화 체계 구축",
@@ -55,7 +55,7 @@
                     }
                 ],
                 "reference": "",
-                "flow_diagram": ""
+                "flow_diagram": "resources/diagrams/email-hybrid.html"
             }
         ]
     },
@@ -80,7 +80,7 @@
                     }
                 ],
                 "reference": "",
-                "flow_diagram": ""
+                "flow_diagram": "resources/diagrams/sso-filter.html"
             },
             {
                 "title": "메뉴 접근 권한(RBAC) 인터페이스 및 데이터 동기화 적용",
@@ -124,7 +124,7 @@
                     }
                 ],
                 "reference": "",
-                "flow_diagram": ""
+                "flow_diagram": "resources/diagrams/container-support.html"
             },
             {
                 "title": "대규모 메시징 시스템 유지보수",
@@ -148,7 +148,7 @@
                     }
                 ],
                 "reference": "",
-                "flow_diagram": ""
+                "flow_diagram": "resources/diagrams/cs-pipeline.html"
             }
         ]
     },
@@ -175,7 +175,7 @@
             }
         ],
         "reference": "",
-        "flow_diagram": ""
+        "flow_diagram": "resources/diagrams/integrated-portal.html"
     },
     {
         "id": "5",
@@ -201,7 +201,7 @@
             }
         ],
         "reference": "",
-        "flow_diagram": ""
+        "flow_diagram": "resources/diagrams/cloud-migration-flow.html"
     },
     {
         "id": "6",
@@ -224,7 +224,7 @@
                     }
                 ],
                 "reference": "",
-                "flow_diagram": ""
+                "flow_diagram": "resources/diagrams/devops-db-arch.html"
             },
             {
                 "title": "솔루션 배포/개발 파이프라인(DevOps) 체계 구축",
@@ -243,7 +243,7 @@
                     }
                 ],
                 "reference": "",
-                "flow_diagram": ""
+                "flow_diagram": "resources/diagrams/devops-pipeline.html"
             }
         ]
     }

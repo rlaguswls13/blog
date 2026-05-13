@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: transparent;
+            margin: 0;
+            padding: 40px 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .flow-card { transition: transform 0.2s ease; }
+        .flow-card:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div id="capture-area" class="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+        <!-- Header -->
+        <div class="bg-slate-900 p-8 text-center">
+            <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">Okta API 기반 커스텀 SSO/SLO 필터 구조</h1>
+            <p class="text-slate-400 font-medium">플러그인 충돌 극복 및 인터페이스 추상화를 통한 확장성 확보</p>
+        </div>
+
+        <div class="p-8 md:p-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 relative">
+                
+                <!-- 1. Infrastructure Constraint -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2 text-rose-600 font-bold text-lg mb-4">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <span>인프라 제약 및 우회 로직</span>
+                    </div>
+                    
+                    <!-- Legacy Issue -->
+                    <div class="flow-card p-5 bg-rose-50 border border-rose-200 rounded-2xl flex items-center gap-4">
+                        <div class="w-12 h-12 bg-rose-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                            <i class="fas fa-bug text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-rose-900">Legacy Plugin Conflict</h3>
+                            <p class="text-xs text-rose-700 leading-relaxed">기존 모듈과 최신 Okta 플러그인 간 JDK 충돌 발생</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Custom HTTP -->
+                    <div class="flow-card p-5 bg-gradient-to-r from-blue-600 to-sky-500 text-white rounded-2xl flex items-center gap-4 shadow-md">
+                        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-network-wired text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white">Custom HTTP API</h3>
+                            <p class="text-xs text-blue-100">라이브러리 의존성 제거 및 순수 HTTP 통신 구현</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- User Request -->
+                    <div class="flow-card p-5 bg-slate-800 text-white rounded-2xl flex items-center gap-4 shadow-xl">
+                        <div class="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-user-shield text-xl text-sky-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">SSO Authentication Request</h3>
+                            <p class="text-xs text-slate-400 italic font-mono">클라이언트 로그인 및 토큰 발급 요청</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Application Architecture -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2 text-indigo-600 font-bold text-lg mb-4">
+                        <i class="fas fa-layer-group"></i>
+                        <span>유연한 애플리케이션 아키텍처</span>
+                    </div>
+
+                    <!-- Custom Pre-Filter -->
+                    <div class="p-5 border-2 border-dashed border-indigo-200 rounded-2xl flex items-center gap-4 bg-indigo-50/50">
+                        <div class="w-12 h-12 bg-white border border-indigo-200 rounded-xl flex items-center justify-center text-indigo-500">
+                            <i class="fas fa-filter text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-indigo-900">Custom Pre-Filter</h3>
+                            <p class="text-xs text-indigo-700 font-medium">Spring Security 체인 진입 직전 인증 점검</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Abstraction Core -->
+                    <div class="relative p-6 bg-slate-50 border-2 border-slate-300 rounded-3xl shadow-sm">
+                        <div class="absolute -top-3 left-6 bg-slate-600 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">Abstraction Layer</div>
+                        <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">Service Interface</h3>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-sky-200 hover:border-sky-400 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-plug text-sky-500"></i>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-700">Okta Auth Impl</p>
+                                        <p class="text-[10px] text-slate-400">현재 통신 로직 구현체</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-black text-sky-600 bg-sky-100 px-2 py-1 rounded">ACTIVE</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-dashed border-slate-300">
+                                <div class="flex items-center gap-3 opacity-50">
+                                    <i class="fas fa-plus text-slate-400"></i>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-500">Other Vendor Impl</p>
+                                        <p class="text-[10px] text-slate-400">신규 SSO 솔루션 즉각 대응 가능</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-black text-slate-400 bg-slate-100 px-2 py-1 rounded">READY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Spring Security -->
+                    <div class="p-5 bg-indigo-600 border border-indigo-700 rounded-2xl flex items-center justify-center shadow-lg">
+                        <p class="text-sm font-bold text-white flex items-center gap-3 text-center">
+                            <i class="fas fa-shield-halved text-indigo-200"></i>
+                            Spring Security Filter Chain
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Features -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-rose-50 rounded-2xl border border-rose-100">
+                    <h4 class="text-rose-700 font-bold mb-1 text-sm uppercase">문제 해결 (Problem Solving)</h4>
+                    <p class="text-xs text-rose-900 leading-relaxed italic">레거시 환경의 제약을 하드코딩 없이 유연한 소프트웨어 아키텍처로 극복</p>
+                </div>
+                <div class="p-6 bg-slate-100 rounded-2xl border border-slate-200">
+                    <h4 class="text-slate-700 font-bold mb-1 text-sm uppercase">확장성 (Scalability)</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed italic">인터페이스 추상화 설계로 코어 변경 없이 새로운 벤더사 SSO 연동 준비 완료</p>
+                </div>
+                <div class="p-6 bg-indigo-50 rounded-2xl border border-indigo-100">
+                    <h4 class="text-indigo-700 font-bold mb-1 text-sm uppercase">보안성 (Security)</h4>
+                    <p class="text-xs text-indigo-900 leading-relaxed italic">Spring Security 진입 전 선행 제어를 통한 단단한 인증 체계 확립</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/diagram-common.js"></script>
+</body>
+</html>

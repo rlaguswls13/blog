@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: transparent;
+            margin: 0;
+            padding: 40px 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .flow-card { transition: transform 0.2s ease; }
+        .flow-card:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div id="capture-area" class="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+        <!-- Header -->
+        <div class="bg-slate-900 p-8 text-center">
+            <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">사내 그룹웨어 및 ERP 통합지원 포털 구축</h1>
+            <p class="text-slate-400 font-medium">Java 15 / React 기반 모던 아키텍처 및 듀얼 모듈 융합(Merger) 설계</p>
+        </div>
+
+        <div class="p-8 md:p-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 relative">
+                
+                <!-- 1. Modernization Flow -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2 text-blue-600 font-bold text-lg mb-4">
+                        <i class="fas fa-arrow-up-right-dots"></i>
+                        <span>시스템 체질 개선 및 고도화</span>
+                    </div>
+                    
+                    <!-- Legacy -->
+                    <div class="flow-card p-5 bg-slate-100 border border-slate-300 rounded-2xl flex items-center gap-4 opacity-80">
+                        <div class="w-12 h-12 bg-slate-400 rounded-xl flex items-center justify-center text-white shadow-sm">
+                            <i class="fas fa-building-columns text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-700">Legacy Groupware</h3>
+                            <p class="text-xs text-slate-500 leading-relaxed">노후화된 프레임워크 및 기능 확장 한계 도달</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-blue-300 text-2xl">↓</div>
+
+                    <!-- Tech Stack Upgrade -->
+                    <div class="flow-card p-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center gap-4 shadow-md">
+                        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                            <i class="fab fa-react text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white">Modern Tech Stack</h3>
+                            <p class="text-xs text-blue-100">Java 15 백엔드 및 React 프론트엔드 전면 개편</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-blue-300 text-2xl">↓</div>
+
+                    <!-- Agile Process -->
+                    <div class="flow-card p-5 bg-slate-800 text-white rounded-2xl flex items-center gap-4 shadow-xl">
+                        <div class="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-rotate text-xl text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Agile Development</h3>
+                            <p class="text-xs text-slate-400 italic font-mono">HR 및 글로벌 마케팅 부서 밀착 협업 파이프라인</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Dual Module Integration -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2 text-indigo-600 font-bold text-lg mb-4">
+                        <i class="fas fa-object-group"></i>
+                        <span>듀얼 모듈 아키텍처 및 융합</span>
+                    </div>
+
+                    <!-- Dual Module Container -->
+                    <div class="relative p-6 bg-indigo-50 border-2 border-indigo-400 rounded-3xl shadow-sm">
+                        <div class="absolute -top-3 left-6 bg-indigo-500 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">Dual Architecture</div>
+                        <h3 class="font-bold text-indigo-900 mb-4 flex items-center gap-2">Business Domain Modules</h3>
+                        
+                        <div class="space-y-3">
+                            <!-- HR Domain -->
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-indigo-200 hover:border-indigo-400 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-user-tie text-indigo-500"></i>
+                                    <div>
+                                        <p class="text-xs font-bold text-indigo-800">1차: HR Domain 고도화</p>
+                                        <p class="text-[10px] text-slate-400">자동 휴무, 결재 승인 파이프라인 및 통계 추출</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ERP Domain -->
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-amber-200 hover:border-amber-400 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-coins text-amber-500"></i>
+                                    <div>
+                                        <p class="text-xs font-bold text-amber-800">2차: ERP Finance 모듈</p>
+                                        <p class="text-[10px] text-slate-400">자사 특화 DB 스키마 및 세금 자동 연산 알고리즘</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Merger & Governance -->
+                    <div class="p-5 border-2 border-dashed border-emerald-200 rounded-2xl flex items-center gap-4 bg-emerald-50/50">
+                        <div class="w-12 h-12 bg-white border border-emerald-200 rounded-xl flex items-center justify-center text-emerald-500">
+                            <i class="fas fa-shield-halved text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-emerald-900">3차: System Merger & Security</h3>
+                            <p class="text-xs text-emerald-700 font-medium">임시 분리 배포 후 무중단 통합 및 온프레미스 격리</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Result -->
+                    <div class="p-5 bg-indigo-600 border border-indigo-700 rounded-2xl flex items-center justify-center shadow-lg">
+                        <p class="text-sm font-bold text-white flex items-center gap-3 text-center">
+                            <i class="fas fa-check-circle text-indigo-200"></i>
+                            거대 사내 통합지원 포털 론칭 완료
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Features -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                    <h4 class="text-emerald-700 font-bold mb-1 text-sm uppercase">비용 절감 (Cost Reduction)</h4>
+                    <p class="text-xs text-emerald-900 leading-relaxed italic">외부 3rd Party 솔루션 의존성을 탈피하여 대규모 라이선스 비용 획기적 절감</p>
+                </div>
+                <div class="p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                    <h4 class="text-blue-700 font-bold mb-1 text-sm uppercase">맞춤화 (Customization)</h4>
+                    <p class="text-xs text-blue-900 leading-relaxed italic">글로벌 마케팅 및 HR 부서의 특수한 프로세스를 100% 반영한 파이프라인 탑재</p>
+                </div>
+                <div class="p-6 bg-slate-100 rounded-2xl border border-slate-200">
+                    <h4 class="text-slate-700 font-bold mb-1 text-sm uppercase">보안 거버넌스 (Security)</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed italic">대외비 성격의 자원 및 사업 데이터를 외부 연동 없이 온프레미스 내 자체 격리 통제</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/diagram-common.js"></script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: transparent;
+            margin: 0;
+            padding: 40px 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .flow-card { transition: transform 0.2s ease; }
+        .flow-card:hover { transform: translateY(-2px); }
+        .sync-line { border-top: 2px dashed #94a3b8; position: relative; }
+        .sync-label { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: white; padding: 0 8px; font-size: 11px; font-weight: 700; color: #64748b; white-space: nowrap; }
+    </style>
+</head>
+<body>
+    <div id="capture-area" class="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+        <!-- Header -->
+        <div class="bg-slate-900 p-8 text-center">
+            <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">대규모 이메일 커스텀 발송 아키텍처</h1>
+            <p class="text-slate-400 font-medium">대용량 청구서 파일 병목 해결 및 GC 메모리 최적화 체계</p>
+        </div>
+
+        <div class="p-8 md:p-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 relative">
+                
+                <!-- 1. Processing Flow -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2 text-indigo-600 font-bold text-lg mb-4">
+                        <i class="fas fa-network-wired"></i>
+                        <span>대용량 첨부파일 처리 프로세스</span>
+                    </div>
+                    
+                    <!-- Input Data -->
+                    <div class="flow-card p-5 bg-indigo-50 border border-indigo-200 rounded-2xl flex items-center gap-4">
+                        <div class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                            <i class="fas fa-file-invoice text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-indigo-900">Large-Scale Data Input</h3>
+                            <p class="text-xs text-indigo-700 leading-relaxed">대규모 결재 내역 및 대용량 청구서 첨부</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Custom Engine -->
+                    <div class="flow-card p-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl flex items-center gap-4 shadow-md">
+                        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-cogs text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white">Custom Dispatch Engine</h3>
+                            <p class="text-xs text-indigo-100">Java Segment Block 방식 특화 아키텍처</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Dispatch -->
+                    <div class="flow-card p-5 bg-slate-800 text-white rounded-2xl flex items-center gap-4 shadow-xl">
+                        <div class="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-paper-plane text-xl text-indigo-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">High-Availability Server</h3>
+                            <p class="text-xs text-slate-400 italic font-mono">STABLE_DISPATCH_QUEUE</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Memory & Stability Control -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2 text-rose-600 font-bold text-lg mb-4">
+                        <i class="fas fa-shield-heart"></i>
+                        <span>[Real-time] 시스템 과부하 방어 로직</span>
+                    </div>
+
+                    <!-- Memory Monitor -->
+                    <div class="p-5 border-2 border-dashed border-rose-200 rounded-2xl flex items-center gap-4 bg-rose-50/50">
+                        <div class="w-12 h-12 bg-white border border-rose-200 rounded-xl flex items-center justify-center text-rose-500">
+                            <i class="fas fa-chart-line text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-rose-900">Resource Monitoring</h3>
+                            <p class="text-xs text-rose-700 font-medium">실시간 메모리 사용량 추적 및 통제</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Optimization Core -->
+                    <div class="relative p-6 bg-amber-50 border-2 border-amber-400 rounded-3xl shadow-sm">
+                        <div class="absolute -top-3 left-6 bg-amber-500 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">Optimization Layer</div>
+                        <h3 class="font-bold text-amber-900 mb-4 flex items-center gap-2">Heap & GC Optimization</h3>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-amber-200 hover:border-amber-400 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-broom text-amber-500"></i>
+                                    <div>
+                                        <p class="text-xs font-bold text-amber-800">GC Policy Tuning</p>
+                                        <p class="text-[10px] text-slate-400">효율적 객체 소멸 및 자원 회수</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-black text-amber-600 bg-amber-100 px-2 py-1 rounded">APPLIED</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-amber-200 hover:border-amber-400 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-memory text-amber-500"></i>
+                                    <div>
+                                        <p class="text-xs font-bold text-amber-800">Heap Allocation Refactoring</p>
+                                        <p class="text-[10px] text-slate-400">Global/Static 변수 제거 및 참조 개선</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-black text-amber-600 bg-amber-100 px-2 py-1 rounded">HOTFIX</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Result -->
+                    <div class="p-5 bg-slate-100 border border-slate-200 rounded-2xl flex items-center justify-center">
+                        <p class="text-sm font-bold text-slate-500 flex items-center gap-3 italic text-center">
+                            <i class="fas fa-server text-emerald-500"></i>
+                            Shutdown 방지 및 100% 무중단 발송
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Features -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-indigo-50 rounded-2xl border border-indigo-100">
+                    <h4 class="text-indigo-700 font-bold mb-1 text-sm uppercase">가용성 (Availability)</h4>
+                    <p class="text-xs text-indigo-900 leading-relaxed italic">특화 커스텀 설계로 대량 첨부 발송 시 안정적인 퍼포먼스 유지</p>
+                </div>
+                <div class="p-6 bg-amber-50 rounded-2xl border border-amber-100">
+                    <h4 class="text-amber-700 font-bold mb-1 text-sm uppercase">자원 효율 (Efficiency)</h4>
+                    <p class="text-xs text-amber-900 leading-relaxed italic">GC 튜닝 및 힙 메모리 참조 개선을 통해 시스템 과부하 완벽 방어</p>
+                </div>
+                <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                    <h4 class="text-emerald-700 font-bold mb-1 text-sm uppercase">유지보수 (Maintainability)</h4>
+                    <p class="text-xs text-emerald-900 leading-relaxed italic">더미 데이터 생성 테스터 모듈 사전 연동으로 사전 검증 편의성 대폭 향상</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/diagram-common.js"></script>
+</body>
+</html>

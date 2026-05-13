@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: transparent;
+            margin: 0;
+            padding: 40px 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .flow-card { transition: transform 0.2s ease; }
+        .flow-card:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div id="capture-area" class="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+        <!-- Header -->
+        <div class="bg-slate-900 p-8 text-center">
+            <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">DevOps 배포/개발 자동화 파이프라인</h1>
+            <p class="text-slate-400 font-medium">모놀리식 분리 및 CI/CD 오케스트레이션 체계 구축</p>
+        </div>
+
+        <div class="p-8 md:p-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 relative">
+                
+                <!-- 1. CI & Refactoring -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2 text-rose-600 font-bold text-lg mb-4">
+                        <i class="fas fa-code-branch"></i>
+                        <span>지속적 통합 (Continuous Integration)</span>
+                    </div>
+                    
+                    <!-- Source Refactoring -->
+                    <div class="flow-card p-5 bg-slate-50 border border-slate-200 rounded-2xl flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                            <i class="fas fa-boxes-stacked text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800">Monolithic Refactoring</h3>
+                            <p class="text-xs text-slate-500 leading-relaxed">도메인/인프라/화면 모듈 분리 및 IaC 관리</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Git & Test -->
+                    <div class="flow-card p-5 bg-rose-50 border border-rose-200 rounded-2xl flex items-center gap-4 shadow-sm">
+                        <div class="w-12 h-12 bg-rose-500 rounded-xl flex items-center justify-center text-white">
+                            <i class="fab fa-git-alt text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-rose-900">Git Branch & Unit Test</h3>
+                            <p class="text-xs text-rose-700">단위 테스트 의무화 및 브랜치 전략(Conflict 방어)</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Jenkins CI -->
+                    <div class="flow-card p-5 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-2xl flex items-center gap-4 shadow-md">
+                        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                            <i class="fab fa-jenkins text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white">Jenkins CI Pipeline</h3>
+                            <p class="text-xs text-rose-100">자동 회귀 테스트(Regression Test) 및 빌드</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. CD & Orchestration -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2 text-sky-600 font-bold text-lg mb-4">
+                        <i class="fas fa-rocket"></i>
+                        <span>지속적 배포 (Continuous Deployment)</span>
+                    </div>
+
+                    <!-- Docker Build -->
+                    <div class="p-5 border-2 border-dashed border-sky-200 rounded-2xl flex items-center gap-4 bg-sky-50/50">
+                        <div class="w-12 h-12 bg-white border border-sky-200 rounded-xl flex items-center justify-center text-sky-500">
+                            <i class="fab fa-docker text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sky-900">Docker Container Build</h3>
+                            <p class="text-xs text-sky-700 font-medium">테스트 완료된 코드를 이미지로 자동 패키징</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Harbor Registry -->
+                    <div class="relative p-6 bg-indigo-50 border-2 border-indigo-400 rounded-3xl shadow-sm">
+                        <div class="absolute -top-3 left-6 bg-indigo-500 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">Storage Layer</div>
+                        <h3 class="font-bold text-indigo-900 mb-4 flex items-center gap-2">Harbor Image Registry</h3>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-indigo-200 hover:border-indigo-400 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-box-archive text-indigo-500"></i>
+                                    <div>
+                                        <p class="text-[11px] font-bold text-indigo-800">Secure Image Push</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-black text-indigo-600 bg-indigo-100 px-2 py-1 rounded">STORED</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Deploy -->
+                    <div class="p-5 bg-emerald-600 border border-emerald-700 rounded-2xl flex items-center justify-center shadow-lg">
+                        <p class="text-sm font-bold text-white flex items-center gap-3 text-center">
+                            <i class="fas fa-check-double text-emerald-200"></i>
+                            배포 리드타임 1시간 → 10분 단축
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Features -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                    <h4 class="text-emerald-700 font-bold mb-1 text-sm uppercase">생산성 (Productivity)</h4>
+                    <p class="text-xs text-emerald-900 leading-relaxed italic">빌드/배포 시간을 획기적으로 줄여 팀의 핵심 로직 개발 할당량을 70% 이상으로 증가</p>
+                </div>
+                <div class="p-6 bg-rose-50 rounded-2xl border border-rose-100">
+                    <h4 class="text-rose-700 font-bold mb-1 text-sm uppercase">품질 관리 (Quality)</h4>
+                    <p class="text-xs text-rose-900 leading-relaxed italic">의무적인 단위 테스트 및 자동 회귀 테스트 파이프라인으로 수동 검증 비용 제로화</p>
+                </div>
+                <div class="p-6 bg-slate-100 rounded-2xl border border-slate-200">
+                    <h4 class="text-slate-700 font-bold mb-1 text-sm uppercase">안정성 (Stability)</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed italic">모듈 분리와 Git 브랜치 전략을 통해 기존의 악성 깃 충돌(Conflict) 현상 완벽 방어</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/diagram-common.js"></script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
         body {
             font-family: 'Pretendard', sans-serif;
             background-color: transparent;
@@ -17,14 +19,38 @@
             justify-content: center;
             align-items: flex-start;
         }
-        .flow-card { transition: transform 0.2s ease; }
-        .flow-card:hover { transform: translateY(-2px); }
-        .sync-line { border-top: 2px dashed #94a3b8; position: relative; }
-        .sync-label { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: white; padding: 0 8px; font-size: 11px; font-weight: 700; color: #64748b; white-space: nowrap; }
+
+        .flow-card {
+            transition: transform 0.2s ease;
+        }
+
+        .flow-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .sync-line {
+            border-top: 2px dashed #94a3b8;
+            position: relative;
+        }
+
+        .sync-label {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 0 8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            white-space: nowrap;
+        }
     </style>
 </head>
+
 <body>
-    <div id="capture-area" class="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+    <div id="capture-area"
+        class="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
         <!-- Header -->
         <div class="bg-slate-900 p-8 text-center">
             <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">메뉴 접근 권한(RBAC) 아키텍처 및 데이터 흐름</h1>
@@ -41,17 +67,19 @@
                     </div>
                     <!-- Okta -->
                     <div class="flow-card p-5 bg-blue-50 border border-blue-200 rounded-2xl flex items-center gap-4">
-                        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                        <div
+                            class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                             <i class="fas fa-id-card-clip text-xl"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-blue-900">External Auth (Okta)</h3>
+                            <h3 class="font-bold text-blue-900">External Auth (외부 API / DB roitines)</h3>
                             <p class="text-xs text-blue-700 leading-relaxed">인사 정보 및 권한 API Response 데이터 제공</p>
                         </div>
                     </div>
                     <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
                     <!-- Spring Batch -->
-                    <div class="flow-card p-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center gap-4 shadow-md">
+                    <div
+                        class="flow-card p-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center gap-4 shadow-md">
                         <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
                             <i class="fas fa-bolt text-xl"></i>
                         </div>
@@ -80,8 +108,10 @@
                         <span>[Real-time] 접근 제어 프로세스</span>
                     </div>
                     <!-- User Request -->
-                    <div class="p-5 border-2 border-dashed border-slate-200 rounded-2xl flex items-center gap-4 bg-slate-50/50">
-                        <div class="w-12 h-12 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-slate-400">
+                    <div
+                        class="p-5 border-2 border-dashed border-slate-200 rounded-2xl flex items-center gap-4 bg-slate-50/50">
+                        <div
+                            class="w-12 h-12 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-slate-400">
                             <i class="fas fa-user-gear text-xl"></i>
                         </div>
                         <div>
@@ -92,10 +122,13 @@
                     <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
                     <!-- Interceptor Core -->
                     <div class="relative p-6 bg-emerald-50 border-2 border-emerald-500 rounded-3xl shadow-sm">
-                        <div class="absolute -top-3 left-6 bg-emerald-500 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">Security Layer</div>
+                        <div
+                            class="absolute -top-3 left-6 bg-emerald-500 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
+                            Security Layer</div>
                         <h3 class="font-bold text-emerald-900 mb-4 flex items-center gap-2">Spring Interceptor</h3>
                         <div class="space-y-3">
-                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-emerald-200 hover:border-emerald-400 transition-colors">
+                            <div
+                                class="flex items-center justify-between p-3 bg-white rounded-xl border border-emerald-200 hover:border-emerald-400 transition-colors">
                                 <div class="flex items-center gap-3">
                                     <i class="fas fa-lock-open text-emerald-500"></i>
                                     <div>
@@ -103,9 +136,11 @@
                                         <p class="text-[10px] text-slate-400">antMatch Pattern Matching</p>
                                     </div>
                                 </div>
-                                <span class="text-[10px] font-black text-emerald-600 bg-emerald-100 px-2 py-1 rounded">BYPASS</span>
+                                <span
+                                    class="text-[10px] font-black text-emerald-600 bg-emerald-100 px-2 py-1 rounded">BYPASS</span>
                             </div>
-                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-red-200 hover:border-red-400 transition-colors">
+                            <div
+                                class="flex items-center justify-between p-3 bg-white rounded-xl border border-red-200 hover:border-red-400 transition-colors">
                                 <div class="flex items-center gap-3">
                                     <i class="fas fa-key text-red-500"></i>
                                     <div>
@@ -113,7 +148,8 @@
                                         <p class="text-[10px] text-slate-400">Privilege Verification</p>
                                     </div>
                                 </div>
-                                <span class="text-[10px] font-black text-red-600 bg-red-100 px-2 py-1 rounded">CHECK DB</span>
+                                <span class="text-[10px] font-black text-red-600 bg-red-100 px-2 py-1 rounded">CHECK
+                                    DB</span>
                             </div>
                         </div>
                     </div>
@@ -136,31 +172,18 @@
                 </div>
                 <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
                     <h4 class="text-emerald-700 font-bold mb-1 text-sm uppercase">무결성 (Integrity)</h4>
-                    <p class="text-xs text-emerald-900 leading-relaxed italic">Interceptor 단계의 즉각적인 제어로 레거시 취약점 근본적 차단</p>
+                    <p class="text-xs text-emerald-900 leading-relaxed italic">Interceptor 단계의 즉각적인 제어로 레거시 취약점 근본적 차단
+                    </p>
                 </div>
                 <div class="p-6 bg-amber-50 rounded-2xl border border-amber-100">
                     <h4 class="text-amber-700 font-bold mb-1 text-sm uppercase">효율성 (Efficiency)</h4>
-                    <p class="text-xs text-amber-900 leading-relaxed italic">antMatch 패턴을 이용한 방어적 설계로 기존 소스 Side-effect 최소화</p>
+                    <p class="text-xs text-amber-900 leading-relaxed italic">antMatch 패턴을 이용한 방어적 설계로 기존 소스 Side-effect
+                        최소화</p>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        function sendHeight() {
-            const area = document.getElementById('capture-area');
-            if (area) {
-                // 패딩 40px * 2 = 80px을 더해 정밀 측정
-                const height = area.offsetHeight + 80;
-                window.parent.postMessage({ type: 'resize-iframe', height: height }, '*');
-            }
-        }
-        window.addEventListener('load', sendHeight);
-        // 부모의 리사이즈에 의한 루프 방지를 위해 resize 이벤트 대신 필요할 때만 호출하거나 디바운싱 고려
-        window.addEventListener('resize', () => {
-            clearTimeout(window.resizeTimer);
-            window.resizeTimer = setTimeout(sendHeight, 200);
-        });
-        setTimeout(sendHeight, 100);
-    </script>
+    <script src="../js/diagram-common.js"></script>
 </body>
+
 </html>

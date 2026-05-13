@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: transparent;
+            margin: 0;
+            padding: 40px 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .flow-card { transition: transform 0.2s ease; }
+        .flow-card:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div id="capture-area" class="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+        <!-- Header -->
+        <div class="bg-slate-900 p-8 text-center">
+            <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">엔터프라이즈 클라우드 마이그레이션 아키텍처</h1>
+            <p class="text-slate-400 font-medium">비용 효율 최적화 및 고가용성 인프라(보안/백업) 재구축</p>
+        </div>
+
+        <div class="p-8 md:p-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 relative">
+                
+                <!-- 1. Migration & Containerization -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2 text-sky-600 font-bold text-lg mb-4">
+                        <i class="fas fa-cloud-arrow-up"></i>
+                        <span>인프라 전환 및 컨테이너화</span>
+                    </div>
+                    
+                    <!-- Legacy VM -->
+                    <div class="flow-card p-5 bg-rose-50 border border-rose-200 rounded-2xl flex items-center gap-4 opacity-80">
+                        <div class="w-12 h-12 bg-rose-400 rounded-xl flex items-center justify-center text-white shadow-sm">
+                            <i class="fas fa-server text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-rose-900">Legacy On-Premise VM</h3>
+                            <p class="text-xs text-rose-700 leading-relaxed">서버 노후화, 로깅 부재, 백업 불가의 제약 환경</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-sky-300 text-2xl">↓</div>
+
+                    <!-- Docker Compose -->
+                    <div class="flow-card p-5 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-2xl flex items-center gap-4 shadow-md">
+                        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                            <i class="fab fa-docker text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white">Containerization (Docker)</h3>
+                            <p class="text-xs text-sky-100">DB, WEB, APP 의존성 통합 및 원클릭 배포(Compose)</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-sky-300 text-2xl">↓</div>
+
+                    <!-- Public Cloud -->
+                    <div class="flow-card p-5 bg-slate-800 text-white rounded-2xl flex items-center gap-4 shadow-xl">
+                        <div class="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-cloud text-xl text-sky-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Public Cloud Infrastructure</h3>
+                            <p class="text-xs text-slate-400 italic font-mono">300+ Users / 고효율 매니지드 환경 안착</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Security & Reliability Core -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2 text-emerald-600 font-bold text-lg mb-4">
+                        <i class="fas fa-shield-halved"></i>
+                        <span>네트워크 보안 및 재해 복구(DR)</span>
+                    </div>
+
+                    <!-- Security Layer -->
+                    <div class="relative p-6 bg-emerald-50 border-2 border-emerald-400 rounded-3xl shadow-sm">
+                        <div class="absolute -top-3 left-6 bg-emerald-500 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">Security Core</div>
+                        <h3 class="font-bold text-emerald-900 mb-4 flex items-center gap-2">Network & Monitoring</h3>
+                        
+                        <div class="space-y-3">
+                            <!-- Network -->
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-emerald-200 hover:border-emerald-400 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-network-wired text-emerald-500"></i>
+                                    <div>
+                                        <p class="text-xs font-bold text-emerald-800">L7 AAA & Port Forwarding</p>
+                                        <p class="text-[10px] text-slate-400">Inbound/Outbound IP 통제 및 비인가 접근 차단</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Monitoring -->
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-teal-200 hover:border-teal-400 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-desktop text-teal-500"></i>
+                                    <div>
+                                        <p class="text-xs font-bold text-teal-800">OS Logging & Audit</p>
+                                        <p class="text-[10px] text-slate-400">계정 분리 및 리소스/접근 이력 실시간 추적</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- DR Backup -->
+                    <div class="p-5 border-2 border-dashed border-amber-200 rounded-2xl flex items-center gap-4 bg-amber-50/50">
+                        <div class="w-12 h-12 bg-white border border-amber-200 rounded-xl flex items-center justify-center text-amber-500">
+                            <i class="fas fa-vault text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-amber-900">Disaster Recovery (DR)</h3>
+                            <p class="text-xs text-amber-700 font-medium">주기적 Cold Backup 및 Archive 저장소 보관</p>
+                        </div>
+                    </div>
+
+                    <div class="arrow-path flex items-center justify-center h-10 text-slate-300 text-2xl">↓</div>
+
+                    <!-- Result -->
+                    <div class="p-5 bg-sky-600 border border-sky-700 rounded-2xl flex items-center justify-center shadow-lg">
+                        <p class="text-sm font-bold text-white flex items-center gap-3 text-center">
+                            <i class="fas fa-sack-dollar text-sky-200"></i>
+                            CAPEX 전액 절감 및 IT 파이낸싱 혁신
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Features -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-sky-50 rounded-2xl border border-sky-100">
+                    <h4 class="text-sky-700 font-bold mb-1 text-sm uppercase">비용 절감 (Cost Efficiency)</h4>
+                    <p class="text-xs text-sky-900 leading-relaxed italic">초기 물리 서버 도입 비용(CAPEX) 완전 절감 및 월 유지비 6~8만원 대 최적화 안착</p>
+                </div>
+                <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                    <h4 class="text-emerald-700 font-bold mb-1 text-sm uppercase">보안성 (Security)</h4>
+                    <p class="text-xs text-emerald-900 leading-relaxed italic">강력한 L7 네트워크 통제와 정밀한 로깅 서비스를 통해 인프라 접근 무결성 보장</p>
+                </div>
+                <div class="p-6 bg-amber-50 rounded-2xl border border-amber-100">
+                    <h4 class="text-amber-700 font-bold mb-1 text-sm uppercase">안정성 (Reliability)</h4>
+                    <p class="text-xs text-amber-900 leading-relaxed italic">다운타임에 대비한 DR 백업 체계를 갖춰, 향후 10년간의 시스템 생존력 확보</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/diagram-common.js"></script>
+</body>
+</html>
