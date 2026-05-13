@@ -189,10 +189,10 @@ function loadProjectDetail(data) {
                 if (diagramPath.trim().endsWith('.html')) {
                     const fullPath = resourcePrefix + diagramPath;
                     return `
-                        <div class="logic-flow-section" style="display: flex; justify-content: center; width: 100%; margin: 2rem 0;">
+                        <div class="logic-flow-section" style="display: flex; justify-content: center; width: 100%; margin: 1rem 0;">
                             <iframe src="${fullPath}" 
-                                    style="width: 100%; max-width: 1200px; border: none; overflow: hidden; min-height: 500px;" 
-                                    onload="try { this.style.height = this.contentWindow.document.body.scrollHeight + 'px'; } catch(e) { console.warn('Iframe resize failed:', e); }">
+                                    style="width: 100%; max-width: 1200px; border: none; overflow: hidden; height: 0;" 
+                                    onload="this.style.height = this.contentWindow.document.documentElement.scrollHeight + 'px';">
                             </iframe>
                         </div>`;
                 }
