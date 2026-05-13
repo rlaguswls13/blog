@@ -14,7 +14,7 @@
     max-width: 1200px;
     border: none;
     overflow: hidden;
-    height: 0; /* JS가 높이를 잡아줄 때까지 0으로 유지 */
+    min-height: 300px;
     transition: height 0.3s ease;
 }
 
