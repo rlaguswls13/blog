@@ -65,7 +65,7 @@ function formatPeriods(periods) {
 function calculateTotalPeriod(periods) {
     const periodArray = Array.isArray(periods) ? periods : (periods ? [periods] : []);
     if (periodArray.length === 0) return '';
-    
+
     let totalMonths = 0;
     periodArray.forEach(p => {
         const parts = p.split(' - ');
@@ -81,7 +81,7 @@ function calculateTotalPeriod(periods) {
 
     const years = Math.floor(totalMonths / 12);
     const months = totalMonths % 12;
-    
+
     let result = '총 ';
     if (years > 0) result += `${years}년 `;
     if (months > 0) result += `${months}개월`;
@@ -270,8 +270,6 @@ function loadProjectDetail(data) {
                         btn.classList.add('active');
                         document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
 
-                        const tabData = detailProject.tabs[index];
-                        const tabPeriod = (tabData && tabData.period) || (basicProject.periods && basicProject.periods[index]);
                         // Tab switching logic (duration update)
                         const tabData = detailProject.tabs[index];
                         const tabPeriod = (tabData && tabData.period) || (basicProject.periods && basicProject.periods[index]);
