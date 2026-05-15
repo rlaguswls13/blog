@@ -38,14 +38,16 @@
     },
     {
       "id": "prob-4",
-      "title": "Java Scheduler와 Quartz의 클러스터링 문제 처리 방법",
+      "title": "[Troubleshooting] Spring Quartz 분산 환경 최적화 및 HA 아키텍처 고려한 문제 해결",
       "date": "2026.05.15",
       "tags": [
-        "Java",
+        "Spring",
         "Quartz",
-        "Clustering"
+        "HA",
+        "Clustering",
+        "Sharding"
       ],
-      "description": "다중 서버 환경에서 기본 Java Scheduler와 Quartz Job 구동 시 발생할 수 있는 중복 실행(Clustering) 문제를 해결하기 위한 DB Lock 기반 동기화 아키텍처 구현 내용입니다."
+      "description": "이중화 클러스터링 환경에서 발생한 스케줄링 중복 등록과 작업 쏠림(Greedy Locking) 현상을 분석하고, 등록/실행 역할 분리 및 쿼리 파티셔닝 기반 균등 분배 아키텍처로 해결한 사례입니다."
     },
     {
       "id": "prob-5",
