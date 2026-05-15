@@ -1,126 +1,190 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+
 <head>
-<meta charset="UTF-8">
-<style>
-  body { 
-    margin: 0; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    background-color: transparent; 
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  }
-  canvas { 
-    background-color: #1e1e1e; 
-    border-radius: 8px; 
-    border: 1px solid #333; 
-    max-width: 100%;
-    height: auto;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: transparent;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 550px;
+        }
+
+        .canvas-container {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            border: 1px solid #333;
+        }
+    </style>
 </head>
+
 <body>
-<canvas id="kahadbCanvas" width="600" height="240"></canvas>
-<script>
-  const canvas = document.getElementById('kahadbCanvas');
-  const ctx = canvas.getContext('2d');
-  
-  const drawBlocks = () => {
-    ctx.clearRect(0, 0, 600, 240);
-    
-    // Legend
-    ctx.fillStyle = '#4CAF50';
-    ctx.fillRect(450, 20, 15, 15);
-    ctx.fillStyle = '#e0e0e0';
-    ctx.font = '12px Arial';
-    ctx.fillText('Dequeued (Clean)', 470, 32);
-    
-    ctx.fillStyle = '#f44336';
-    ctx.fillRect(450, 40, 15, 15);
-    ctx.fillStyle = '#e0e0e0';
-    ctx.fillText('Remained (Dirty)', 470, 52);
 
-    ctx.font = 'bold 13px Arial';
-    ctx.fillStyle = '#e0e0e0';
-    ctx.fillText('KahaDB Log File Blocks (16MB each)', 20, 25);
-    
-    // Draw 4 Blocks
-    for(let b=0; b<4; b++) {
-        const x = 20 + b*140;
-        const y = 60;
-        
-        // Block Boundary
-        ctx.strokeStyle = '#555';
-        ctx.setLineDash([5, 3]);
-        ctx.strokeRect(x, y, 120, 120);
-        ctx.setLineDash([]);
-        
-        ctx.fillStyle = '#888';
-        ctx.font = '11px Arial';
-        ctx.fillText(`db-${b+1}.log`, x + 35, y - 5);
+    <div class="canvas-container">
+        <canvas id="kahadbCanvas" width="620" height="460"></canvas>
+    </div>
 
-        // Draw messages inside block
-        for(let r=0; r<3; r++) {
-            for(let c=0; c<3; c++) {
-                const mx = x + 10 + c*35;
-                const my = y + 10 + r*35;
-                
-                // Block 1 & 2 are clean (all green)
-                // Block 3 has one red message
-                // Block 4 is full (all red/gray)
-                
-                if (b < 2) {
-                    ctx.fillStyle = 'rgba(76, 175, 80, 0.3)'; // Green
-                    ctx.strokeStyle = '#4CAF50';
-                } else if (b === 2) {
-                    if (r === 1 && c === 1) {
-                        ctx.fillStyle = 'rgba(244, 67, 54, 0.8)'; // Red
-                        ctx.strokeStyle = '#f44336';
-                    } else {
-                        ctx.fillStyle = 'rgba(76, 175, 80, 0.3)';
-                        ctx.strokeStyle = '#4CAF50';
+    <script>
+        const canvas = document.getElementById('kahadbCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const drawBlocks = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Title Section
+            ctx.font = 'bold 20px Inter, Arial';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText('KahaDB Log File Management', 20, 40);
+            ctx.font = '14px Inter';
+            ctx.fillStyle = '#888';
+            ctx.fillText('Automatic Cleanup Mechanism (16MB Unit)', 20, 65);
+
+            const blockY = 120;
+            const blockSize = 120;
+
+            for (let b = 0; b < 4; b++) {
+                const x = 20 + b * 150;
+
+                // Block Boundary
+                ctx.strokeStyle = '#444';
+                ctx.setLineDash([6, 4]);
+                ctx.lineWidth = 1;
+                ctx.strokeRect(x, blockY, blockSize, blockSize);
+                ctx.setLineDash([]);
+
+                // File Name Label
+                ctx.fillStyle = '#aaa';
+                ctx.font = '600 13px Inter, Arial';
+                ctx.fillText(`db-${b + 1}.log`, x + 35, blockY - 15);
+
+                // Message Grid (3x3)
+                for (let r = 0; r < 3; r++) {
+                    for (let c = 0; c < 3; c++) {
+                        const mx = x + 12 + c * 36;
+                        const my = blockY + 12 + r * 36;
+                        const msgSize = 24;
+
+                        if (b < 2) {
+                            ctx.fillStyle = 'rgba(74, 222, 128, 0.15)';
+                            ctx.strokeStyle = '#4ade80';
+                        } else if (b === 2) {
+                            if (r === 1 && c === 1) {
+                                ctx.fillStyle = 'rgba(248, 113, 113, 0.9)'; // Dirty Message
+                                ctx.strokeStyle = '#ef4444';
+                            } else {
+                                ctx.fillStyle = 'rgba(74, 222, 128, 0.15)';
+                                ctx.strokeStyle = '#4ade80';
+                            }
+                        } else {
+                            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                            ctx.strokeStyle = '#555';
+                        }
+
+                        ctx.beginPath();
+                        if (ctx.roundRect) {
+                            ctx.roundRect(mx, my, msgSize, msgSize, 4);
+                        } else {
+                            ctx.rect(mx, my, msgSize, msgSize);
+                        }
+                        ctx.fill();
+                        ctx.stroke();
                     }
-                } else {
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-                    ctx.strokeStyle = '#777';
                 }
-                
-                ctx.fillRect(mx, my, 25, 25);
-                ctx.strokeRect(mx, my, 25, 25);
-            }
-        }
-        
-        // Status Text
-        ctx.font = 'bold 11px Arial';
-        if (b < 2) {
-            ctx.fillStyle = '#4CAF50';
-            ctx.fillText('DELETED', x + 35, y + 135);
-        } else if (b === 2) {
-            ctx.fillStyle = '#f44336';
-            ctx.fillText('HELD ON DISK', x + 25, y + 135);
-            ctx.font = '10px Arial';
-            ctx.fillText('(1 Dirty Message)', x + 25, y + 150);
-        } else {
-            ctx.fillStyle = '#777';
-            ctx.fillText('PENDING', x + 35, y + 135);
-        }
-    }
 
-    // Annotation
-    ctx.strokeStyle = '#f44336';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(330, 105); // Pointing at the dirty message
-    ctx.lineTo(380, 35);  // Pointing up to empty space
-    ctx.stroke();
-    ctx.fillStyle = '#f44336';
-    ctx.font = 'bold 12px Arial';
-    ctx.fillText('This single message blocks', 385, 30);
-    ctx.fillText('deletion of 16MB file!', 385, 45);
-  };
-  
-  drawBlocks();
-</script>
+                // Block Status labels (Bottom of each block)
+                ctx.font = 'bold 12px Inter, Arial';
+                if (b < 2) {
+                    ctx.fillStyle = '#4ade80';
+                    ctx.fillText('CLEANED', x + 32, blockY + blockSize + 25);
+                } else if (b === 2) {
+                    ctx.fillStyle = '#f87171';
+                    ctx.fillText('HELD ON DISK', x + 20, blockY + blockSize + 25);
+                } else {
+                    ctx.fillStyle = '#555';
+                    ctx.fillText('PENDING', x + 35, blockY + blockSize + 25);
+                }
+            }
+
+            // Red Arrow pointing from the BOTTOM of the dirty message
+            const arrowStartX = 338;
+            const arrowStartY = 205;
+            const arrowEndX = 430;
+            const arrowEndY = 360;
+
+            ctx.strokeStyle = '#f87171';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(arrowStartX, arrowStartY);
+
+            // S-curve: First curve dives down, second curves into the side of the box
+            ctx.bezierCurveTo(
+                arrowStartX, arrowStartY + 100, // Control Point 1: Deep dive
+                arrowEndX - 120, arrowEndY + 20, // Control Point 2: S-shape bend
+                arrowEndX, arrowEndY             // Target
+            );
+            ctx.stroke();
+
+            // Arrow head
+            ctx.beginPath();
+            ctx.fillStyle = '#f87171';
+            ctx.moveTo(arrowEndX, arrowEndY);
+            ctx.lineTo(arrowEndX - 8, arrowEndY - 6);
+            ctx.lineTo(arrowEndX - 8, arrowEndY + 6);
+            ctx.fill();
+
+            // Warning Box (Positioned to avoid all lines)
+            const boxX = 440;
+            const boxY = 350;
+            ctx.fillStyle = 'rgba(248, 113, 113, 0.1)';
+            ctx.beginPath();
+            if (ctx.roundRect) ctx.roundRect(boxX - 10, boxY - 15, 175, 65, 10);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(248, 113, 113, 0.5)';
+            ctx.stroke();
+
+            ctx.fillStyle = '#f87171';
+            ctx.font = 'bold 13px Inter, Arial';
+            ctx.fillText('단 1개의 메시지만 남아도', boxX, boxY + 12);
+            ctx.fillText('16MB 파일 삭제 불가!', boxX, boxY + 34);
+
+            // Legend Section
+            const legendY = 435;
+            ctx.font = '12px Inter, Arial';
+
+            // Legend 1: Dequeued
+            ctx.fillStyle = 'rgba(74, 222, 128, 0.15)';
+            ctx.beginPath();
+            if (ctx.roundRect) ctx.roundRect(20, legendY - 12, 15, 15, 4);
+            ctx.fill();
+            ctx.strokeStyle = '#4ade80';
+            ctx.stroke();
+            ctx.fillStyle = '#999';
+            ctx.fillText('처리 완료 (Dequeue)', 42, legendY);
+
+            // Legend 2: Dirty
+            ctx.fillStyle = 'rgba(248, 113, 113, 0.9)';
+            ctx.beginPath();
+            if (ctx.roundRect) ctx.roundRect(180, legendY - 12, 15, 15, 4);
+            ctx.fill();
+            ctx.strokeStyle = '#ef4444';
+            ctx.stroke();
+            ctx.fillStyle = '#999';
+            ctx.fillText('미처리 데이터 (Dirty)', 202, legendY);
+        };
+
+        window.onload = drawBlocks;
+    </script>
+
 </body>
+
 </html>
