@@ -49,14 +49,16 @@
     },
     {
       "id": "prob-5",
-      "title": "MQ 연동을 통한 대용량 이메일 처리속도 및 Limit 제어",
+      "title": "[Troubleshooting] ActiveMQ KahaDB 디스크 고갈 문제와 발송 속도 제어(Rate Limit) 전략",
       "date": "2026.05.15",
       "tags": [
-        "Message Queue",
-        "RabbitMQ",
-        "Rate Limiting"
+        "ActiveMQ",
+        "KahaDB",
+        "Disk Full",
+        "Rate Limit",
+        "Backpressure"
       ],
-      "description": "대규모 이메일 발송 시스템에서 병목을 방지하고 ISP 발송 Limit(제한) 정책을 준수하기 위해 Message Queue(MQ)를 도입하여 비동기 처리 및 발송 속도를 제어한 최적화 과정입니다."
+      "description": "ActiveMQ KahaDB의 블록 관리 특성으로 인한 디스크 고갈 문제를 진단하고, Threshold 기반 역압(Backpressure) 및 타임아웃 최적화를 통해 시스템 안정성을 확보한 사례입니다."
     },
     {
       "id": "prob-6",
