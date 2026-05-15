@@ -1,4 +1,5 @@
 /* global.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import url('project-detail.css');
 
 :root {
@@ -397,7 +398,7 @@ ul {
 .mini-period {
     font-size: 0.85rem;
     color: var(--text-secondary);
-    font-family: 'Inter', monospace;
+    font-family: 'JetBrains Mono', monospace;
     flex-shrink: 0;
     min-width: 65px;
     text-align: right;
