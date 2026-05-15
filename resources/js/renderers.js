@@ -164,8 +164,10 @@ export function loadDevlog(data) {
         `).join('');
     };
 
-    // Initial render
-    renderEntries('tech_study');
+    // Initial render based on active tab in HTML
+    const activeTab = document.querySelector('.category-tab.active');
+    const initialCategory = activeTab ? activeTab.dataset.category : 'tech_study';
+    renderEntries(initialCategory);
 
     // Tab switching logic
     tabs.forEach(tab => {
