@@ -75,7 +75,13 @@
 
   };
   
-  drawRegions();
+  window.onload = () => {
+    drawRegions();
+    setTimeout(() => {
+        const height = document.documentElement.scrollHeight;
+        window.parent.postMessage({ type: 'resize-iframe', height: height }, '*');
+    }, 100);
+  };
 </script>
 </body>
 </html>

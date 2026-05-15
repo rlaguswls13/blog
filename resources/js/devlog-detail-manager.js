@@ -135,3 +135,15 @@ export function loadDevlogDetail(data) {
             detailEl.innerHTML = '<p>상세 내용을 불러오는데 실패했습니다.</p>';
         });
 }
+
+// Global Iframe Resize Listener for Devlog Detail
+window.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'resize-iframe') {
+        const iframes = document.querySelectorAll('.diagram-iframe');
+        iframes.forEach(iframe => {
+            if (iframe.contentWindow === event.source) {
+                iframe.style.height = event.data.height + 'px';
+            }
+        });
+    }
+});
