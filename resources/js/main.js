@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /**
  * 내비게이션 바 동적 업데이트
- * 현재 활성화된 메뉴명을 타이틀로 표시하고 메뉴 목록에서 제거
+ * 현재 활성화된 메뉴명을 타이틀로 표시
  */
 function initNavigation() {
     const navBrand = document.querySelector('.nav-brand');
@@ -50,7 +50,6 @@ function initNavigation() {
             if (navBrand) {
                 navBrand.textContent = link.textContent;
             }
-            link.style.display = 'none'; // 메뉴 목록에서 삭제
         }
     });
 }
