@@ -145,20 +145,22 @@ export function loadDevlog(data) {
     if (!container) return;
 
     const renderEntries = (category) => {
-        const entries = data.devlog[category];
+        const entries = data[category];
         container.innerHTML = entries.map(entry => `
-            <div class="devlog-card">
-                <div>
-                    <div class="devlog-meta">
-                        <span>📅 ${entry.date}</span>
+            <a href="devlog-detail.html?category=${category}&id=${entry.id}" class="devlog-card-link" style="text-decoration:none; color:inherit; display:block;">
+                <div class="devlog-card">
+                    <div>
+                        <div class="devlog-meta">
+                            <span>📅 ${entry.date}</span>
+                        </div>
+                        <h3>${entry.title}</h3>
+                        <div class="devlog-tags">
+                            ${entry.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                        </div>
+                        <p class="devlog-description">${entry.description}</p>
                     </div>
-                    <h3>${entry.title}</h3>
-                    <div class="devlog-tags">
-                        ${entry.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}
-                    </div>
-                    <p class="devlog-description">${entry.description}</p>
                 </div>
-            </div>
+            </a>
         `).join('');
     };
 

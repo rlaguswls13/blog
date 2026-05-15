@@ -1,12 +1,14 @@
 {
   "tech_study": [
     {
+      "id": "tech-1",
       "title": "Java Garbage Collection (G1GC) 튜닝 가이드",
       "date": "2026.05.10",
       "tags": ["Java", "GC", "Performance"],
       "description": "대용량 메시징 시스템 운영 중 발생한 Stop-the-world 시간을 줄이기 위한 G1GC 옵션 최적화 과정을 정리했습니다."
     },
     {
+      "id": "tech-2",
       "title": "React Server Components와 동적 렌더링",
       "date": "2026.04.15",
       "tags": ["React", "Next.js", "Frontend"],
@@ -15,16 +17,53 @@
   ],
   "problem_solving": [
     {
+      "id": "prob-1",
       "title": "고가용성 분산 환경에서의 분산 락(Distributed Lock) 구현",
       "date": "2026.05.12",
       "tags": ["Redis", "Concurrency", "Backend"],
       "description": "동시성 이슈를 해결하기 위해 Redis Redlock 알고리즘을 활용하여 동시 주문 처리 시스템의 정합성을 확보한 사례입니다."
     },
     {
+      "id": "prob-2",
       "title": "Legacy 시스템 마이그레이션 중 인코딩 깨짐 문제 해결",
       "date": "2026.03.20",
       "tags": ["Troubleshooting", "Encoding", "Linux"],
       "description": "EUC-KR 기반의 레거시 DB 데이터를 UTF-8 환경으로 이전하며 발생한 문자열 깨짐 현상을 쉘 스크립트와 커스텀 파서를 통해 해결했습니다."
+    },
+    {
+      "id": "prob-3",
+      "title": "Java Block-size에 따른 Heap Memory 및 GC 처리 옵션 최적화",
+      "date": "2026.05.15",
+      "tags": ["Java", "Memory", "GC Tuning"],
+      "description": "대규모 데이터 처리 시 Java의 Block-size 설정에 따른 Heap 메모리 단편화 현상을 분석하고, GC(Garbage Collection) 옵션을 튜닝하여 메모리 효율을 개선한 사례입니다."
+    },
+    {
+      "id": "prob-4",
+      "title": "Java Scheduler와 Quartz의 클러스터링 문제 처리 방법",
+      "date": "2026.05.15",
+      "tags": ["Java", "Quartz", "Clustering"],
+      "description": "다중 서버 환경에서 기본 Java Scheduler와 Quartz Job 구동 시 발생할 수 있는 중복 실행(Clustering) 문제를 해결하기 위한 DB Lock 기반 동기화 아키텍처 구현 내용입니다."
+    },
+    {
+      "id": "prob-5",
+      "title": "MQ 연동을 통한 대용량 이메일 처리속도 및 Limit 제어",
+      "date": "2026.05.15",
+      "tags": ["Message Queue", "RabbitMQ", "Rate Limiting"],
+      "description": "대규모 이메일 발송 시스템에서 병목을 방지하고 ISP 발송 Limit(제한) 정책을 준수하기 위해 Message Queue(MQ)를 도입하여 비동기 처리 및 발송 속도를 제어한 최적화 과정입니다."
+    },
+    {
+      "id": "prob-6",
+      "title": "병목 현상을 줄이기 위한 Pub/Sub 처리 방식 도입",
+      "date": "2026.05.15",
+      "tags": ["Pub/Sub", "Architecture", "Redis"],
+      "description": "단일 컴포넌트에 집중되는 트래픽 병목 현상을 해소하기 위해 발행-구독(Publish-Subscribe) 모델을 도입하여 이벤트를 분산 처리하고 시스템 결합도를 낮춘 아키텍처 리팩토링 사례입니다."
+    },
+    {
+      "id": "prob-7",
+      "title": "API 비동기화 응답 처리 방식 고도화",
+      "date": "2026.05.15",
+      "tags": ["API", "Asynchronous", "Spring WebFlux"],
+      "description": "동기 방식의 외부 API 연동으로 인한 시스템 블로킹(Blocking) 문제를 해결하기 위해 비동기 논블로킹(Non-blocking) 방식의 응답 처리 로직을 구현하여 전체 스루풋(Throughput)을 향상시킨 방법론입니다."
     }
   ]
 }

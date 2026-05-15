@@ -5,6 +5,7 @@
 import { initTheme } from './theme.js';
 import { loadProfile, loadProjects, loadResume, loadContact, loadDevlog } from './renderers.js';
 import { loadProjectDetail } from './project-detail-manager.js';
+import { loadDevlogDetail } from './devlog-detail-manager.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     // 테마 모듈 초기화
@@ -56,6 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById('project-detail')) {
         // 상세 페이지는 기본 프로젝트 정보가 필요함
         loadData('projects.json').then(data => loadProjectDetail(data));
+    }
+
+    // 데브로그 상세 페이지인 경우 매니저 호출
+    if (document.getElementById('devlog-detail')) {
+        loadData('devlog.json').then(data => loadDevlogDetail(data));
     }
 });
 

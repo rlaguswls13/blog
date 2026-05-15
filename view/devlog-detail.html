@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김현진 포트폴리오 | Devlog Detail</title>
+    <link rel="stylesheet" href="../resources/css/global.css">
+    <link rel="stylesheet" href="../resources/css/devlog.css">
+    <script type="module" src="../resources/js/main.js"></script>
+    <style>
+        .devlog-detail-header h1 {
+            margin-bottom: 0.5rem;
+            border-bottom: none;
+            padding-bottom: 0;
+            font-size: 2.2rem;
+        }
+
+        .devlog-detail-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            border: 0;
+            height: 1px;
+            background: var(--border-color);
+            margin: 2rem 0;
+        }
+
+        .devlog-detail-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .devlog-detail-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .devlog-detail-content h2,
+        .devlog-detail-content h3 {
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+
+        .devlog-detail-content pre {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .devlog-detail-content code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-brand">My Portfolio</div>
+            <div class="nav-links">
+                <a href="../index.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="devlog.html" class="active">Devlog</a>
+                <a href="resume.html">Resume</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </nav>
+
+        <div id="detail-container">
+            <a href="devlog.html" class="back-link">← Back to Devlog</a>
+            <div id="devlog-detail">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
