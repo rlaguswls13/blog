@@ -227,5 +227,35 @@
         "icon": "📱"
       }
     ]
+  },
+  "devlog": {
+    "tech_study": [
+      {
+        "title": "Java Garbage Collection (G1GC) 튜닝 가이드",
+        "date": "2026.05.10",
+        "tags": ["Java", "GC", "Performance"],
+        "description": "대용량 메시징 시스템 운영 중 발생한 Stop-the-world 시간을 줄이기 위한 G1GC 옵션 최적화 과정을 정리했습니다."
+      },
+      {
+        "title": "React Server Components와 동적 렌더링",
+        "date": "2026.04.15",
+        "tags": ["React", "Next.js", "Frontend"],
+        "description": "클라이언트 사이드 렌더링의 한계를 극복하기 위한 RSC의 도입 배경과 데이터 패칭 전략에 대해 학습했습니다."
+      }
+    ],
+    "problem_solving": [
+      {
+        "title": "고가용성 분산 환경에서의 분산 락(Distributed Lock) 구현",
+        "date": "2026.05.12",
+        "tags": ["Redis", "Concurrency", "Backend"],
+        "description": "동시성 이슈를 해결하기 위해 Redis Redlock 알고리즘을 활용하여 동시 주문 처리 시스템의 정합성을 확보한 사례입니다."
+      },
+      {
+        "title": "Legacy 시스템 마이그레이션 중 인코딩 깨짐 문제 해결",
+        "date": "2026.03.20",
+        "tags": ["Troubleshooting", "Encoding", "Linux"],
+        "description": "EUC-KR 기반의 레거시 DB 데이터를 UTF-8 환경으로 이전하며 발생한 문자열 깨짐 현상을 쉘 스크립트와 커스텀 파서를 통해 해결했습니다."
+      }
+    ]
   }
 }

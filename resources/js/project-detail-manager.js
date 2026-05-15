@@ -21,7 +21,7 @@ export function loadProjectDetail(data) {
     const isInProjectDir = window.location.pathname.includes('/view/project/');
     const resourcePrefix = isInProjectDir ? '../../' : (window.location.pathname.includes('/view/') ? '../' : '');
 
-    fetch(resourcePrefix + 'resources/project-detail.json')
+    fetch(resourcePrefix + 'resources/data/project-detail.json')
         .then(res => res.json())
         .then(detailsData => {
             const basicProject = data.projects.find(p => p.id === id);
