@@ -403,3 +403,17 @@ ul {
     min-width: 65px;
     text-align: right;
 }
+
+.back-link {
+    display: block;
+    text-align: right;
+    text-decoration: none;
+    color: var(--accent-primary);
+    font-weight: 600;
+    margin-bottom: 20px;
+    transition: opacity 0.2s;
+}
+
+.back-link:hover {
+    opacity: 0.8;
+}
