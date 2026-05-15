@@ -98,7 +98,6 @@ export function loadDevlogDetail(data) {
                     ${section.image ? `<div class="diagram-container"><img src="../${section.image}" class="logic-flow-image"></div>` : ''}
                     ${getFlowHtml(section.flow_diagram)}
                 </div>
-                <br>
             `).join('');
 
             // Render Conclusion

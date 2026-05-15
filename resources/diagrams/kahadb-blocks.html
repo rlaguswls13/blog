@@ -111,13 +111,13 @@
     ctx.strokeStyle = '#f44336';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(330, 105);
-    ctx.lineTo(380, 50);
+    ctx.moveTo(330, 105); // Pointing at the dirty message
+    ctx.lineTo(380, 35);  // Pointing up to empty space
     ctx.stroke();
     ctx.fillStyle = '#f44336';
-    ctx.font = '12px Arial';
-    ctx.fillText('This single message blocks', 385, 45);
-    ctx.fillText('deletion of 16MB file!', 385, 60);
+    ctx.font = 'bold 12px Arial';
+    ctx.fillText('This single message blocks', 385, 30);
+    ctx.fillText('deletion of 16MB file!', 385, 45);
   };
   
   drawBlocks();
