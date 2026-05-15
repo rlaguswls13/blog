@@ -18,8 +18,8 @@
 
         .devlog-detail-meta {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 1rem;
             margin-bottom: 2rem;
             color: var(--text-secondary);
             font-size: 0.95rem;
@@ -42,17 +42,37 @@
             margin-bottom: 1.5rem;
         }
 
-        .devlog-detail-content h2,
         .devlog-detail-content h3 {
             margin-top: 2.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             color: var(--accent-primary);
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .devlog-detail-content h4 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            border-left: 4px solid var(--accent-primary);
+            padding-left: 15px;
+            font-weight: 600;
+        }
+
+        .devlog-section:first-child h3 {
+            margin-top: 0;
+        }
+
+        .block-text {
+            margin-bottom: 1.5rem;
+            padding-left: 19px; /* Align with h4 padding-left + border */
         }
 
         .devlog-detail-content pre {
             background-color: var(--bg-secondary);
             padding: 1.5rem;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow-x: auto;
             border: 1px solid var(--border-color);
             margin-bottom: 1.5rem;

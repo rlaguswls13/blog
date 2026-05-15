@@ -20,14 +20,12 @@ export function loadDevlogDetail(data) {
 
     // Find the base info from devlog.json
     let baseEntry = null;
-    let categoryFound = null;
 
     const entries = data[category];
     if (entries) {
         const found = entries.find(e => e.id === id);
         if (found) {
             baseEntry = found;
-            categoryFound = category;
         }
     }
 
@@ -36,30 +34,59 @@ export function loadDevlogDetail(data) {
         return;
     }
 
+    const getFlowHtml = (diagramPath) => {
+        if (!diagramPath) return '';
+        
+        // resourcePrefix is not defined here, but since it's devlog-detail.html in /view/
+        // the resources are in ../
+        const prefix = '../';
+        
+        if (diagramPath.trim().endsWith('.html')) {
+            return `<div class="diagram-container"><iframe src="${prefix + diagramPath}" class="diagram-iframe"></iframe></div>`;
+        }
+        
+        if (diagramPath.trim().startsWith('<')) return `<div class="html-diagram-wrapper">${diagramPath}</div>`;
+        
+        return `<div class="diagram-container"><img src="${prefix + diagramPath}" alt="Flow Diagram" class="logic-flow-image"></div>`;
+    };
+
     fetch(`../resources/data/devlog-detail-${category}.json`)
         .then(res => res.json())
         .then(detailsData => {
             const detailEntry = detailsData.find(d => d.id === id);
             
-            let contentHtml = '';
-            
-            if (detailEntry && detailEntry.content) {
-                contentHtml = detailEntry.content.map(block => {
-                    if (block.type === 'heading') {
-                        return `<h${block.level}>${block.text}</h${block.level}>`;
-                    } else if (block.type === 'paragraph') {
-                        return `<p>${block.text}</p>`;
-                    } else if (block.type === 'code') {
-                        return `<pre><code class="language-${block.language}">${block.code}</code></pre>`;
-                    } else if (block.type === 'list') {
-                        const items = block.items.map(item => `<li>${item}</li>`).join('');
-                        return `<ul>${items}</ul>`;
-                    }
-                    return '';
-                }).join('');
-            } else {
-                contentHtml = '<p>상세 내용이 준비 중입니다.</p>';
+            if (!detailEntry) {
+                detailEl.innerHTML = '<p>상세 내용이 준비 중입니다.</p>';
+                return;
             }
+
+            // Render Overview
+            const overviewHtml = detailEntry.overview ? `
+                <div class="devlog-section">
+                    <h3>개요</h3>
+                    <p>${detailEntry.overview}</p>
+                </div>
+            ` : '';
+
+            // Render Sections
+            const sectionsHtml = (detailEntry.sections || []).map(section => `
+                <div class="devlog-content-block">
+                    <h4>${section.subtitle}</h4>
+                    <div class="block-text">${section.content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>
+                    ${section.image ? `<div class="diagram-container"><img src="../${section.image}" class="logic-flow-image"></div>` : ''}
+                    ${getFlowHtml(section.flow_diagram)}
+                </div>
+                <br>
+            `).join('');
+
+            // Render Conclusion
+            const conclusionHtml = detailEntry.conclusion ? `
+                <hr class="section-divider">
+                <div class="devlog-section">
+                    <h3>느낀점 - 더 나아갈 방향성</h3>
+                    <p>${detailEntry.conclusion}</p>
+                </div>
+            ` : '';
 
             const tagsHtml = baseEntry.tags.map(t => `<span class="tech-tag">${t}</span>`).join('');
 
@@ -72,8 +99,13 @@ export function loadDevlogDetail(data) {
                     </div>
                 </div>
                 <hr class="section-divider">
+                
                 <div class="devlog-detail-content">
-                    ${contentHtml}
+                    ${overviewHtml}
+                    <div class="devlog-body">
+                        ${sectionsHtml}
+                    </div>
+                    ${conclusionHtml}
                 </div>
             `;
         })
