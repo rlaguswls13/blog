@@ -72,7 +72,16 @@ export function loadDevlogDetail(data) {
             const sectionsHtml = (detailEntry.sections || []).map(section => `
                 <div class="devlog-content-block">
                     <h4>${section.subtitle}</h4>
-                    <div class="block-text">${section.content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>
+                    <div class="block-text">
+                        ${section.content.split('\n').map(line => {
+                            const trimmedLine = line.trim();
+                            // Check for sub-item patterns like 2-1. or 1-2.
+                            const isSubItem = /^\d+-\d+\./.test(trimmedLine);
+                            const style = isSubItem ? 'style="padding-left: 20px; margin-bottom: 0.5rem;"' : 'style="margin-bottom: 0.8rem;"';
+                            const formattedLine = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                            return `<div ${style}>${formattedLine}</div>`;
+                        }).join('')}
+                    </div>
                     ${section.image ? `<div class="diagram-container"><img src="../${section.image}" class="logic-flow-image"></div>` : ''}
                     ${getFlowHtml(section.flow_diagram)}
                 </div>
