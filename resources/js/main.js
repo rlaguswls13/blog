@@ -82,3 +82,15 @@ function initNavigation() {
         }
     });
 }
+
+// Global Iframe Resize Listener
+window.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'resize-iframe') {
+        const iframes = document.querySelectorAll('.diagram-iframe');
+        iframes.forEach(iframe => {
+            if (iframe.contentWindow === event.source) {
+                iframe.style.height = event.data.height + 'px';
+            }
+        });
+    }
+});

@@ -182,12 +182,16 @@
             ctx.fillText('미처리 데이터 (Dirty)', 202, legendY);
         };
 
+        const notifyHeight = () => {
+            const height = document.documentElement.scrollHeight;
+            window.parent.postMessage({ type: 'resize-iframe', height: height }, '*');
+        };
+
         window.onload = () => {
             drawBlocks();
-            setTimeout(() => {
-                const height = document.documentElement.scrollHeight;
-                window.parent.postMessage({ type: 'resize-iframe', height: height }, '*');
-            }, 100);
+            notifyHeight();
+            // Also observe for any late changes (like Tailwind processing)
+            new ResizeObserver(notifyHeight).observe(document.body);
         };
     </script>
 

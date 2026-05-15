@@ -75,12 +75,15 @@
 
   };
   
+  const notifyHeight = () => {
+    const height = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'resize-iframe', height: height }, '*');
+  };
+
   window.onload = () => {
     drawRegions();
-    setTimeout(() => {
-        const height = document.documentElement.scrollHeight;
-        window.parent.postMessage({ type: 'resize-iframe', height: height }, '*');
-    }, 100);
+    notifyHeight();
+    new ResizeObserver(notifyHeight).observe(document.body);
   };
 </script>
 </body>
