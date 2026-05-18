@@ -44,11 +44,12 @@ export async function generateStaticParams() {
 export default async function DevlogDetailPage({
   params,
 }: {
-  params: { category: string; id: string };
+  params: Promise<{ category: string; id: string }>;
 }) {
+  const { category, id } = await params;
   const filePath = path.join(
     process.cwd(),
-    `src/content/devlog/${params.category}/${params.id}.mdx`
+    `src/content/devlog/${category}/${id}.mdx`
   );
 
   let fileContent;

@@ -21,22 +21,23 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function ProjectDetailPage({
+export default async function ProjectDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const meta = (projectsMeta.projects as Project[]).find(
-    (p) => p.id === params.id
+    (p) => p.id === id
   );
   const detail = (projectDetails as ProjectDetail[]).find(
-    (d) => d.id === meta?.id || d.project_id === params.id
+    (d) => d.id === meta?.id || d.project_id === id
   );
 
   if (!meta || !detail) return <div>Project not found</div>;
 
-  const renderDiagram = (id: string) => {
-    switch (id) {
+  const renderDiagram = (diagramId: string) => {
+    switch (diagramId) {
       case "cloud-migration":
         return <CloudMigrationFlow />;
       case "enterprise-support":
@@ -90,7 +91,7 @@ export default function ProjectDetailPage({
         <h2>프로젝트 개요</h2>
         <p>{meta.description}</p>
 
-        {renderDiagram(params.id)}
+        {renderDiagram(id)}
 
         {detail.tabs && detail.tabs.map((tab, tIdx) => (
           <div key={tIdx} style={{ marginTop: "40px" }}>
