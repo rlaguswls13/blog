@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import devlogData from "@/data/devlog.json";
 import { TabGroup } from "@/components/ui/TabGroup";
@@ -9,6 +10,8 @@ import type { DevlogCategory, DevlogEntry } from "@/types";
 
 export default function DevlogPage() {
   const [activeTab, setActiveTab] = useState<DevlogCategory>("problem_solving");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6; // 3 rows of 2 columns
 
   const tabs = [
     { key: "tech_study", label: "기술 학습 기록" },
@@ -16,6 +19,17 @@ export default function DevlogPage() {
   ];
 
   const entries = sortByDateDesc(devlogData[activeTab] as DevlogEntry[]);
+  const totalPages = Math.ceil(entries.length / itemsPerPage);
+  
+  const paginatedEntries = entries.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleTabChange = (key: string) => {
+    setActiveTab(key as DevlogCategory);
+    setCurrentPage(1); // Reset to first page on tab change
+  };
 
   return (
     <>
@@ -30,23 +44,83 @@ export default function DevlogPage() {
         <TabGroup
           tabs={tabs}
           activeTab={activeTab}
-          onTabChange={(key) => setActiveTab(key as DevlogCategory)}
+          onTabChange={handleTabChange}
         />
 
-        <div className="devlog-grid">
-          {entries.map((entry) => (
-            <Link key={entry.id} href={`/devlog/${activeTab}/${entry.id}`} className="devlog-card-link">
-              <div className="devlog-card">
-                <div className="devlog-meta">
+        <div
+          className="devlog-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
+            gap: "20px",
+            marginTop: "30px",
+          }}
+        >
+          {paginatedEntries.map((entry) => (
+            <Link
+              key={entry.id}
+              href={`/devlog/${activeTab}/${entry.id}`}
+              className="devlog-card-link"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <div
+                className="devlog-card"
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "8px",
+                  padding: "20px",
+                  background: "var(--card-bg)",
+                  transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                }}
+              >
+                <div className="devlog-meta" style={{ marginBottom: "10px" }}>
                   <span>📅 {entry.date}</span>
                 </div>
-                <h3>{entry.title}</h3>
+                <h3 style={{ marginTop: 0, marginBottom: "12px" }}>{entry.title}</h3>
                 <TagList tags={entry.tags} />
-                <p className="devlog-description">{entry.description}</p>
+                <p
+                  className="devlog-description"
+                  style={{
+                    color: "var(--text-secondary)",
+                    marginTop: "12px",
+                    flexGrow: 1,
+                    fontSize: "0.95rem",
+                    lineHeight: "1.5",
+                  }}
+                >
+                  {entry.description}
+                </p>
               </div>
             </Link>
           ))}
         </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 40 }}>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => setCurrentPage(pageNum)}
+                style={{
+                  padding: "8px 16px",
+                  borderRadius: "6px",
+                  border: "none",
+                  background: currentPage === pageNum ? "var(--accent-primary)" : "var(--card-bg)",
+                  color: currentPage === pageNum ? "#ffffff" : "var(--text-primary)",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                  transition: "all 0.2s ease",
+                }}
+              >
+                {pageNum}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

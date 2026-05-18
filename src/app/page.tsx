@@ -13,8 +13,28 @@ export default function AboutPage() {
 
   return (
     <>
-      <div className="profile-section">
-        <div className="profile-card">
+      {/* Row 1: Image Card | Bio Card | Recent Projects Card */}
+      <div
+        className="about-top-grid"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gap: "30px",
+          alignItems: "stretch",
+        }}
+      >
+        {/* Column 1: Profile Card */}
+        <div
+          className="profile-card"
+          style={{
+            margin: 0,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Image
             src={myImage}
             alt="Profile"
@@ -23,74 +43,172 @@ export default function AboutPage() {
             height={200}
             priority
           />
-          <h2 style={{ marginBottom: "5px" }}>{profile.name}</h2>
-          <p className="role">{profile.role}</p>
-          <p className="univ">{profile.organization}</p>
+          <h2 style={{ marginBottom: "5px", marginTop: "15px" }}>{profile.name}</h2>
+          <p className="role" style={{ margin: "5px 0" }}>{profile.role}</p>
+          <p className="univ" style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>
+            {profile.organization}
+          </p>
           <div style={{ marginTop: "15px" }}>
             {profile.social.map((s, i) => (
-              <a key={i} href={s.link}>
+              <a
+                key={i}
+                href={s.link}
+                style={{
+                  display: "inline-block",
+                  margin: "0 8px",
+                  fontSize: "1.3rem",
+                  textDecoration: "none",
+                }}
+              >
                 {s.icon}
               </a>
             ))}
           </div>
         </div>
-        <div className="bio-content">
-          <h1>{profile.bio_title}</h1>
-          <p>{profile.bio_text}</p>
-          <div className="grid-2" style={{ marginTop: "40px" }}>
-            <div>
-              <h3>Interests</h3>
-              <ul>
-                {profile.interests.map((item, i) => (
-                  <li key={i}>• {item}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3>Education</h3>
-              <ul>
-                {profile.education.map((edu, i) => (
-                  <li key={i}>
-                    <strong>{edu.degree}</strong>
-                    <br />
-                    {edu.school} ({edu.year})
-                  </li>
-                ))}
-              </ul>
-            </div>
+
+        {/* Column 2: Bio Content */}
+        <div
+          className="bio-card"
+          style={{
+            background: "var(--card-bg)",
+            padding: "30px",
+            borderRadius: "8px",
+            border: "1px solid var(--border-color)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <h2 style={{ marginTop: 0, marginBottom: "20px" }}>{profile.bio_title}</h2>
+          <p style={{ lineHeight: "1.6", color: "var(--text-secondary)", margin: 0 }}>
+            {profile.bio_text}
+          </p>
+        </div>
+
+        {/* Column 3: Recent Projects */}
+        <div
+          className="recent-projects-card"
+          style={{
+            background: "var(--card-bg)",
+            padding: "30px",
+            borderRadius: "8px",
+            border: "1px solid var(--border-color)",
+            height: "100%",
+          }}
+        >
+          <h2 style={{ marginTop: 0, marginBottom: "20px" }}>최근 프로젝트</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+            {recentProjects.map((p) => (
+              <div
+                key={p.id}
+                className="recent-project-mini"
+                style={{ borderBottom: "1px solid var(--border-color)", paddingBottom: "10px" }}
+              >
+                <span
+                  className="mini-title"
+                  style={{ display: "block", fontWeight: "bold", marginBottom: "4px" }}
+                >
+                  <Link
+                    href={`/projects/${p.id}`}
+                    style={{ textDecoration: "none", color: "var(--accent-primary)" }}
+                  >
+                    {p.title}
+                  </Link>
+                </span>
+                <span
+                  className="mini-period"
+                  style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}
+                >
+                  {formatPeriods(p.periods)}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      <div style={{ marginTop: "60px" }}>
-        <h1>기술스택/역량</h1>
-        <div className="grid-2">
+      {/* Row 2: Others (기타 정보) */}
+      <div
+        style={{
+          marginTop: "40px",
+          background: "var(--card-bg)",
+          padding: "30px",
+          borderRadius: "8px",
+          border: "1px solid var(--border-color)",
+        }}
+      >
+        <h2 style={{ marginTop: 0, marginBottom: "20px" }}>기타 정보</h2>
+        <div
+          className="grid-2"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gap: "30px",
+          }}
+        >
           <div>
-            <h3>TECHNICAL</h3>
+            <h3 style={{ marginTop: 0, color: "var(--text-primary)" }}>Interests</h3>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {profile.interests.map((item, i) => (
+                <li key={i} style={{ padding: "6px 0", color: "var(--text-secondary)" }}>
+                  • {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 style={{ marginTop: 0, color: "var(--text-primary)" }}>Education</h3>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {profile.education.map((edu, i) => (
+                <li key={i} style={{ padding: "6px 0", color: "var(--text-secondary)" }}>
+                  <strong style={{ color: "var(--text-primary)" }}>{edu.degree}</strong>
+                  <br />
+                  {edu.school} ({edu.year})
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Row 3: Skills | Hobbies */}
+      <div style={{ marginTop: "40px" }}>
+        <h2>기술 스택 및 취미</h2>
+        <div
+          className="grid-2"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "30px",
+          }}
+        >
+          <div
+            style={{
+              background: "var(--card-bg)",
+              padding: "30px",
+              borderRadius: "8px",
+              border: "1px solid var(--border-color)",
+            }}
+          >
+            <h3 style={{ marginTop: 0, marginBottom: "20px" }}>TECHNICAL</h3>
             {skills.technical.map((s: Skill) => (
               <SkillBar key={s.name} skill={s} />
             ))}
           </div>
-          <div>
-            <h3>HOBBIES</h3>
+          <div
+            style={{
+              background: "var(--card-bg)",
+              padding: "30px",
+              borderRadius: "8px",
+              border: "1px solid var(--border-color)",
+            }}
+          >
+            <h3 style={{ marginTop: 0, marginBottom: "20px" }}>HOBBIES</h3>
             {skills.hobbies.map((s: Skill) => (
               <SkillBar key={s.name} skill={s} />
             ))}
           </div>
-        </div>
-      </div>
-
-      <div style={{ marginTop: "60px" }}>
-        <div className="recent-projects-box">
-          <h3>최근 프로젝트</h3>
-          {recentProjects.map((p) => (
-            <div key={p.id} className="recent-project-mini">
-              <span className="mini-title">
-                <Link href={`/projects/${p.id}`}>{p.title}</Link>
-              </span>
-              <span className="mini-period">{formatPeriods(p.periods)}</span>
-            </div>
-          ))}
         </div>
       </div>
     </>

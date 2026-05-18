@@ -1,3 +1,6 @@
+"use client";
+
+import React, { useState } from "react";
 import { BackLink } from "@/components/layout/BackLink";
 import projectsMeta from "@/data/projects.json";
 import projectDetails from "@/data/project-detail.json";
@@ -14,6 +17,7 @@ import { EmailLargeScale } from "@/components/diagrams/EmailLargeScale";
 import { IntegratedPortal } from "@/components/diagrams/IntegratedPortal";
 import { RbacFlow } from "@/components/diagrams/RbacFlow";
 import { SsoFilter } from "@/components/diagrams/SsoFilter";
+import { TabGroup } from "@/components/ui/TabGroup";
 
 export async function generateStaticParams() {
   return projectsMeta.projects.map((p) => ({
@@ -21,12 +25,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ProjectDetailPage({
+export default function ProjectDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
+  const { id } = React.use(params);
   const meta = (projectsMeta.projects as Project[]).find(
     (p) => p.id === id
   );
@@ -34,47 +38,49 @@ export default async function ProjectDetailPage({
     (d) => d.id === meta?.id || d.project_id === id
   );
 
+  const [activeTabKey, setActiveTabKey] = useState("0");
+
   if (!meta || !detail) return <div>Project not found</div>;
 
-  const renderDiagram = (diagramId: string) => {
-    switch (diagramId) {
-      case "cloud-migration":
-        return <CloudMigrationFlow />;
-      case "enterprise-support":
+  const renderTabDiagram = (flowDiagram: string | undefined) => {
+    if (!flowDiagram) return null;
+    const filename = flowDiagram.split("/").pop();
+    switch (filename) {
+      case "email-large-scale.html":
+        return <EmailLargeScale />;
+      case "email-hybrid.html":
+        return <EmailHybrid />;
+      case "sso-filter.html":
+        return <SsoFilter />;
+      case "rbac-flow.html":
+        return <RbacFlow />;
+      case "container-support.html":
+        return <ContainerSupport />;
+      case "cs-pipeline.html":
         return <CSPipeline />;
-      case "integrated-support":
+      case "integrated-portal.html":
         return <IntegratedPortal />;
-      case "enterprise-email":
-        return (
-          <>
-            <EmailLargeScale />
-            <div style={{ marginTop: "40px" }}>
-              <EmailHybrid />
-            </div>
-          </>
-        );
-      case "messaging-sso":
-        return (
-          <>
-            <SsoFilter />
-            <div style={{ marginTop: "40px" }}>
-              <RbacFlow />
-            </div>
-          </>
-        );
-      case "devops-portal":
-        return (
-          <>
-            <DevopsDbArch />
-            <div style={{ marginTop: "40px" }}>
-              <DevopsPipeline />
-            </div>
-          </>
-        );
+      case "cloud-migration-flow.html":
+        return <CloudMigrationFlow />;
+      case "devops-db-arch.html":
+        return <DevopsDbArch />;
+      case "devops-pipeline.html":
+        return <DevopsPipeline />;
       default:
         return null;
     }
   };
+
+  // Convert tabs to the TabGroup expected format
+  const tabItems = detail.tabs
+    ? detail.tabs.map((tab, idx) => ({
+        key: idx.toString(),
+        label: tab.title,
+      }))
+    : [];
+
+  const activeIdx = parseInt(activeTabKey);
+  const activeTab = detail.tabs ? detail.tabs[activeIdx] : null;
 
   return (
     <>
@@ -91,15 +97,26 @@ export default async function ProjectDetailPage({
         <h2>프로젝트 개요</h2>
         <p>{meta.description}</p>
 
-        {renderDiagram(id)}
+        {/* If the project has tabs, render TabGroup to switch content */}
+        {detail.tabs && detail.tabs.length > 0 && (
+          <div style={{ marginTop: "40px", marginBottom: "30px" }}>
+            <TabGroup
+              tabs={tabItems}
+              activeTab={activeTabKey}
+              onTabChange={(key) => setActiveTabKey(key)}
+            />
+          </div>
+        )}
 
-        {detail.tabs && detail.tabs.map((tab, tIdx) => (
-          <div key={tIdx} style={{ marginTop: "40px" }}>
-            <h2 style={{ color: "var(--accent-primary)", borderBottom: "2px solid var(--accent-primary)" }}>
-              {tab.title}
-            </h2>
-            {tab.sections.map((section, idx) => (
-              <div key={idx}>
+        {/* Render the matching diagram and sections based on tabs or project level */}
+        {activeTab ? (
+          <div style={{ marginTop: "30px" }}>
+            {/* Tab level diagram */}
+            {renderTabDiagram(activeTab.flow_diagram)}
+
+            {/* Tab level sections */}
+            {activeTab.sections.map((section, idx) => (
+              <div key={idx} style={{ marginTop: "30px" }}>
                 <h3>{section.title}</h3>
                 {section.body && <p dangerouslySetInnerHTML={{ __html: section.body.replace(/\n/g, "<br/>") }} />}
                 {section.list && (
@@ -112,22 +129,27 @@ export default async function ProjectDetailPage({
               </div>
             ))}
           </div>
-        ))}
+        ) : (
+          <div style={{ marginTop: "30px" }}>
+            {/* Project level diagram */}
+            {renderTabDiagram(detail.flow_diagram)}
 
-        {detail.sections && detail.sections.map((section, idx) => (
-          <div key={idx}>
-            <hr className="section-divider" />
-            <h2>{section.title}</h2>
-            {section.body && <p dangerouslySetInnerHTML={{ __html: section.body.replace(/\n/g, "<br/>") }} />}
-            {section.list && (
-              <ul>
-                {section.list.map((item, i) => (
-                  <li key={i} dangerouslySetInnerHTML={{ __html: `• ${item}` }} />
-                ))}
-              </ul>
-            )}
+            {/* Project level sections */}
+            {detail.sections && detail.sections.map((section, idx) => (
+              <div key={idx} style={{ marginTop: "30px" }}>
+                <h3>{section.title}</h3>
+                {section.body && <p dangerouslySetInnerHTML={{ __html: section.body.replace(/\n/g, "<br/>") }} />}
+                {section.list && (
+                  <ul>
+                    {section.list.map((item, i) => (
+                      <li key={i} dangerouslySetInnerHTML={{ __html: `• ${item}` }} />
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
     </>
   );
