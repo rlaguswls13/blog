@@ -5,6 +5,7 @@ import { formatPeriods } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import type { Skill } from "@/types";
+import myImage from "../../public/images/myImage.png";
 
 export default function AboutPage() {
   const { profile, skills } = profileData;
@@ -15,7 +16,7 @@ export default function AboutPage() {
       <div className="profile-section">
         <div className="profile-card">
           <Image
-            src="/images/myImage.png"
+            src={myImage}
             alt="Profile"
             className="profile-img"
             width={200}
