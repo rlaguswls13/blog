@@ -3,6 +3,7 @@ import projectsData from "@/data/projects.json";
 import { SkillBar } from "@/components/ui/SkillBar";
 import { formatPeriods } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 import type { Skill } from "@/types";
 
 export default function AboutPage() {
@@ -13,10 +14,13 @@ export default function AboutPage() {
     <>
       <div className="profile-section">
         <div className="profile-card">
-          <img
+          <Image
             src="/images/myImage.png"
             alt="Profile"
             className="profile-img"
+            width={200}
+            height={200}
+            priority
           />
           <h2 style={{ marginBottom: "5px" }}>{profile.name}</h2>
           <p className="role">{profile.role}</p>
