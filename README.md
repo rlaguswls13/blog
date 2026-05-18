@@ -1,34 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 개발자 포트폴리오 (김현진)
 
-## Getting Started
+본 프로젝트는 풀스택 개발자 김현진의 개인 이력, 프로젝트 경험, 기술 블로그형 트러블슈팅(Devlog), 그리고 연락처 정보를 소개하기 위해 설계된 반응형 웹 포트폴리오 사이트입니다.
 
-First, run the development server:
+기존의 레거시 모놀리식 HTML/JS 아키텍처에서 Next.js 16 (App Router), TypeScript, 그리고 MDX 기반의 현대적인 정적 웹 애플리케이션으로 전면 마이그레이션되었습니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 프로젝트 개요
+- 용도: 개발자 이력 관리 및 기술 트러블슈팅 기록(Devlog) 보관
+- 배포 대상: GitHub Pages (정적 내보내기 모드)
+- 주요 개선 사항:
+  - React 컴포넌트 모듈화: 기존의 무거운 단일 HTML 구조들을 재사용성이 높은 독립된 React 컴포넌트로 개편했습니다.
+  - 타입 세이프한 콘텐츠 제어: 정적 JSON 데이터의 형식을 정의하고 src/data/ 디렉터리 내부에 구조화하여 관리의 안정성을 확보했습니다.
+  - 네이티브 캔버스 다이어그램 구현: 성능 저하를 유발하던 기존의 iframe 렌더링 방식을 걷어내고, 15개의 커스텀 React Canvas 컴포넌트를 자체 개발하여 렌더링 속도와 반응형 리사이징 품질을 극대화했습니다.
+  - MDX 기반 콘텐츠 파이프라인: 마크다운 파일 본문 내에 복잡한 아키텍처 다이어그램 컴포넌트를 직접 내장하여 렌더링할 수 있는 유연한 구조를 확보했습니다.
+  - 자동화된 배포 프로세스 구축: GitHub Actions를 통합하여 코드 변경 시 자동으로 빌드를 검증하고 배포를 수행하는 파이프라인을 구축했습니다.
+
+---
+
+## 주요 문서 정보 안내
+
+상세한 아키텍처 분석, 의존성 패키지 명세서, 그리고 환경 구축 및 관리 방법에 대한 가이드는 아래 개별 문서를 참조해 주시기 바랍니다.
+
+- [기술 스택 및 아키텍처 상세 정의서](docs/TECH_STACK.md): 프로젝트의 빌드 사양, 프레임워크 런타임, 커스텀 Canvas 렌더링 엔진 상세 분석을 담고 있습니다.
+- [설치 및 관리 가이드](docs/GUIDE.md): 의존성 설치, 로컬 개발 서버 구동, 정적 빌드 실행 및 GitHub Actions를 통한 CI/CD 배포 관리에 관한 절차를 담고 있습니다.
+
+---
+
+## 디렉터리 구조
+```text
+resume
+ ┣ .github/workflows
+ ┃ ┗ deploy.yml          # GitHub Actions 배포 자동화 파이프라인
+ ┣ docs                  # 추가 가이드 및 명세서 보관 폴더
+ ┃ ┣ GUIDE.md            # 설치 및 관리 가이드
+ ┃ ┗ TECH_STACK.md       # 기술 스택 및 아키텍처 상세 정의서
+ ┣ public/images         # 로컬 이미지 자원 폴더
+ ┣ src
+ ┃ ┣ app                 # Next.js App Router 페이지 및 동적 라우트 구조
+ ┃ ┃ ┣ contact           # 연락처 정보 페이지
+ ┃ ┃ ┣ devlog            # 개발 로그 대시보드 및 상세 포스트 페이지
+ ┃ ┃ ┣ projects          # 프로젝트 이력 및 상세 아키텍처 뷰어
+ ┃ ┃ ┣ resume            # 타임라인 기반 이력서 페이지
+ ┃ ┃ ┣ globals.css       # 통합 스타일 변수 및 전역 스타일시트
+ ┃ ┃ ┣ layout.tsx        # 공통 레이아웃 및 내비게이션 구성
+ ┃ ┃ ┗ page.tsx          # 메인 소개 페이지 (About)
+ ┃ ┣ components          # 공통 React 컴포넌트
+ ┃ ┃ ┣ diagrams          # 15개의 Canvas 기반 TSX 다이어그램 컴포넌트
+ ┃ ┃ ┣ layout            # 상단 메뉴바 및 하단 푸터 구성 컴포넌트
+ ┃ ┃ ┗ ui                # 역량 바, 타임라인 등 공통 UI 요소
+ ┃ ┣ content/devlog      # MDX 포맷의 기술 로그 콘텐츠 파일들
+ ┃ ┣ data                # 공통 정적 JSON 메타데이터
+ ┃ ┣ lib                 # 날짜 포맷팅 및 문자열 공통 유틸리티 함수
+ ┃ ┗ types               # TypeScript 인터페이스 및 타입 정의 파일
+ ┣ next.config.ts         # 정적 배포 및 MDX 호환을 위한 Next.js 설정
+ ┣ package.json           # 프로젝트 패키지 의존성 명세
+ ┗ tsconfig.json          # 타입스크립트 컴파일 구성 설정
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
