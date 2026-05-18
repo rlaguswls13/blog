@@ -69,11 +69,6 @@ export default function DevlogPage() {
                   height: "100%",
                   display: "flex",
                   flexDirection: "column",
-                  border: "1px solid var(--border-color)",
-                  borderRadius: "8px",
-                  padding: "20px",
-                  background: "var(--card-bg)",
-                  transition: "transform 0.2s ease, box-shadow 0.2s ease",
                 }}
               >
                 <div className="devlog-meta" style={{ marginBottom: "10px" }}>
@@ -100,21 +95,12 @@ export default function DevlogPage() {
 
         {/* Pagination Controls */}
         {totalPages > 1 && (
-          <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 40 }}>
+          <div className="pagination-container">
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
               <button
                 key={pageNum}
                 onClick={() => setCurrentPage(pageNum)}
-                style={{
-                  padding: "8px 16px",
-                  borderRadius: "6px",
-                  border: "none",
-                  background: currentPage === pageNum ? "var(--accent-primary)" : "var(--card-bg)",
-                  color: currentPage === pageNum ? "#ffffff" : "var(--text-primary)",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                  transition: "all 0.2s ease",
-                }}
+                className={`pagination-btn ${currentPage === pageNum ? "active" : ""}`}
               >
                 {pageNum}
               </button>

@@ -51,21 +51,12 @@ export default function ProjectsPage() {
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 40 }}>
+        <div className="pagination-container">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
             <button
               key={pageNum}
               onClick={() => setCurrentPage(pageNum)}
-              style={{
-                padding: "8px 16px",
-                borderRadius: "6px",
-                border: "none",
-                background: currentPage === pageNum ? "var(--accent-primary)" : "var(--card-bg)",
-                color: currentPage === pageNum ? "#ffffff" : "var(--text-primary)",
-                cursor: "pointer",
-                fontWeight: "bold",
-                transition: "all 0.2s ease",
-              }}
+              className={`pagination-btn ${currentPage === pageNum ? "active" : ""}`}
             >
               {pageNum}
             </button>

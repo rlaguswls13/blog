@@ -398,7 +398,9 @@ ul { list-style: none; padding: 0; }
     color: var(--accent-primary);
     font-size: 1.1rem;
 }
-.mdx-content p { margin-left: 20px; line-height: 1.8; margin-bottom: 1.2rem; }
+.mdx-content p { margin-left: 0; line-height: 1.8; margin-bottom: 1.2rem; }
+.mdx-content ul, .mdx-content ol { margin-left: 0; padding-left: 0; margin-bottom: 1.2rem; }
+.mdx-content li { margin-left: 0; line-height: 1.8; margin-bottom: 0.5rem; }
 .mdx-content strong { color: var(--text-primary); }
 .mdx-content pre {
     background-color: var(--bg-secondary);
@@ -420,6 +422,43 @@ ul { list-style: none; padding: 0; }
 .data-table th { background-color: var(--bg-tertiary); color: var(--accent-primary); font-weight: 600; }
 .data-table tr:last-child td { border-bottom: none; }
 .data-table td { color: var(--text-primary); }
+
+/* Unified About page cards for perfect style consistency */
+.bio-card, .recent-projects-card, .skills-card, .others-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-speed);
+}
+
+/* Reusable premium pagination */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+.pagination-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all var(--transition-speed);
+}
+.pagination-btn:hover {
+    background-color: var(--bg-tertiary);
+    border-color: var(--accent-primary);
+}
+.pagination-btn.active {
+    background-color: var(--accent-primary);
+    color: #ffffff;
+    border-color: var(--accent-primary);
+}
 
 /* Mobile */
 @media (max-width: 768px) {

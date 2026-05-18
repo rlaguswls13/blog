@@ -70,10 +70,6 @@ export default function AboutPage() {
         <div
           className="bio-card"
           style={{
-            background: "var(--card-bg)",
-            padding: "30px",
-            borderRadius: "8px",
-            border: "1px solid var(--border-color)",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -87,16 +83,7 @@ export default function AboutPage() {
         </div>
 
         {/* Column 3: Recent Projects */}
-        <div
-          className="recent-projects-card"
-          style={{
-            background: "var(--card-bg)",
-            padding: "30px",
-            borderRadius: "8px",
-            border: "1px solid var(--border-color)",
-            height: "100%",
-          }}
-        >
+        <div className="recent-projects-card" style={{ height: "100%" }}>
           <h2 style={{ marginTop: 0, marginBottom: "20px" }}>최근 프로젝트</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
             {recentProjects.map((p) => (
@@ -129,15 +116,7 @@ export default function AboutPage() {
       </div>
 
       {/* Row 2: Others (기타 정보) */}
-      <div
-        style={{
-          marginTop: "40px",
-          background: "var(--card-bg)",
-          padding: "30px",
-          borderRadius: "8px",
-          border: "1px solid var(--border-color)",
-        }}
-      >
+      <div className="others-card" style={{ marginTop: "40px" }}>
         <h2 style={{ marginTop: 0, marginBottom: "20px" }}>기타 정보</h2>
         <div
           className="grid-2"
@@ -183,27 +162,13 @@ export default function AboutPage() {
             gap: "30px",
           }}
         >
-          <div
-            style={{
-              background: "var(--card-bg)",
-              padding: "30px",
-              borderRadius: "8px",
-              border: "1px solid var(--border-color)",
-            }}
-          >
+          <div className="skills-card">
             <h3 style={{ marginTop: 0, marginBottom: "20px" }}>TECHNICAL</h3>
             {skills.technical.map((s: Skill) => (
               <SkillBar key={s.name} skill={s} />
             ))}
           </div>
-          <div
-            style={{
-              background: "var(--card-bg)",
-              padding: "30px",
-              borderRadius: "8px",
-              border: "1px solid var(--border-color)",
-            }}
-          >
+          <div className="skills-card">
             <h3 style={{ marginTop: 0, marginBottom: "20px" }}>HOBBIES</h3>
             {skills.hobbies.map((s: Skill) => (
               <SkillBar key={s.name} skill={s} />
