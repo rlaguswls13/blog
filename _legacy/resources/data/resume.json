@@ -1,0 +1,60 @@
+{
+  "resume": {
+    "work": [
+      {
+        "title": "개발2팀 / 프로",
+        "date": "2024.08 - 2026.02 | 휴머스온(주)",
+        "description": "자사 메시징(이메일/푸시/문자/카카오비즈) 채널 통합지원 및 커스터마이징 프로젝트 수행"
+      },
+      {
+        "title": "Cloud Management Platform 유지보수팀 / 대리",
+        "date": "2021.09 - 2024.02 | 굿모닝아이텍(주)",
+        "description": "DevOps 포털 리팩토링 및 유지보수, 통합관리시스템 클라우드 마이그레이션 주도. K8s 및 Docker 환경 최적화 수행."
+      }
+    ],
+    "education": [
+      {
+        "title": "Python & Elasticsearch 기반 금융솔루션 개발자 과정",
+        "date": "2026.05 - 현재 | KH정보교육원",
+        "description": "Python, Java, SQL을 활용한 빅데이터 금융솔루션 개발 과정"
+      },
+      {
+        "title": "서울사이버대학교 (컴퓨터공학과|빅데이터·정보보호학과)",
+        "date": "2024.03 - 2026.02 | 졸업",
+        "description": "컴퓨터 공학 심화 학습 진행 중"
+      },
+      {
+        "title": "UI/UX 웹 콘텐츠 융합 응용 SW 개발자 과정",
+        "date": "2021.03 - 2021.08 | KH정보교육원",
+        "description": "Java, Spring, 웹 표준 기술 등 풀스택 개발 과정 수료 (888시간)"
+      },
+      {
+        "title": "서울과학기술대학교 (신소재공학과)",
+        "date": "2012.03 - 2018.02 | 졸업",
+        "description": "공학사 학위 취득"
+      }
+    ],
+    "certification": [
+      {
+        "title": "정보처리기사",
+        "date": "2026.05 | 필기합격 (2026.07 실기 예정)",
+        "description": ""
+      },
+      {
+        "title": "ADsP (데이터분석 준전문가)",
+        "date": "2024.06 | 취득 | 한국데이터산업진흥원",
+        "description": "데이터 이해, 데이터 분석 기획, 데이터 분석 역량 검증 [자격번호: ADsP-041003058]"
+      },
+      {
+        "title": "SQLD (SQL 개발자) 취득",
+        "date": "2024.04 | 취득 | 한국데이터산업진흥원",
+        "description": "데이터 모델모델링, SQL 기본 및 활용 능력 검증 [자격번호: SQLD-052008412]"
+      },
+      {
+        "title": "CKA (Certified Kubernetes Administrator)",
+        "date": "2023.04 | 2026.04 만료 | CNCF",
+        "description": "쿠버네티스 관리자 자격 인증 [Cert ID: LF-b2czca9bdo]"
+      }
+    ]
+  }
+}

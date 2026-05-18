@@ -1,50 +1,34 @@
-# 김현진 포트폴리오 (Developer Portfolio)
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-본 프로젝트는 풀스택 개발자 김현진의 개인 이력, 진행한 프로젝트, 그리고 연락처 정보를 소개하기 위해 제작된 반응형 웹 포트폴리오 사이트입니다.
+## Getting Started
 
-## 프로젝트 개요
-- **목적:** 개인 이력 정리 및 포트폴리오 소개
-- **주요 기술:** HTML, CSS (Vanilla), JavaScript (ES6 Modules)
-- **특징:**
-  - `data.json`을 활용한 동적 데이터 렌더링을 통해 유지보수성 향상
-  - 다크모드 및 라이트모드 테마 지원 (`theme.js` 활용)
-  - 다양한 디바이스에 대응하는 반응형 웹 디자인 적용
-  - 컴포넌트 기반 자바스크립트 모듈화 (`main.js`, `renderers.js` 등)
+First, run the development server:
 
-## 내비게이션 (메뉴) 안내
-
-본 포트폴리오 사이트는 다음과 같은 4가지 주요 메뉴로 구성되어 있습니다.
-
-### 1. About (`index.html`)
-- **개요:** 개발자 본인에 대한 전반적인 소개를 담고 있는 메인 페이지입니다.
-- **주요 내용:** 프로필 이미지, 현재 역할, 자기소개(Bio), 주요 관심사, 학력 요약, 그리고 보유하고 있는 기술 스택(Skills)과 취미를 시각적인 프로그레스 바 형태로 보여줍니다.
-
-### 2. Projects (`view/projects.html`)
-- **개요:** 그동안 참여하고 개발한 주요 프로젝트들의 목록을 제공합니다.
-- **주요 내용:** 이메일 대용량 처리 서버 개발, SSO 연동 고도화, 클라우드 마이그레이션 등 실무에서 진행한 핵심 프로젝트들이 카드 형태로 나열됩니다. 각 프로젝트 카드를 클릭하면 상세한 기술 스택과 업무 내용을 확인할 수 있는 상세 페이지(`project-detail.html` 등)로 이동합니다.
-
-### 3. Resume (`view/resume.html`)
-- **개요:** 상세한 이력(경력 및 학위)을 연대기 순으로 확인할 수 있는 페이지입니다.
-- **주요 내용:** 실무 경력(Work Experience), 교육 수료 내역 및 학력(Education), 그리고 취득한 자격증(Certification - CKA, SQLD, ADsP, 정보처리기사 등) 정보를 타임라인 또는 리스트 형태로 깔끔하게 제공합니다.
-
-### 4. Contact (`view/contact.html`)
-- **개요:** 저에게 연락할 수 있는 채널을 안내하는 페이지입니다.
-- **주요 내용:** 간단한 인사말과 함께 이메일 주소, 전화번호 등의 연락처 정보가 포함되어 있어, 채용 및 협업 제안 시 쉽게 연락을 취할 수 있습니다.
-
-## 🛠️ 폴더 구조
-```text
-📦 resume
- ┣ 📂 resources
- ┃ ┣ 📂 css       # 공통 및 페이지별 스타일시트 (global.css, home.css 등)
- ┃ ┣ 📂 images    # 프로필 및 프로젝트 관련 이미지 에셋
- ┃ ┣ 📂 js        # 모듈화된 자바스크립트 파일 (main.js, renderers.js 등)
- ┃ ┗ 📜 data.json # 사이트 전체 콘텐츠를 관리하는 통합 데이터 파일
- ┣ 📂 view
- ┃ ┣ 📂 project   # 개별 프로젝트 상세 소개 페이지 HTML 모음
- ┃ ┣ 📜 contact.html
- ┃ ┣ 📜 project-detail.html
- ┃ ┣ 📜 projects.html
- ┃ ┗ 📜 resume.html
- ┣ 📜 index.html  # 메인 페이지 (About)
- ┗ 📜 README.md   # 프로젝트 소개 문서
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

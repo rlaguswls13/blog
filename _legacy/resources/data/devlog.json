@@ -1,0 +1,88 @@
+{
+  "tech_study": [],
+  "problem_solving": [
+    {
+      "id": "prob-1",
+      "title": "고가용성 분산 환경에서의 분산 락(Distributed Lock) 구현",
+      "date": "2026.05.12",
+      "tags": [
+        "Redis",
+        "Concurrency",
+        "Backend"
+      ],
+      "description": "동시성 이슈를 해결하기 위해 Redis Redlock 알고리즘을 활용하여 동시 주문 처리 시스템의 정합성을 확보한 사례입니다."
+    },
+    {
+      "id": "prob-2",
+      "title": "Legacy 시스템 마이그레이션 중 인코딩 깨짐 문제 해결",
+      "date": "2026.03.20",
+      "tags": [
+        "Troubleshooting",
+        "Encoding",
+        "Linux"
+      ],
+      "description": "EUC-KR 기반의 레거시 DB 데이터를 UTF-8 환경으로 이전하며 발생한 문자열 깨짐 현상을 쉘 스크립트와 커스텀 파서를 통해 해결했습니다."
+    },
+    {
+      "id": "prob-3",
+      "title": "[Troubleshooting] Java 8 환경에서 10MB 거대 객체 처리와 G1GC 최적화 전략",
+      "date": "2026.05.15",
+      "tags": [
+        "Java8",
+        "G1GC",
+        "ZGC",
+        "JVM_Tuning",
+        "GraalVM"
+      ],
+      "description": "대규모 메시징 서비스에서 10MB 단위 거대 객체(Humongous Object)로 인해 발생하는 빈번한 Full GC와 메모리 부족(OOM) 현상을 분석하고, 코드 레벨 최적화 및 G1GC 옵션 튜닝을 통해 성능을 개선한 사례입니다."
+    },
+    {
+      "id": "prob-4",
+      "title": "[Troubleshooting] Spring Quartz 분산 환경 최적화 및 HA 아키텍처 고려한 문제 해결",
+      "date": "2026.05.15",
+      "tags": [
+        "Spring",
+        "Quartz",
+        "HA",
+        "Clustering",
+        "Sharding"
+      ],
+      "description": "이중화 클러스터링 환경에서 발생한 스케줄링 중복 등록과 작업 쏠림(Greedy Locking) 현상을 분석하고, 등록/실행 역할 분리 및 쿼리 파티셔닝 기반 균등 분배 아키텍처로 해결한 사례입니다."
+    },
+    {
+      "id": "prob-5",
+      "title": "[Troubleshooting] ActiveMQ KahaDB 디스크 고갈 문제와 발송 속도 제어(Rate Limit) 전략",
+      "date": "2026.05.15",
+      "tags": [
+        "ActiveMQ",
+        "KahaDB",
+        "Disk Full",
+        "Rate Limit",
+        "Backpressure"
+      ],
+      "description": "ActiveMQ KahaDB의 블록 관리 특성으로 인한 디스크 고갈 문제를 진단하고, Threshold 기반 역압(Backpressure) 및 타임아웃 최적화를 통해 시스템 안정성을 확보한 사례입니다."
+    },
+    {
+      "id": "prob-6",
+      "title": "병목 현상을 줄이기 위한 Pub/Sub 처리 방식 도입",
+      "date": "2026.05.15",
+      "tags": [
+        "Pub/Sub",
+        "Architecture",
+        "Redis"
+      ],
+      "description": "단일 컴포넌트에 집중되는 트래픽 병목 현상을 해소하기 위해 발행-구독(Publish-Subscribe) 모델을 도입하여 이벤트를 분산 처리하고 시스템 결합도를 낮춘 아키텍처 리팩토링 사례입니다."
+    },
+    {
+      "id": "prob-7",
+      "title": "API 비동기화 응답 처리 방식 고도화",
+      "date": "2026.05.15",
+      "tags": [
+        "API",
+        "Asynchronous",
+        "Spring WebFlux"
+      ],
+      "description": "동기 방식의 외부 API 연동으로 인한 시스템 블로킹(Blocking) 문제를 해결하기 위해 비동기 논블로킹(Non-blocking) 방식의 응답 처리 로직을 구현하여 전체 스루풋(Throughput)을 향상시킨 방법론입니다."
+    }
+  ]
+}
