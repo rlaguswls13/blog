@@ -72,6 +72,7 @@ export interface ProjectDetail {
 export interface DevlogEntry {
   id: string;
   title: string;
+  package?: string;
   date: string;
   tags: string[];
   description: string;
@@ -88,6 +89,7 @@ export type DevlogCategory = "tech_study" | "problem_solving";
 export interface DevlogFrontmatter {
   id: string;
   title: string;
+  package?: string;
   date: string;
   tags: string[];
   description: string;

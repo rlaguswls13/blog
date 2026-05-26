@@ -659,3 +659,94 @@ ul { list-style: none; padding: 0; }
     .profile-section { grid-template-columns: 1fr; }
     .profile-card { position: static; }
 }
+
+/* Devlog Sub-Category Nav Layout */
+.devlog-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.devlog-sidebar {
+  width: 100%;
+}
+
+.devlog-sidebar nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 10px;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-primary) var(--bg-tertiary);
+}
+
+.devlog-sidebar nav::-webkit-scrollbar {
+  height: 6px;
+}
+
+.devlog-sidebar nav::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 10px;
+}
+
+.devlog-sidebar nav::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+}
+
+.devlog-sidebar nav::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+.devlog-main {
+  width: 100%;
+}
+
+/* Package Pill Styles */
+.pkg-pill {
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  outline: none;
+  text-align: left;
+  width: 100%;
+}
+
+.pkg-pill:hover {
+  background: rgba(187, 134, 252, 0.1);
+  color: var(--text-primary);
+}
+
+.pkg-pill.active {
+  background: transparent;
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+
+@media (min-width: 1100px) {
+  .devlog-layout {
+    position: relative;
+  }
+  .devlog-sidebar {
+    position: absolute;
+    left: -180px;
+    top: 0;
+    width: 160px;
+    height: 100%;
+  }
+  .devlog-sidebar nav {
+    flex-direction: column;
+    overflow-x: visible;
+    padding-bottom: 0;
+    position: sticky;
+    top: 100px;
+  }
+}

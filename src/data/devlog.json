@@ -12,7 +12,8 @@
         "DevOps",
         "TechStudy"
       ],
-      "description": "오래된 SVN/NAS 환경의 10만여 건 대량 파일을 FTP/SFTP로 이관하며 발생한 인코딩 깨짐 문제를, Python 기반 자동 매핑 및 전환 솔루션으로 실질적 복원율 100%를 달성한 가이드입니다."
+      "description": "오래된 SVN/NAS 환경의 10만여 건 대량 파일을 FTP/SFTP로 이관하며 발생한 인코딩 깨짐 문제를, Python 기반 자동 매핑 및 전환 솔루션으로 실질적 복원율 100%를 달성한 가이드입니다.",
+      "package": "architecture"
     },
     {
       "id": "tech-2",
@@ -26,7 +27,8 @@
         "Logging",
         "TechStudy"
       ],
-      "description": "단일 모듈 환경에서 서비스 로깅의 결합도를 낮추고 비동기 처리 및 트랜잭션 안전성을 확보하는 아키텍처 전환 가이드"
+      "description": "단일 모듈 환경에서 서비스 로깅의 결합도를 낮추고 비동기 처리 및 트랜잭션 안전성을 확보하는 아키텍처 전환 가이드",
+      "package": "architecture"
     },
     {
       "id": "tech-3",
@@ -38,7 +40,8 @@
         "Container",
         "DevOps"
       ],
-      "description": "가상화 기술의 핵심인 Docker 컨테이너의 기본 개념과 구동 프로세스, 그리고 아키텍처에 대해 알아봅니다."
+      "description": "가상화 기술의 핵심인 Docker 컨테이너의 기본 개념과 구동 프로세스, 그리고 아키텍처에 대해 알아봅니다.",
+      "package": "docker"
     },
     {
       "id": "tech-4",
@@ -50,7 +53,8 @@
         "Command",
         "DevOps"
       ],
-      "description": "실무에서 자주 쓰이는 Docker 명령어의 다양한 옵션과 상세한 활용법을 정리했습니다."
+      "description": "실무에서 자주 쓰이는 Docker 명령어의 다양한 옵션과 상세한 활용법을 정리했습니다.",
+      "package": "docker"
     },
     {
       "id": "tech-5",
@@ -63,7 +67,8 @@
         "Volume",
         "NAS"
       ],
-      "description": "컨테이너의 데이터 휘발성을 극복하기 위한 Volume, Bind Mount, NAS/SAN 연동 등 다양한 스토리지 세팅 방법을 다룹니다."
+      "description": "컨테이너의 데이터 휘발성을 극복하기 위한 Volume, Bind Mount, NAS/SAN 연동 등 다양한 스토리지 세팅 방법을 다룹니다.",
+      "package": "docker"
     },
     {
       "id": "tech-6",
@@ -75,7 +80,8 @@
         "Network",
         "Port"
       ],
-      "description": "컨테이너 간 통신 및 외부 네트워크 통신을 제어하기 위한 Docker Network의 동작 원리와 세팅 방법을 학습합니다."
+      "description": "컨테이너 간 통신 및 외부 네트워크 통신을 제어하기 위한 Docker Network의 동작 원리와 세팅 방법을 학습합니다.",
+      "package": "docker"
     },
     {
       "id": "tech-7",
@@ -88,7 +94,8 @@
         "AppArmor",
         "Env"
       ],
-      "description": "커널을 공유하는 컨테이너 환경의 보안 취약점을 극복하기 위해 AppArmor를 활용한 Root 공격 억제 및 안전한 환경변수 관리 방법을 다룹니다."
+      "description": "커널을 공유하는 컨테이너 환경의 보안 취약점을 극복하기 위해 AppArmor를 활용한 Root 공격 억제 및 안전한 환경변수 관리 방법을 다룹니다.",
+      "package": "docker"
     },
     {
       "id": "tech-8",
@@ -101,7 +108,8 @@
         "Dockerfile",
         "Entrypoint"
       ],
-      "description": "기존 컨테이너를 Commit 하는 방식부터 Dockerfile을 작성하여 커스텀 이미지를 빌드하는 세밀한 과정과 entry.sh 스크립트 활용법을 비교 분석합니다."
+      "description": "기존 컨테이너를 Commit 하는 방식부터 Dockerfile을 작성하여 커스텀 이미지를 빌드하는 세밀한 과정과 entry.sh 스크립트 활용법을 비교 분석합니다.",
+      "package": "docker"
     },
     {
       "id": "tech-9",
@@ -114,7 +122,8 @@
         "Podman",
         "Kubernetes"
       ],
-      "description": "여전히 강력한 컨테이너 기술 생태계에서, Docker 대신 Podman이 대안으로 떠오르는 이유와 K8s 전환 측면에서의 장단점을 분석합니다."
+      "description": "여전히 강력한 컨테이너 기술 생태계에서, Docker 대신 Podman이 대안으로 떠오르는 이유와 K8s 전환 측면에서의 장단점을 분석합니다.",
+      "package": "docker"
     },
     {
       "id": "tech-10",
@@ -128,7 +137,8 @@
         "DirectStorage",
         "Architecture"
       ],
-      "description": "NAS와 SAN의 인프라 구성 레벨 연결 방식과 DirectStorage의 OS-하드웨어 간 최신 데이터 전송 API 기술의 명확한 차이점을 비교 분석합니다."
+      "description": "NAS와 SAN의 인프라 구성 레벨 연결 방식과 DirectStorage의 OS-하드웨어 간 최신 데이터 전송 API 기술의 명확한 차이점을 비교 분석합니다.",
+      "package": "storage"
     },
     {
       "id": "tech-11",
@@ -142,7 +152,8 @@
         "NVMe",
         "Hardware"
       ],
-      "description": "스토리지 연결 인프라망을 넘어, 본체 내부에 직접 장착되는 물리적 저장 매체들의 구조와 데이터 전송 버스의 명확한 차이점을 분석합니다."
+      "description": "스토리지 연결 인프라망을 넘어, 본체 내부에 직접 장착되는 물리적 저장 매체들의 구조와 데이터 전송 버스의 명확한 차이점을 분석합니다.",
+      "package": "storage"
     },
     {
       "id": "tech-12",
@@ -157,7 +168,8 @@
         "Apache",
         "JEUS"
       ],
-      "description": "Apache httpd, Nginx, Tomcat, JEUS 등 웹 서버와 WAS의 특징을 비교하고, 현대 클라우드 및 MSA 환경에서 Tomcat이 사실상 표준으로 자리 잡은 이유를 분석합니다."
+      "description": "Apache httpd, Nginx, Tomcat, JEUS 등 웹 서버와 WAS의 특징을 비교하고, 현대 클라우드 및 MSA 환경에서 Tomcat이 사실상 표준으로 자리 잡은 이유를 분석합니다.",
+      "package": "was"
     },
     {
       "id": "tech-13",
@@ -171,7 +183,8 @@
         "SSL",
         "Security"
       ],
-      "description": "Tomcat의 핵심 설정 파일들의 역할과 setenv.sh를 활용한 구동 옵션 분리 전략, 그리고 최신 HTTP/2 및 OpenSSL 기반의 HTTPS 설정 방법을 알아봅니다."
+      "description": "Tomcat의 핵심 설정 파일들의 역할과 setenv.sh를 활용한 구동 옵션 분리 전략, 그리고 최신 HTTP/2 및 OpenSSL 기반의 HTTPS 설정 방법을 알아봅니다.",
+      "package": "was"
     }
   ],
   "problem_solving": [
@@ -187,7 +200,8 @@
         "GraalVM",
         "Troubleshooting"
       ],
-      "description": "대규모 메시징 서비스에서 10MB 단위 거대 객체(Humongous Object)로 인해 발생하는 빈번한 Full GC와 메모리 부족(OOM) 현상을 분석하고, 코드 레벨 최적화 및 G1GC 옵션 튜닝을 통해 성능을 개선한 사례입니다."
+      "description": "대규모 메시징 서비스에서 10MB 단위 거대 객체(Humongous Object)로 인해 발생하는 빈번한 Full GC와 메모리 부족(OOM) 현상을 분석하고, 코드 레벨 최적화 및 G1GC 옵션 튜닝을 통해 성능을 개선한 사례입니다.",
+      "package": "java"
     },
     {
       "id": "prob-2",
@@ -201,7 +215,8 @@
         "Sharding",
         "Troubleshooting"
       ],
-      "description": "이중화 클러스터링 환경에서 발생한 스케줄링 중복 등록과 작업 쏠림(Greedy Locking) 현상을 분석하고, 등록/실행 역할 분리 및 쿼리 파티셔닝 기반 균등 분배 아키텍처로 해결한 사례입니다."
+      "description": "이중화 클러스터링 환경에서 발생한 스케줄링 중복 등록과 작업 쏠림(Greedy Locking) 현상을 분석하고, 등록/실행 역할 분리 및 쿼리 파티셔닝 기반 균등 분배 아키텍처로 해결한 사례입니다.",
+      "package": "spring"
     },
     {
       "id": "prob-3",
@@ -215,7 +230,8 @@
         "Backpressure",
         "Troubleshooting"
       ],
-      "description": "ActiveMQ KahaDB의 블록 관리 특성으로 인한 디스크 고갈 문제를 진단하고, Threshold 기반 역압(Backpressure) 및 타임아웃 최적화를 통해 시스템 안정성을 확보한 사례입니다."
+      "description": "ActiveMQ KahaDB의 블록 관리 특성으로 인한 디스크 고갈 문제를 진단하고, Threshold 기반 역압(Backpressure) 및 타임아웃 최적화를 통해 시스템 안정성을 확보한 사례입니다.",
+      "package": "messaging"
     },
     {
       "id": "prob-4",
@@ -228,7 +244,8 @@
         "MSA",
         "Troubleshooting"
       ],
-      "description": "기존의 100% 동기식 처리에서 발생하는 병목을 해결하기 위해 비동기 기반의 아키텍처로 개편한 전체 흐름 및 해결 전략입니다."
+      "description": "기존의 100% 동기식 처리에서 발생하는 병목을 해결하기 위해 비동기 기반의 아키텍처로 개편한 전체 흐름 및 해결 전략입니다.",
+      "package": "architecture"
     },
     {
       "id": "prob-5",
@@ -242,7 +259,8 @@
         "Java",
         "Troubleshooting"
       ],
-      "description": "Tomcat 클러스터링 설정(Tribes)이 정상임에도 세션 공유가 실패하는 현상에 대해, Java 내부 직렬화 및 보안 검증 키 불일치 원인과 해결책을 분석합니다."
+      "description": "Tomcat 클러스터링 설정(Tribes)이 정상임에도 세션 공유가 실패하는 현상에 대해, Java 내부 직렬화 및 보안 검증 키 불일치 원인과 해결책을 분석합니다.",
+      "package": "was"
     }
   ]
 }

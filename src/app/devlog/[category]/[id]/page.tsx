@@ -3,7 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
-import { BackLink } from "@/components/layout/BackLink";
+import { DevlogBackLink } from "@/components/layout/DevlogBackLink";
 import { TagList } from "@/components/ui/TagBadge";
 import { G1GCMemory } from "@/components/diagrams/G1GCMemory";
 import { KahaDBBlocks } from "@/components/diagrams/KahaDBBlocks";
@@ -36,6 +36,38 @@ const components = {
   EventBusSimulator,
 };
 
+function getAllMdxFiles(dir: string): string[] {
+  let results: string[] = [];
+  if (!fs.existsSync(dir)) return results;
+  
+  const files = fs.readdirSync(dir);
+  for (const file of files) {
+    const fullPath = path.join(dir, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      results = results.concat(getAllMdxFiles(fullPath));
+    } else if (file.endsWith(".mdx")) {
+      results.push(fullPath);
+    }
+  }
+  return results;
+}
+
+function findMdxFile(dir: string, id: string): string | null {
+  if (!fs.existsSync(dir)) return null;
+  
+  const files = fs.readdirSync(dir);
+  for (const file of files) {
+    const fullPath = path.join(dir, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      const found = findMdxFile(fullPath, id);
+      if (found) return found;
+    } else if (file === `${id}.mdx`) {
+      return fullPath;
+    }
+  }
+  return null;
+}
+
 export async function generateStaticParams() {
   const contentDir = path.join(process.cwd(), "src/content/devlog");
   const categories = ["tech_study", "problem_solving"];
@@ -43,16 +75,12 @@ export async function generateStaticParams() {
 
   for (const category of categories) {
     const categoryDir = path.join(contentDir, category);
-    if (fs.existsSync(categoryDir)) {
-      const files = fs.readdirSync(categoryDir);
-      for (const file of files) {
-        if (file.endsWith(".mdx")) {
-          params.push({
-            category,
-            id: file.replace(/\.mdx$/, ""),
-          });
-        }
-      }
+    const mdxFiles = getAllMdxFiles(categoryDir);
+    for (const file of mdxFiles) {
+      params.push({
+        category,
+        id: path.basename(file, ".mdx"),
+      });
     }
   }
 
@@ -65,10 +93,12 @@ export default async function DevlogDetailPage({
   params: Promise<{ category: string; id: string }>;
 }) {
   const { category, id } = await params;
-  const filePath = path.join(
-    process.cwd(),
-    `src/content/devlog/${category}/${id}.mdx`
-  );
+  const categoryDir = path.join(process.cwd(), `src/content/devlog/${category}`);
+  const filePath = findMdxFile(categoryDir, id);
+
+  if (!filePath) {
+    return <div>Devlog not found</div>;
+  }
 
   let fileContent;
   try {
@@ -79,24 +109,9 @@ export default async function DevlogDetailPage({
 
   const { data, content } = matter(fileContent);
 
-  // Calculate which page this entry is on
-  let pageNum = 1;
-  const itemsPerPage = 6;
-  const categoryEntries = devlogData[category as DevlogCategory] as DevlogEntry[] | undefined;
-  
-  if (categoryEntries) {
-    const sortedEntries = sortByDateDesc(categoryEntries);
-    const index = sortedEntries.findIndex((entry) => entry.id === id);
-    if (index !== -1) {
-      pageNum = Math.floor(index / itemsPerPage) + 1;
-    }
-  }
-
-  const backLinkHref = `/devlog?tab=${category}&page=${pageNum}`;
-
   return (
     <>
-      <BackLink href={backLinkHref} label="목록으로" />
+      <DevlogBackLink category={category} />
       <div className="project-card" style={{ marginBottom: "40px" }}>
         <div className="devlog-meta" style={{ marginBottom: "15px" }}>
           <span>📅 {data.date}</span>
