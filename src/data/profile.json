@@ -8,10 +8,20 @@
     "bio_text": "Java & Spring Boot 기반의 견고한 백엔드 아키텍처 설계와 React를 활용한 프론트엔드 개발 역량을 두루 갖춘 풀스택 지향 개발자입니다. LGU+, 스마일게이트 등 엔터프라이즈 환경에서 대용량 메시징 시스템을 구축하고, Okta SSO 및 Spring Security를 활용한 인증/인가 고도화 작업을 주도했습니다. 단순 개발을 넘어 레거시 시스템의 마이그레이션과 DB 쿼리 튜닝, 비동기 처리를 통한 트래픽 분산 등 시스템 성능 최적화에 강점이 있으며, 데이터 기반의 장애 분석을 통해 안정적인 서비스를 제공하는 데 가치를 둡니다.",
     "social": [
       {
-        "icon": "📧",
+        "icon": "phone",
+        "url": "tel:010-3545-8473"
+      },
+      {
+        "icon": "mail",
         "link": "mailto:gcd1324@gmail.com"
+      },
+      {
+        "icon": "github",
+        "url": "https://github.com/rlaguswls13"
       }
-    ],
+    ]
+  },
+  "others": {
     "interests": [
       "Sustainable Development",
       "High Volume Traffic",
@@ -29,9 +39,7 @@
         "year": "2012 ~ 2018",
         "school": "서울과학기술대학교"
       }
-    ]
-  },
-  "skills": {
+    ],
     "technical": [
       {
         "name": "Java & SpringBoot",

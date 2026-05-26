@@ -6,7 +6,12 @@
       {
         "label": "Mobile",
         "url": "tel:010-3545-8473",
-        "icon": "📱"
+        "icon": "phone"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/rlaguswls13",
+        "icon": "github"
       }
     ]
   }

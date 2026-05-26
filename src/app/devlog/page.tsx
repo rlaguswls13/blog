@@ -86,7 +86,7 @@ export default function DevlogPage() {
         </div>
 
         {/* Pagination Controls */}
-        {totalPages > 1 && (
+        {totalPages >= 1 && (
           <div className="pagination-container">
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
               <button

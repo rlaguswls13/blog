@@ -10,7 +10,7 @@ import type { Project } from "@/types";
 export default function ProjectsPage() {
   const sorted = sortByDateDesc(projectsData.projects as Project[]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // 2 rows of 2 columns
+  const itemsPerPage = 6; // 6 cards per page
 
   const totalPages = Math.ceil(sorted.length / itemsPerPage);
   const paginatedProjects = sorted.slice(
@@ -43,7 +43,7 @@ export default function ProjectsPage() {
       </div>
 
       {/* Pagination Controls */}
-      {totalPages > 1 && (
+      {totalPages >= 1 && (
         <div className="pagination-container">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
             <button

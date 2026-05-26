@@ -8,6 +8,12 @@ export function parseDate(dateStr: string): Date | null {
   if (cleanStr === "현재") return new Date();
 
   const parts = cleanStr.split(".");
+  if (parts.length === 3) {
+    const year = parseInt(parts[0]);
+    const month = parseInt(parts[1]) - 1;
+    const day = parseInt(parts[2]);
+    return new Date(year, month, day);
+  }
   if (parts.length === 2) {
     const year = parseInt(parts[0]);
     const month = parseInt(parts[1]) - 1;
@@ -20,6 +26,16 @@ export function formatPeriods(periods: string[]): string {
   if (!periods || periods.length === 0) return "";
   if (periods.length <= 2) return periods.join(" / ");
   return `${periods[0]} / ... / ${periods[periods.length - 1]}`;
+}
+
+export function formatMiniPeriod(periods: string[]): string {
+  if (!periods || periods.length === 0) return "";
+  if (periods.length === 1) return periods[0];
+  const firstPeriod = periods[0];
+  const lastPeriod = periods[periods.length - 1];
+  const firstStart = firstPeriod.split(" - ")[0] || firstPeriod;
+  const lastEnd = lastPeriod.split(" - ")[1] || lastPeriod;
+  return `${firstStart} ... ${lastEnd}`;
 }
 
 export function calculateTotalPeriod(periods: string[]): string {
@@ -55,12 +71,38 @@ export function sortByDateDesc<T extends { periods?: string[]; date?: string }>(
   items: T[]
 ): T[] {
   return [...items].sort((a, b) => {
-    const aDateStr = a.periods?.[0]?.split(" - ")[0] || a.date || "";
-    const bDateStr = b.periods?.[0]?.split(" - ")[0] || b.date || "";
-    const aDate = parseDate(aDateStr);
-    const bDate = parseDate(bDateStr);
-    if (!aDate || !bDate) return 0;
-    return bDate.getTime() - aDate.getTime();
+    // Find the latest start date for A
+    let aLatest: Date | null = null;
+    if (a.periods && a.periods.length > 0) {
+      a.periods.forEach((p) => {
+        const startStr = p.split(" - ")[0];
+        const d = parseDate(startStr);
+        if (d && (!aLatest || d > aLatest)) {
+          aLatest = d;
+        }
+      });
+    } else if (a.date) {
+      aLatest = parseDate(a.date);
+    }
+
+    // Find the latest start date for B
+    let bLatest: Date | null = null;
+    if (b.periods && b.periods.length > 0) {
+      b.periods.forEach((p) => {
+        const startStr = p.split(" - ")[0];
+        const d = parseDate(startStr);
+        if (d && (!bLatest || d > bLatest)) {
+          bLatest = d;
+        }
+      });
+    } else if (b.date) {
+      bLatest = parseDate(b.date);
+    }
+
+    if (!aLatest && !bLatest) return 0;
+    if (!aLatest) return 1;
+    if (!bLatest) return -1;
+    return bLatest.getTime() - aLatest.getTime();
   });
 }
 

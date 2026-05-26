@@ -1,5 +1,8 @@
 "use client";
 import contactData from "@/data/contact.json";
+import { GithubIcon } from "@/components/icons/GithubIcon";
+import { PhoneIcon } from "@/components/icons/PhoneIcon";
+import { MailIcon } from "@/components/icons/MailIcon";
 
 export default function ContactPage() {
   const { contact } = contactData;
@@ -15,7 +18,10 @@ export default function ContactPage() {
         <a
           href={`mailto:${contact.email}`}
           style={{
-            display: "inline-block",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "10px",
             padding: "15px 30px",
             backgroundColor: "var(--accent-primary)",
             color: "white",
@@ -36,6 +42,7 @@ export default function ContactPage() {
             e.currentTarget.style.boxShadow = "0 4px 15px rgba(98, 0, 238, 0.3)";
           }}
         >
+          <MailIcon width={24} height={24} />
           {contact.email}
         </a>
 
@@ -67,7 +74,17 @@ export default function ContactPage() {
                 e.currentTarget.style.color = "var(--text-primary)";
               }}
             >
-              <span>{link.icon}</span>
+              <span style={{ display: "flex", alignItems: "center" }}>
+                {link.icon === "github" ? (
+                  <GithubIcon width={20} height={20} />
+                ) : link.icon === "phone" ? (
+                  <PhoneIcon width={20} height={20} />
+                ) : link.icon === "mail" ? (
+                  <MailIcon width={20} height={20} />
+                ) : (
+                  link.icon
+                )}
+              </span>
               <span>{link.label}</span>
             </a>
           ))}
@@ -76,3 +93,4 @@ export default function ContactPage() {
     </div>
   );
 }
+

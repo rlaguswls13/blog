@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import rehypePrettyCode from "rehype-pretty-code";
 import { BackLink } from "@/components/layout/BackLink";
 import { TagList } from "@/components/ui/TagBadge";
 import { G1GCMemory } from "@/components/diagrams/G1GCMemory";
@@ -9,6 +10,13 @@ import { KahaDBBlocks } from "@/components/diagrams/KahaDBBlocks";
 import { QuartzMechanism } from "@/components/diagrams/QuartzMechanism";
 import { QuartzHAClustering } from "@/components/diagrams/QuartzHAClustering";
 import { QuartzSharding } from "@/components/diagrams/QuartzSharding";
+import { Indent } from "@/components/ui/Indent";
+import { ApiFlowDiagram } from "@/components/diagrams/ApiFlowDiagram";
+import { DbBottleneckDiagram } from "@/components/diagrams/DbBottleneckDiagram";
+import { MqPriorityDiagram } from "@/components/diagrams/MqPriorityDiagram";
+import { TimeoutPolicyDiagram } from "@/components/diagrams/TimeoutPolicyDiagram";
+import { PubSubArchitecture } from "@/components/diagrams/PubSubArchitecture";
+import { EventBusSimulator } from "@/components/diagrams/EventBusSimulator";
 
 const components = {
   G1GCMemory,
@@ -16,6 +24,13 @@ const components = {
   QuartzMechanism,
   QuartzHAClustering,
   QuartzSharding,
+  Indent,
+  ApiFlowDiagram,
+  DbBottleneckDiagram,
+  MqPriorityDiagram,
+  TimeoutPolicyDiagram,
+  PubSubArchitecture,
+  EventBusSimulator,
 };
 
 export async function generateStaticParams() {
@@ -75,7 +90,23 @@ export default async function DevlogDetailPage({
       </div>
 
       <div className="mdx-content">
-        <MDXRemote source={content} components={components} />
+        <MDXRemote
+          source={content}
+          components={components}
+          options={{
+            mdxOptions: {
+              rehypePlugins: [
+                [
+                  rehypePrettyCode,
+                  {
+                    theme: "github-dark-dimmed",
+                    keepBackground: true,
+                  },
+                ],
+              ],
+            },
+          }}
+        />
       </div>
     </>
   );
