@@ -282,7 +282,12 @@ ul { list-style: none; padding: 0; }
 .category-tab.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
 
 /* Devlog Cards */
-.devlog-grid { display: grid; gap: 20px; animation: fadeIn 0.3s ease-in-out; }
+.devlog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
+    gap: 20px;
+    animation: fadeIn 0.3s ease-in-out;
+}
 .devlog-card {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-color);
@@ -292,17 +297,36 @@ ul { list-style: none; padding: 0; }
     box-shadow: var(--card-shadow);
 }
 .devlog-card:hover {
+    position: relative;
+    z-index: 2;
     transform: translateY(-4px);
     box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     border-color: var(--accent-primary);
 }
-.devlog-card h3 { font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
 .devlog-meta { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.75rem; }
 .devlog-tags { margin: 0.75rem 0; }
 .devlog-description { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 0; }
-.devlog-card-link { text-decoration: none; color: inherit; display: block; }
+.devlog-card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
 
 /* Project Cards */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
+    gap: 20px;
+}
+.projects-grid a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
 .project-card {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-color);
@@ -312,11 +336,12 @@ ul { list-style: none; padding: 0; }
     box-shadow: var(--card-shadow);
 }
 .project-card:hover {
+    position: relative;
+    z-index: 2;
     transform: translateY(-4px);
     box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     border-color: var(--accent-primary);
 }
-.project-card h3 { margin-top: 0; margin-bottom: 0.5rem; }
 .project-card .project-period { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; }
 
 /* Profile Section */
@@ -401,6 +426,16 @@ ul { list-style: none; padding: 0; }
 .mdx-content p { margin-left: 0; line-height: 1.8; margin-bottom: 1.2rem; }
 .mdx-content ul, .mdx-content ol { margin-left: 0; padding-left: 0; margin-bottom: 1.2rem; }
 .mdx-content li { margin-left: 0; line-height: 1.8; margin-bottom: 0.5rem; }
+
+/* Indent paragraph and list components following subheaders in project detail */
+.mdx-content h3 ~ p {
+    margin-left: 1.5rem;
+}
+.mdx-content h3 ~ ul,
+.mdx-content h3 ~ ol {
+    margin-left: 1.5rem;
+}
+
 .mdx-content strong { color: var(--text-primary); }
 .mdx-content pre {
     background-color: var(--bg-secondary);

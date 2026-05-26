@@ -55,7 +55,7 @@ export default async function DevlogDetailPage({
   let fileContent;
   try {
     fileContent = fs.readFileSync(filePath, "utf8");
-  } catch (error) {
+  } catch {
     return <div>Devlog not found</div>;
   }
 

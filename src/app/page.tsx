@@ -1,7 +1,7 @@
 import profileData from "@/data/profile.json";
 import projectsData from "@/data/projects.json";
 import { SkillBar } from "@/components/ui/SkillBar";
-import { formatPeriods } from "@/lib/utils";
+import { formatPeriods, truncateMiddle } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import type { Skill } from "@/types";
@@ -107,7 +107,7 @@ export default function AboutPage() {
                   className="mini-period"
                   style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}
                 >
-                  {formatPeriods(p.periods)}
+                  {truncateMiddle(formatPeriods(p.periods), 24)}
                 </span>
               </div>
             ))}

@@ -10,7 +10,7 @@ import type { Project } from "@/types";
 export default function ProjectsPage() {
   const sorted = sortByDateDesc(projectsData.projects as Project[]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; // 3 rows of 2 columns
+  const itemsPerPage = 4; // 2 rows of 2 columns
 
   const totalPages = Math.ceil(sorted.length / itemsPerPage);
   const paginatedProjects = sorted.slice(
@@ -21,14 +21,7 @@ export default function ProjectsPage() {
   return (
     <>
       <h1>프로젝트</h1>
-      <div
-        className="projects-grid"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
-          gap: "20px",
-        }}
-      >
+      <div className="projects-grid">
         {paginatedProjects.map((p) => (
           <Link
             key={p.id}

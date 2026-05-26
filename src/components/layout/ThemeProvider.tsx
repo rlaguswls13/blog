@@ -11,7 +11,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       ? "light"
       : "dark";
     document.documentElement.setAttribute("data-theme", stored || system);
-    setMounted(true);
+    setTimeout(() => {
+      setMounted(true);
+    }, 0);
   }, []);
 
   const toggleTheme = () => {

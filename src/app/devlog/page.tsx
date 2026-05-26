@@ -47,15 +47,7 @@ export default function DevlogPage() {
           onTabChange={handleTabChange}
         />
 
-        <div
-          className="devlog-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
-            gap: "20px",
-            marginTop: "30px",
-          }}
-        >
+        <div className="devlog-grid" style={{ marginTop: "30px" }}>
           {paginatedEntries.map((entry) => (
             <Link
               key={entry.id}

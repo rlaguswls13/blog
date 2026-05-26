@@ -63,3 +63,12 @@ export function sortByDateDesc<T extends { periods?: string[]; date?: string }>(
     return bDate.getTime() - aDate.getTime();
   });
 }
+
+export function truncateMiddle(str: string, maxLength: number = 25): string {
+  if (!str || str.length <= maxLength) return str;
+  const charsToShow = maxLength - 3;
+  const frontChars = Math.ceil(charsToShow / 2);
+  const backChars = Math.floor(charsToShow / 2);
+  return str.substring(0, frontChars) + "..." + str.substring(str.length - backChars);
+}
+
