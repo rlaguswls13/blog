@@ -2,18 +2,6 @@
   "tech_study": [
     {
       "id": "tech-1",
-      "title": "고가용성 분산 환경에서의 분산 락(Distributed Lock) 구현",
-      "date": "2026.05.26",
-      "tags": [
-        "Redis",
-        "Concurrency",
-        "Backend",
-        "TechStudy"
-      ],
-      "description": "동시성 이슈를 해결하기 위해 Redis Redlock 알고리즘을 활용하여 동시 주문 처리 시스템의 정합성을 확보한 사례입니다."
-    },
-    {
-      "id": "tech-2",
       "title": "레거시 환경(SVN/NAS) 대량 데이터 마이그레이션 및 인코딩 복원 가이드",
       "date": "2026.05.26",
       "tags": [
@@ -27,7 +15,7 @@
       "description": "오래된 SVN/NAS 환경의 10만여 건 대량 파일을 FTP/SFTP로 이관하며 발생한 인코딩 깨짐 문제를, Python 기반 자동 매핑 및 전환 솔루션으로 실질적 복원율 100%를 달성한 가이드입니다."
     },
     {
-      "id": "tech-3",
+      "id": "tech-2",
       "title": "스프링 내장 이벤트를 활용한 로깅 아키텍처 (Pub/Sub 기반 의존성 분리)",
       "date": "2026.05.26",
       "tags": [
@@ -39,6 +27,55 @@
         "TechStudy"
       ],
       "description": "단일 모듈 환경에서 서비스 로깅의 결합도를 낮추고 비동기 처리 및 트랜잭션 안전성을 확보하는 아키텍처 전환 가이드"
+    },
+    {
+      "id": "tech-3",
+      "title": "Docker 기본 및 Container 구동 프로세스 이해",
+      "date": "2026.05.26",
+      "tags": ["TechStudy", "Docker", "Container", "DevOps"],
+      "description": "가상화 기술의 핵심인 Docker 컨테이너의 기본 개념과 구동 프로세스, 그리고 아키텍처에 대해 알아봅니다."
+    },
+    {
+      "id": "tech-4",
+      "title": "자주 사용하는 필수 Docker Command 상세 가이드",
+      "date": "2026.05.26",
+      "tags": ["TechStudy", "Docker", "Command", "DevOps"],
+      "description": "실무에서 자주 쓰이는 Docker 명령어의 다양한 옵션과 상세한 활용법을 정리했습니다."
+    },
+    {
+      "id": "tech-5",
+      "title": "Docker 저장소(Storage) 및 데이터 영속화 세팅 가이드",
+      "date": "2026.05.26",
+      "tags": ["TechStudy", "Docker", "Storage", "Volume", "NAS"],
+      "description": "컨테이너의 데이터 휘발성을 극복하기 위한 Volume, Bind Mount, NAS/SAN 연동 등 다양한 스토리지 세팅 방법을 다룹니다."
+    },
+    {
+      "id": "tech-6",
+      "title": "Docker 네트워크 세팅: Inbound/Outbound 제어 및 포트 연결",
+      "date": "2026.05.26",
+      "tags": ["TechStudy", "Docker", "Network", "Port"],
+      "description": "컨테이너 간 통신 및 외부 네트워크 통신을 제어하기 위한 Docker Network의 동작 원리와 세팅 방법을 학습합니다."
+    },
+    {
+      "id": "tech-7",
+      "title": "Docker 보안: AppArmor 및 환경변수(envset) 암호화 최적화",
+      "date": "2026.05.26",
+      "tags": ["TechStudy", "Docker", "Security", "AppArmor", "Env"],
+      "description": "커널을 공유하는 컨테이너 환경의 보안 취약점을 극복하기 위해 AppArmor를 활용한 Root 공격 억제 및 안전한 환경변수 관리 방법을 다룹니다."
+    },
+    {
+      "id": "tech-8",
+      "title": "Docker Image 생성법: Commit과 Dockerfile (entry.sh 활용)",
+      "date": "2026.05.26",
+      "tags": ["TechStudy", "Docker", "Image", "Dockerfile", "Entrypoint"],
+      "description": "기존 컨테이너를 Commit 하는 방식부터 Dockerfile을 작성하여 커스텀 이미지를 빌드하는 세밀한 과정과 entry.sh 스크립트 활용법을 비교 분석합니다."
+    },
+    {
+      "id": "tech-9",
+      "title": "DevOps 패러다임 전환: Docker에서 Podman으로?",
+      "date": "2026.05.26",
+      "tags": ["TechStudy", "DevOps", "Docker", "Podman", "Kubernetes"],
+      "description": "여전히 강력한 컨테이너 기술 생태계에서, Docker 대신 Podman이 대안으로 떠오르는 이유와 K8s 전환 측면에서의 장단점을 분석합니다."
     }
   ],
   "problem_solving": [
