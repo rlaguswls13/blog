@@ -17,6 +17,9 @@ import { MqPriorityDiagram } from "@/components/diagrams/MqPriorityDiagram";
 import { TimeoutPolicyDiagram } from "@/components/diagrams/TimeoutPolicyDiagram";
 import { PubSubArchitecture } from "@/components/diagrams/PubSubArchitecture";
 import { EventBusSimulator } from "@/components/diagrams/EventBusSimulator";
+import devlogData from "@/data/devlog.json";
+import { sortByDateDesc } from "@/lib/utils";
+import type { DevlogEntry, DevlogCategory } from "@/types";
 
 const components = {
   G1GCMemory,
@@ -76,9 +79,24 @@ export default async function DevlogDetailPage({
 
   const { data, content } = matter(fileContent);
 
+  // Calculate which page this entry is on
+  let pageNum = 1;
+  const itemsPerPage = 6;
+  const categoryEntries = devlogData[category as DevlogCategory] as DevlogEntry[] | undefined;
+  
+  if (categoryEntries) {
+    const sortedEntries = sortByDateDesc(categoryEntries);
+    const index = sortedEntries.findIndex((entry) => entry.id === id);
+    if (index !== -1) {
+      pageNum = Math.floor(index / itemsPerPage) + 1;
+    }
+  }
+
+  const backLinkHref = `/devlog?tab=${category}&page=${pageNum}`;
+
   return (
     <>
-      <BackLink href="/devlog" label="목록으로" />
+      <BackLink href={backLinkHref} label="목록으로" />
       <div className="project-card" style={{ marginBottom: "40px" }}>
         <div className="devlog-meta" style={{ marginBottom: "15px" }}>
           <span>📅 {data.date}</span>

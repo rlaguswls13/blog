@@ -1,22 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
 import devlogData from "@/data/devlog.json";
 import { TabGroup } from "@/components/ui/TabGroup";
 import { TagList } from "@/components/ui/TagBadge";
 import { sortByDateDesc } from "@/lib/utils";
 import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
 import type { DevlogCategory, DevlogEntry } from "@/types";
 
-export default function DevlogPage() {
-  const [activeTab, setActiveTab] = useState<DevlogCategory>("problem_solving");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; // 3 rows of 2 columns
+function DevlogContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const tabs = [
     { key: "tech_study", label: "기술 학습 기록" },
     { key: "problem_solving", label: "문제 해결 기록" },
   ];
+
+  // Initialize from URL or defaults
+  const initialTab = searchParams.get("tab") || tabs.find(t => (devlogData[t.key as DevlogCategory]?.length || 0) > 0)?.key || tabs[0].key;
+  const initialPage = parseInt(searchParams.get("page") || "1", 10);
+
+  const [activeTab, setActiveTab] = useState<DevlogCategory>(initialTab as DevlogCategory);
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const itemsPerPage = 6; // 3 rows of 2 columns
+
+  // Sync state to URL without reloading
+  useEffect(() => {
+    const currentTab = searchParams.get("tab");
+    const currentPg = searchParams.get("page");
+    if (currentTab !== activeTab || currentPg !== String(currentPage)) {
+      router.replace(`/devlog?tab=${activeTab}&page=${currentPage}`, { scroll: false });
+    }
+  }, [activeTab, currentPage, router, searchParams]);
 
   const entries = sortByDateDesc(devlogData[activeTab] as DevlogEntry[]);
   const totalPages = Math.ceil(entries.length / itemsPerPage);
@@ -101,5 +118,13 @@ export default function DevlogPage() {
         )}
       </div>
     </>
+  );
+}
+
+export default function DevlogPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DevlogContent />
+    </Suspense>
   );
 }
