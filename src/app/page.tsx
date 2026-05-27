@@ -6,9 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Skill } from "@/types";
 import myImage from "../../public/images/myImage.png";
-import { GithubIcon } from "@/components/icons/GithubIcon";
-import { PhoneIcon } from "@/components/icons/PhoneIcon";
-import { MailIcon } from "@/components/icons/MailIcon";
+import { GithubIcon, PhoneIcon, MailIcon } from "@/components/ui/Icons";
 
 export default function AboutPage() {
   const { profile, others } = profileData;

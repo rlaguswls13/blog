@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "fetch-notion": "node scripts/fetch-notion.mjs",
+    "prebuild": "node scripts/fetch-notion.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

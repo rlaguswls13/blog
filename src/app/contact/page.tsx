@@ -1,8 +1,6 @@
 "use client";
 import contactData from "@/data/contact.json";
-import { GithubIcon } from "@/components/icons/GithubIcon";
-import { PhoneIcon } from "@/components/icons/PhoneIcon";
-import { MailIcon } from "@/components/icons/MailIcon";
+import { GithubIcon, PhoneIcon, MailIcon } from "@/components/ui/Icons";
 
 export default function ContactPage() {
   const { contact } = contactData;

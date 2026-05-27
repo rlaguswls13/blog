@@ -185,6 +185,19 @@
       ],
       "description": "Tomcat의 핵심 설정 파일들의 역할과 setenv.sh를 활용한 구동 옵션 분리 전략, 그리고 최신 HTTP/2 및 OpenSSL 기반의 HTTPS 설정 방법을 알아봅니다.",
       "package": "was"
+    },
+    {
+      "id": "tech-14",
+      "title": "Java 기본 코드 작성과 클래스 분리, 그리고 Lombok 활용",
+      "date": "2026.05.27",
+      "tags": [
+        "TechStudy",
+        "Java",
+        "Lombok",
+        "OOP"
+      ],
+      "description": "Lombok 라이브러리와 Builder 패턴의 도입 이유, 그리고 Inner Class 활용 및 메모리 누수 방지 전략을 정리합니다.",
+      "package": "java"
     }
   ],
   "problem_solving": [
