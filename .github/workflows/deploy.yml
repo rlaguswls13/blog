@@ -68,6 +68,11 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Fetch Notion Data
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_PAGE_ID: ${{ secrets.NOTION_PAGE_ID }}
+        run: ${{ steps.detect-package-manager.outputs.manager }} run fetch-notion
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.manager }} run build:no-fetch
       - name: Upload artifact
