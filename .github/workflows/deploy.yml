@@ -6,10 +6,6 @@ on:
   push:
     branches: ["change_ts", "main"]
 
-  # Runs every hour
-  schedule:
-    - cron: "0 * * * *"
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -73,10 +69,7 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
-        env:
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          NOTION_PAGE_ID: ${{ secrets.NOTION_PAGE_ID }}
-        run: ${{ steps.detect-package-manager.outputs.manager }} run build
+        run: ${{ steps.detect-package-manager.outputs.manager }} run build:no-fetch
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

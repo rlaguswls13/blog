@@ -1,0 +1,47 @@
+name: Fetch Notion Data
+
+on:
+  schedule:
+    - cron: "0 * * * *"  # Every hour
+  workflow_dispatch:     # Allow manual trigger from GitHub Actions
+
+permissions:
+  contents: write        # Required to push commits to the repository
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch Notion Data
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_PAGE_ID: ${{ secrets.NOTION_PAGE_ID }}
+        run: npm run fetch-notion
+
+      - name: Commit and Push if changed
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Force add since it is gitignored locally
+          git add -f src/data/education.json
+          
+          if git diff --staged --quiet; then
+            echo "No changes detected in Notion database."
+          else
+            echo "Changes detected in Notion database. Committing and pushing..."
+            git commit -m "chore: auto-sync education log from Notion"
+            git push
+          fi

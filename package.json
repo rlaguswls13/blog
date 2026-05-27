@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/fetch-notion.mjs && next dev",
     "fetch-notion": "node scripts/fetch-notion.mjs",
-    "prebuild": "node scripts/fetch-notion.mjs",
-    "build": "next build",
+    "build": "node scripts/fetch-notion.mjs && next build",
+    "build:no-fetch": "next build",
     "start": "next start",
+    "build:run": "node scripts/fetch-notion.mjs && next build && next start",
     "lint": "eslint"
   },
   "dependencies": {
