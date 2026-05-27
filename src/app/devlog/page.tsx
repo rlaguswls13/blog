@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense, useMemo } from "react";
 import devlogData from "@/data/devlog.json";
 import { TabGroup } from "@/components/ui/TabGroup";
 import { TagList } from "@/components/ui/TagBadge";
+import { CalendarIcon, SearchIcon } from "@/components/ui/Icons";
 import { sortByDateDesc } from "@/lib/utils";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -25,21 +26,26 @@ function DevlogContent() {
 
   const initialTab = searchParams.get("tab") || tabs.find(t => (devlogData[t.key as DevlogCategory]?.length || 0) > 0)?.key || tabs[0].key;
   const initialPkg = searchParams.get("pkg") || "All";
+  const initialSearch = searchParams.get("q") || "";
   const initialPage = parseInt(searchParams.get("page") || "1", 10);
 
   const [activeTab, setActiveTab] = useState<DevlogCategory>(initialTab as DevlogCategory);
   const [activePkg, setActivePkg] = useState(initialPkg);
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
+  const [isSearchOpen, setIsSearchOpen] = useState(!!initialSearch);
   const [currentPage, setCurrentPage] = useState(initialPage);
   const itemsPerPage = 6;
 
   useEffect(() => {
     const currentTab = searchParams.get("tab");
     const currentPkg = searchParams.get("pkg");
+    const currentQ = searchParams.get("q") || "";
     const currentPg = searchParams.get("page");
-    if (currentTab !== activeTab || currentPkg !== activePkg || currentPg !== String(currentPage)) {
-      router.replace(`/devlog?tab=${activeTab}&pkg=${activePkg}&page=${currentPage}`, { scroll: false });
+    if (currentTab !== activeTab || currentPkg !== activePkg || currentQ !== searchQuery || currentPg !== String(currentPage)) {
+      const qParam = searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : "";
+      router.replace(`/devlog?tab=${activeTab}&pkg=${activePkg}${qParam}&page=${currentPage}`, { scroll: false });
     }
-  }, [activeTab, activePkg, currentPage, router, searchParams]);
+  }, [activeTab, activePkg, searchQuery, currentPage, router, searchParams]);
 
   const allEntries = sortByDateDesc(devlogData[activeTab] as DevlogEntry[]);
   
@@ -54,9 +60,20 @@ function DevlogContent() {
 
   // Filter entries
   const filteredEntries = useMemo(() => {
-    if (activePkg === "All") return allEntries;
-    return allEntries.filter(e => e.package === activePkg);
-  }, [allEntries, activePkg]);
+    let result = allEntries;
+    if (activePkg !== "All") {
+      result = result.filter(e => e.package === activePkg);
+    }
+    if (searchQuery.trim()) {
+      const lowerQ = searchQuery.toLowerCase();
+      result = result.filter(e => 
+        e.title.toLowerCase().includes(lowerQ) ||
+        e.description?.toLowerCase().includes(lowerQ) ||
+        e.tags?.some(t => t.toLowerCase().includes(lowerQ))
+      );
+    }
+    return result;
+  }, [allEntries, activePkg, searchQuery]);
 
   const totalPages = Math.ceil(filteredEntries.length / itemsPerPage);
   const paginatedEntries = filteredEntries.slice(
@@ -72,6 +89,11 @@ function DevlogContent() {
 
   const handlePkgChange = (pkg: string) => {
     setActivePkg(pkg);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
     setCurrentPage(1);
   };
 
@@ -104,6 +126,38 @@ function DevlogContent() {
                 </button>
               ))}
             </nav>
+            <div className="sidebar-search">
+              {!isSearchOpen ? (
+                <button 
+                  onClick={() => setIsSearchOpen(true)}
+                  style={{ 
+                    background: "transparent", border: "none", cursor: "pointer", 
+                    display: "flex", alignItems: "center", gap: "8px", 
+                    color: "var(--text-secondary)", padding: "8px 12px", 
+                    borderRadius: "6px", width: "100%", fontSize: "0.95rem"
+                  }}
+                  className="pkg-pill"
+                >
+                  <SearchIcon style={{ position: 'relative', left: '0', transform: 'none' }} /> 검색
+                </button>
+              ) : (
+                <div style={{ position: "relative" }}>
+                  <span 
+                    onClick={() => setIsSearchOpen(false)} 
+                    style={{ cursor: "pointer", position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", zIndex: 10, display: "flex" }}
+                  >
+                    <SearchIcon style={{ position: "relative", left: "0", transform: "none" }} />
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="검색어 입력..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    autoFocus
+                  />
+                </div>
+              )}
+            </div>
           </aside>
 
           <main className="devlog-main">
@@ -123,7 +177,7 @@ function DevlogContent() {
                     >
                       <div className="devlog-card" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                         <div className="devlog-meta" style={{ marginBottom: "10px" }}>
-                          <span>📅 {entry.date}</span>
+                          <span><CalendarIcon /> {entry.date}</span>
                         </div>
                         <h3 style={{ marginTop: 0, marginBottom: "12px" }}>{entry.title}</h3>
                         <TagList tags={entry.tags} />

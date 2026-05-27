@@ -1,4 +1,4 @@
-/* globals.css — Migrated from legacy global.css */
+/* globals.css ??Migrated from legacy global.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
@@ -678,6 +678,7 @@ ul { list-style: none; padding: 0; }
   overflow-x: auto;
   gap: 10px;
   padding-bottom: 8px;
+  justify-content: center;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-primary) var(--bg-tertiary);
 }
@@ -716,8 +717,8 @@ ul { list-style: none; padding: 0; }
   font-size: 0.95rem;
   white-space: nowrap;
   outline: none;
-  text-align: left;
-  width: 100%;
+  text-align: center;
+  width: auto;
 }
 
 .pkg-pill:hover {
@@ -731,9 +732,26 @@ ul { list-style: none; padding: 0; }
   font-weight: 700;
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1720px) {
   .devlog-layout {
     position: relative;
+  }
+  .devlog-sidebar nav {
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+    padding-bottom: 0;
+    position: relative;
+    scrollbar-width: none;
+    justify-content: flex-start;
+  }
+  .devlog-sidebar nav::-webkit-scrollbar {
+    display: none;
+  }
+  .pkg-pill {
+    width: 100%;
+    text-align: left;
   }
   .devlog-sidebar {
     position: absolute;
@@ -742,11 +760,38 @@ ul { list-style: none; padding: 0; }
     width: 160px;
     height: 100%;
   }
-  .devlog-sidebar nav {
-    flex-direction: column;
-    overflow-x: visible;
-    padding-bottom: 0;
-    position: sticky;
-    top: 100px;
-  }
 }
+
+/* Sidebar Search Styles */
+.sidebar-search {
+  margin-top: 10px;
+  position: relative;
+  width: 100%;
+}
+
+.sidebar-search input {
+  width: 100%;
+  padding: 10px 14px 10px 36px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  outline: none;
+  transition: all var(--transition-speed);
+}
+
+.sidebar-search input:focus {
+  border-color: var(--accent-primary);
+  background: var(--bg-primary);
+}
+
+.sidebar-search svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+}
+
+

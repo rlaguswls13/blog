@@ -4,14 +4,13 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
-function DevlogBackLinkInner({ category }: { category: string }) {
+function ProjectBackLinkInner() {
   const searchParams = useSearchParams();
-  const pkg = searchParams.get("pkg") || "All";
   const page = searchParams.get("page") || "1";
   const q = searchParams.get("q") || "";
   
   const qParam = q ? `&q=${encodeURIComponent(q)}` : "";
-  const href = `/devlog?tab=${category}&pkg=${pkg}${qParam}&page=${page}`;
+  const href = `/projects?page=${page}${qParam}`;
   
   return (
     <Link href={href} className="back-link">
@@ -20,10 +19,10 @@ function DevlogBackLinkInner({ category }: { category: string }) {
   );
 }
 
-export function DevlogBackLink({ category }: { category: string }) {
+export function ProjectBackLink() {
   return (
-    <Suspense fallback={<Link href={`/devlog?tab=${category}`} className="back-link">← 목록으로</Link>}>
-      <DevlogBackLinkInner category={category} />
+    <Suspense fallback={<Link href="/projects" className="back-link">← 목록으로</Link>}>
+      <ProjectBackLinkInner />
     </Suspense>
   );
 }

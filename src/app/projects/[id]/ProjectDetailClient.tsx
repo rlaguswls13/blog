@@ -1,20 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { BackLink } from "@/components/layout/BackLink";
+import { ProjectBackLink } from "@/components/layout/ProjectBackLink";
 import { TagList } from "@/components/ui/TagBadge";
+import { CalendarIcon } from "@/components/ui/Icons";
 import { formatPeriods } from "@/lib/utils";
 import type { Project, ProjectDetail } from "@/types";
-import { CloudMigrationFlow } from "@/components/diagrams/CloudMigrationFlow";
-import { ContainerSupport } from "@/components/diagrams/ContainerSupport";
-import { CSPipeline } from "@/components/diagrams/CSPipeline";
-import { DevopsDbArch } from "@/components/diagrams/DevopsDbArch";
-import { DevopsPipeline } from "@/components/diagrams/DevopsPipeline";
-import { EmailHybrid } from "@/components/diagrams/EmailHybrid";
-import { EmailLargeScale } from "@/components/diagrams/EmailLargeScale";
-import { IntegratedPortal } from "@/components/diagrams/IntegratedPortal";
-import { RbacFlow } from "@/components/diagrams/RbacFlow";
-import { SsoFilter } from "@/components/diagrams/SsoFilter";
+import { CloudMigrationFlow } from "@/components/diagrams/projects/CloudMigrationFlow";
+import { ContainerSupport } from "@/components/diagrams/projects/ContainerSupport";
+import { CSPipeline } from "@/components/diagrams/projects/CSPipeline";
+import { DevopsDbArch } from "@/components/diagrams/projects/DevopsDbArch";
+import { DevopsPipeline } from "@/components/diagrams/projects/DevopsPipeline";
+import { EmailHybrid } from "@/components/diagrams/projects/EmailHybrid";
+import { EmailLargeScale } from "@/components/diagrams/projects/EmailLargeScale";
+import { IntegratedPortal } from "@/components/diagrams/projects/IntegratedPortal";
+import { RbacFlow } from "@/components/diagrams/projects/RbacFlow";
+import { SsoFilter } from "@/components/diagrams/projects/SsoFilter";
 import { TabGroup } from "@/components/ui/TabGroup";
 
 interface ProjectDetailClientProps {
@@ -69,11 +70,11 @@ export default function ProjectDetailClient({
 
   return (
     <>
-      <BackLink href="/projects" label="목록으로" />
+      <ProjectBackLink />
       <div className="project-card" style={{ marginBottom: "40px" }}>
         <h1>{meta.title}</h1>
         <p className="project-period">
-          📅 {formatPeriods(meta.periods)}
+          <CalendarIcon /> {formatPeriods(meta.periods)}
         </p>
         <TagList tags={meta.tags} />
       </div>
