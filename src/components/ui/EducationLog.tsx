@@ -104,7 +104,7 @@ export function EducationLog({
                 className="education-blog-link"
                 onClick={(e) => e.stopPropagation()}
               >
-                <BlogIcon /> 블로깅 페이지 보기 ↗
+                <BlogIcon /> 연습 코드 보기 ↗
               </a>
             )}
           </div>
@@ -167,7 +167,7 @@ export function EducationLog({
                 className="education-blog-link"
                 style={{ marginTop: "20px" }}
               >
-                <BlogIcon /> 블로깅 페이지에서 자세히 보기 ↗
+                <BlogIcon /> 연습코드 보러가기 ↗
               </a>
             )}
           </div>

@@ -119,7 +119,7 @@ async function fetchNotionDatabase() {
       date: props["교육일"]?.date?.start || "",
       keywords: (props["키워드"]?.multi_select || []).map((ms) => ms.name),
       impression: extractPlainText(props["느낀점"]?.rich_text).trim(),
-      blogTitle: extractPlainText(props["블로깅 페이지"]?.title).trim(),
+      blogTitle: extractPlainText(props["연습 코드"]?.title).trim(),
       notionUrl: page.url || "",
     };
   });
