@@ -1,4 +1,4 @@
-name: Fetch Notion Data
+name: Fetch Notion Data and Deploy
 
 on:
   schedule:
@@ -6,15 +6,16 @@ on:
   workflow_dispatch:     # 수동 실행 허용
 
 permissions:
-  contents: write 
-  pages: write
-  id-token: write
+  contents: read         # 소스코드는 읽기 권한만 필요
+  pages: write           # Pages 배포를 위해 필수
+  id-token: write        # OIDC 인증을 위해 필수
 
 jobs:
-  fetch:
+  fetch-and-deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -35,38 +36,37 @@ jobs:
             echo "Unable to determine package manager" >&2
             exit 1
           fi
-          
-      # 2. Node.js 설정 (캐시 종류도 동적으로 바인딩)
+
+      # 2. Node.js 설정
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
 
-      # 3. 감지된 패키지 매니저 명령어에 맞춰 의존성 설치 (npm ci 또는 yarn install)
+      # 3. 의존성 설치
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
-      # 4. 동적 매니저로 스크립트 실행 및 환경 변수 주입
+      # 4. 노션 데이터 동적 Fetch 및 실시간 저장 (src/data/education.json 생성)
       - name: Fetch Notion Data
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_PAGE_ID: ${{ secrets.NOTION_PAGE_ID }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run fetch-notion
 
-      # 5. 데이터 변경 시 자동 커밋 및 푸시
-      - name: Commit and Push if changed
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          
-          # 로컬에서 .gitignore 상태인 json 파일을 강제로 스테이징
-          git add -f src/data/education.json
-          
-          if git diff --staged --quiet; then
-            echo "No changes detected in Notion database."
-          else
-            echo "Changes detected in Notion database. Committing and pushing..."
-            git commit -m "chore: auto-sync education log from Notion"
-            git push
-          fi
+      # 5. 프로젝트 빌드 (위에서 생성된 education.json을 포함하여 빌드됨)
+      - name: Build project
+        run: ${{ steps.detect-package-manager.outputs.manager }} run build
+
+      # 6. 빌드 결과물 업로드 (배포 전 아티팩트화)
+      # ※ 만약 빌드 결과물 폴더가 dist가 아니라 build 또는 out 이라면 아래 path를 수정하세요.
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      # 7. GitHub Pages에 실시간 배포
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
