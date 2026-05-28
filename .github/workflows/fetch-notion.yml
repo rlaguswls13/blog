@@ -57,7 +57,7 @@ jobs:
 
       # 5. 프로젝트 빌드 (위에서 생성된 education.json을 포함하여 빌드됨)
       - name: Build project
-        run: ${{ steps.detect-package-manager.outputs.manager }} run build
+        run: ${{ steps.detect-package-manager.outputs.manager }} run build:no-fetch
 
       # 6. 빌드 결과물 업로드 (배포 전 아티팩트화)
       # ※ 만약 빌드 결과물 폴더가 dist가 아니라 build 또는 out 이라면 아래 path를 수정하세요.
