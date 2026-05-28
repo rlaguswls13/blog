@@ -2,7 +2,7 @@ name: Fetch Notion Data and Deploy
 
 on:
   schedule:
-    - cron: "0 * * * *"  # 매 시간 정각마다 실행
+    - cron: "35 * * * *"  # 매 시간 정각마다 실행
   workflow_dispatch:     # 수동 실행 허용
 
 permissions:
