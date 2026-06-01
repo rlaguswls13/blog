@@ -1,8 +1,8 @@
 ---
 id: "tech-7"
 title: "Docker 보안: AppArmor 및 환경변수(envset) 암호화 최적화"
-date: "2026.05.26"
-tags: ["TechStudy", "Docker", "Security", "AppArmor", "Env"]
+date: "2026.05.14"
+tags: ["TechStudy", "Container", "Security", "AppArmor", "Env"]
 description: "커널을 공유하는 컨테이너 환경의 보안 취약점을 극복하기 위해 AppArmor를 활용한 Root 공격 억제 및 안전한 환경변수 관리 방법을 다룹니다."
 category: "tech_study"
 ---
@@ -20,10 +20,14 @@ AppArmor(Application Armor)는 프로그램이나 컨테이너가 접근할 수 
 
 *   **배경:** 컨테이너 내부에서 `root` 권한을 탈취당할 경우, 컨테이너 탈옥(Container Breakout)을 통해 호스트 시스템 전체가 장악될 위험이 있습니다.
 *   **Docker 기본 보안:** Docker는 실행 시 기본적으로 `docker-default`라는 자체 AppArmor 프로파일을 적용하여, 컨테이너 내부에서 커널 수정이나 디바이스 노드 마운트와 같은 치명적인 행위를 차단합니다.
-*   **커스텀 보안 프로파일 적용:** 
-    더 엄격한 제어가 필요한 경우, 시스템 파일 읽기조차 불가능하게 만든 커스텀 프로파일을 작성하여 컨테이너에 적용할 수 있습니다.
+*   **커스텀 보안 프로파일 적용 (docker.io 공식 튜토리얼 기준):** 
+    더 엄격한 제어가 필요한 경우, 커스텀 프로파일을 작성하여 먼저 호스트 시스템에 로드한 뒤 컨테이너에 적용해야 합니다.
     ```bash
-    docker run --security-opt apparmor=my-custom-profile nginx
+    # 1. 호스트 커널에 AppArmor 프로파일 로드
+    sudo apparmor_parser -r -W my-custom-profile
+    
+    # 2. 해당 프로파일을 지정하여 컨테이너 실행
+    docker run --rm -it --security-opt apparmor=my-custom-profile hello-world
     ```
 </Indent>
 
@@ -46,8 +50,15 @@ docker run -e DB_PASSWORD=mySecret123 my_app
     ```bash
     docker run --env-file ./secure_envset.env my_app
     ```
-2.  **Docker Swarm / Kubernetes Secrets 활용**
-    클러스터 환경에서는 해싱 및 암호화되어 분산 저장되는 자체 Secret 관리 기능을 사용하여 컨테이너가 구동될 때 메모리나 임시 파일 시스템에만 주입되도록 구성합니다.
+2.  **Docker Secrets 활용 (Swarm 모드 공식 가이드 기준)**
+    클러스터 환경에서는 해싱 및 암호화되어 분산 저장되는 자체 Secret 관리 기능을 사용하여, 컨테이너가 구동될 때 인메모리 파일시스템(`/run/secrets/`)에만 주입되도록 구성합니다.
+    ```bash
+    # 1. 평문 노출 없이 안전하게 시크릿 생성
+    echo "mySecret123" | docker secret create db_password -
+    
+    # 2. 서비스를 띄우며 시크릿 주입
+    docker service create --name my_db --secret db_password mysql:latest
+    ```
 3.  **외부 KMS(Key Management Service) 연동**
     최고 수준의 보안 환경에서는 AWS KMS, HashiCorp Vault와 같은 도구를 활용하여, 애플리케이션 코드가 기동될 때 실시간으로 암호화된 토큰을 받아 인증하는 방식을 취합니다.
 </Indent>

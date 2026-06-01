@@ -1,8 +1,8 @@
 ---
 id: "tech-9"
 title: "DevOps 패러다임 전환: Docker에서 Podman으로?"
-date: "2026.05.26"
-tags: ["TechStudy", "DevOps", "Docker", "Podman", "Kubernetes"]
+date: "2026.05.16"
+tags: ["TechStudy", "DevOps", "Container", "Podman", "Kubernetes"]
 description: "여전히 강력한 컨테이너 기술 생태계에서, Docker 대신 Podman이 대안으로 떠오르는 이유와 K8s 전환 측면에서의 장단점을 분석합니다."
 category: "tech_study"
 ---
@@ -30,7 +30,31 @@ import Indent from '@/components/ui/Indent'
 
 ---
 
-## 2. Kubernetes(K8s) 환경으로의 손쉬운 전환
+## 2. 네트워크 아키텍처 비교 (Network Architecture)
+
+<Indent>
+도커와 포드맨 네트워크의 가장 큰 차이점은 아키텍처(데몬의 유무)에서 비롯됩니다. 도커는 중앙 백그라운드 데몬이 네트워크를 관리하지만, 포드맨은 데몬 없이 사용자 프로세스로 동작하며 호스트의 네트워킹 유틸리티를 직접 활용합니다.
+
+*   **Docker 네트워크:** 클라이언트-서버 구조로, 도커 데몬이 브릿지(docker0) 등 가상 네트워크를 전면적으로 관리합니다. 설정이 간편하고 여러 호스트에 걸친 오버레이 네트워크 구성에 유리합니다. 다만, 데몬이 `root` 권한으로 방화벽 규칙(iptables)을 수정하므로 데몬 탈취 시 호스트 전체 네트워크 제어권이 넘어갈 수 있습니다.
+*   **Podman 네트워크:** 데몬리스(Daemonless) 및 기본 Rootless 구조입니다. `slirp4netns`나 `pasta` 유틸리티를 사용해 네트워크 트래픽을 가상화하여, 호스트의 실제 네트워크 카드에 직접 접근하는 것을 원천 차단합니다. 또한, 여러 컨테이너를 하나의 Pod으로 묶어 `localhost`를 통해 안전하게 내부 통신을 격리할 수 있습니다.
+</Indent>
+
+---
+
+## 3. Rootless 모드 심층 비교: 도커를 Rootless로 설정한다면?
+
+<Indent>
+도커 데몬을 일반 사용자 권한으로 실행하는 Rootless 모드를 설정하면 보안성을 높일 수 있지만, 태생이 Rootless인 Podman과 비교할 때 구조적 한계가 존재합니다.
+
+*   **Docker Rootless의 한계:** 
+    *   **공격 표면 존재:** 여전히 백그라운드에 데몬(`dockerd`) 프로세스가 상주하며 명령을 대기합니다. 해당 데몬 자체에 취약점이 있다면 일반 사용자 권한을 가진 채 실행되더라도 사용자의 전체 데이터가 탈취될 수 있습니다.
+    *   **기능적 제약:** 호스트의 1024번 이하 특권 포트 바인딩이 바로 불가능하고, 볼륨 마운트 시 권한 매핑(subuid/subgid) 꼬임이 잦으며, AppArmor 등 호스트 강력 보안 프로필과의 연동이 매끄럽지 않습니다.
+*   **Podman의 우위:** 상시 켜져 있는 데몬 자체가 없어 공격 경로(Attack Surface)를 획기적으로 줄였습니다. 보안이 최우선인 환경이라면 도커를 복잡하게 개조하는 것보다 기본 상태가 Rootless인 Podman을 사용하는 것이 더 안전합니다.
+</Indent>
+
+---
+
+## 4. Kubernetes(K8s) 환경으로의 손쉬운 전환
 
 <Indent>
 이름 자체에서도 알 수 있듯, Podman은 쿠버네티스의 최소 배포 단위인 **Pod**의 개념을 내장하고 있습니다.
@@ -41,7 +65,7 @@ import Indent from '@/components/ui/Indent'
 
 ---
 
-## 3. 결론: 가장 중요한 핵심은 'Shell Script'와 '컨테이너 이해도'
+## 5. 결론: 가장 중요한 핵심은 'Shell Script'와 '컨테이너 이해도'
 
 <Indent>
 엔진 트렌드가 Docker에서 Podman으로 넘어가고 있더라도, 도구의 이름은 현상일 뿐 본질이 아닙니다.

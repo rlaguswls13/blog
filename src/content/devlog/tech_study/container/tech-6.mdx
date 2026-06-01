@@ -1,8 +1,8 @@
 ---
 id: "tech-6"
 title: "Docker 네트워크 세팅: Inbound/Outbound 제어 및 포트 연결"
-date: "2026.05.26"
-tags: ["TechStudy", "Docker", "Network", "Port"]
+date: "2026.05.07"
+tags: ["TechStudy", "Container", "Network", "Port"]
 description: "컨테이너 간 통신 및 외부 네트워크 통신을 제어하기 위한 Docker Network의 동작 원리와 세팅 방법을 학습합니다."
 category: "tech_study"
 ---
@@ -47,13 +47,21 @@ import Indent from '@/components/ui/Indent'
 
 **1. Bridge 네트워크 (기본)**
 *   기본적으로 `docker0` 라는 가상 스위치가 생성되어 모든 컨테이너를 연결합니다.
-*   **사용자 정의 Bridge 네트워크 생성:** 
+*   **사용자 정의 Bridge 네트워크 생성 및 테스트 (docker.io 공식 튜토리얼 기준):** 
     ```bash
-    docker network create my-net
-    docker run --network my-net --name backend my_app
-    docker run --network my-net --name database my_db
+    # 사용자 정의 브리지 네트워크 생성
+    docker network create alpine-net
+    
+    # 해당 네트워크에 첫 번째 컨테이너 연결
+    docker run -dit --name alpine1 --network alpine-net alpine ash
+    
+    # 두 번째 컨테이너 연결
+    docker run -dit --name alpine2 --network alpine-net alpine ash
+    
+    # alpine1 내부에 접속하여 alpine2로 통신 테스트 (내장 DNS 활용)
+    docker exec -it alpine1 ping -c 4 alpine2
     ```
-    *   **강점:** 같은 커스텀 브리지 네트워크에 묶인 컨테이너들은 IP 주소를 외울 필요 없이, 컨테이너 이름(DNS)으로 서로 통신할 수 있습니다. (예: `http://database:3306`)
+    *   **강점:** 같은 커스텀 브리지 네트워크에 묶인 컨테이너들은 복잡한 IP 주소를 외울 필요 없이, **컨테이너 이름(DNS)**으로 서로 완벽하게 통신할 수 있습니다.
 
 **2. Host 네트워크**
 *   옵션: `--network host`

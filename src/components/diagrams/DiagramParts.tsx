@@ -31,11 +31,11 @@ export const themes: Record<string, {
 
 // ===== Sub-components =====
 
-export function DiagramWrapper({ children }: { children: React.ReactNode }) {
+export function DiagramWrapper({ children, className = "max-w-[900px]" }: { children: React.ReactNode; className?: string }) {
   return (
     <div className="w-full mt-8 mb-12 flex justify-center font-sans">
       <div
-        className="max-w-[900px] w-full rounded-[24px] overflow-hidden transition-colors duration-300"
+        className={`${className} w-full rounded-[24px] overflow-hidden transition-colors duration-300`}
         style={{
           background: 'var(--diagram-bg)',
           border: '1px solid var(--diagram-wrapper-border)',
@@ -76,8 +76,8 @@ export function DiagramHeader({ title, desc, theme = "slate" }: { title: string;
   );
 }
 
-export function DiagramBody({ children }: { children: React.ReactNode }) {
-  return <div className="py-8 px-12">{children}</div>;
+export function DiagramBody({ children, className = "py-8 px-6 md:px-12" }: { children: React.ReactNode; className?: string }) {
+  return <div className={className}>{children}</div>;
 }
 
 export function TwoColumnGrid({ children }: { children: React.ReactNode }) {

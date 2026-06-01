@@ -21,6 +21,9 @@ import { EventBusSimulator } from "@/components/diagrams/devlog/architecture/Eve
 import { StorageArchitectureDiagram } from "@/components/diagrams/devlog/architecture/StorageArchitectureDiagram";
 import { StorageNetworkDiagram } from "@/components/diagrams/devlog/storage/StorageNetworkDiagram";
 import { StoragePhysicalDiagram } from "@/components/diagrams/devlog/storage/StoragePhysicalDiagram";
+import { ContainerVsVmDiagram } from "@/components/diagrams/devlog/container/ContainerVsVmDiagram";
+import { K8sSecurityDiagram } from "@/components/diagrams/devlog/container/K8sSecurityDiagram";
+import { CodePopup } from "@/components/layout/CodePopup";
 import devlogData from "@/data/devlog.json";
 import { sortByDateDesc } from "@/lib/utils";
 import type { DevlogEntry, DevlogCategory } from "@/types";
@@ -41,6 +44,9 @@ const components = {
   StorageArchitectureDiagram,
   StorageNetworkDiagram,
   StoragePhysicalDiagram,
+  ContainerVsVmDiagram,
+  K8sSecurityDiagram,
+  CodePopup,
 };
 
 function getAllMdxFiles(dir: string): string[] {
