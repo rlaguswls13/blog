@@ -57,7 +57,7 @@ export function QuartzSharding() {
 
   return (
     <div className="diagram-container">
-      <div style={{ background: "#1a1a1a", padding: 30, borderRadius: 20, boxShadow: "0 20px 50px rgba(0,0,0,0.6)", border: "1px solid #333" }}>
+      <div style={{ background: "var(--bg-secondary)", padding: 30, borderRadius: 20, boxShadow: "var(--card-shadow)", border: "1px solid var(--border-color)" }}>
         <canvas ref={canvasRef} width={700} height={360} style={{ maxWidth: "100%", display: "block" }} />
       </div>
     </div>

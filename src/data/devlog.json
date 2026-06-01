@@ -13,7 +13,7 @@
         "TechStudy"
       ],
       "description": "오래된 SVN/NAS 환경의 10만여 건 대량 파일을 FTP/SFTP로 이관하며 발생한 인코딩 깨짐 문제를, Python 기반 자동 매핑 및 전환 솔루션으로 실질적 복원율 100%를 달성한 가이드입니다.",
-      "package": "architecture"
+      "package": "migration"
     },
     {
       "id": "tech-2",
@@ -127,23 +127,23 @@
     },
     {
       "id": "tech-10",
-      "title": "스토리지 아키텍처 비교: NAS vs SAN vs DirectStorage",
+      "title": "스토리지 아키텍처 비교: DAS vs NAS vs SAN",
       "date": "2026.05.26",
       "tags": [
         "TechStudy",
         "Storage",
+        "DAS",
         "NAS",
         "SAN",
-        "DirectStorage",
         "Architecture"
       ],
-      "description": "NAS와 SAN의 인프라 구성 레벨 연결 방식과 DirectStorage의 OS-하드웨어 간 최신 데이터 전송 API 기술의 명확한 차이점을 비교 분석합니다.",
+      "description": "서버와 스토리지의 연결 방식에 따른 대표적인 3대 아키텍처인 DAS, NAS, SAN의 개념, 작동 프로토콜, 장단점 및 차이점을 비교",
       "package": "storage"
     },
     {
       "id": "tech-11",
       "title": "물리적 저장 매체 비교: M.2 NVMe SSD vs SATA SSD vs HDD",
-      "date": "2026.05.26",
+      "date": "2026.06.01",
       "tags": [
         "TechStudy",
         "Storage",
@@ -152,7 +152,7 @@
         "NVMe",
         "Hardware"
       ],
-      "description": "스토리지 연결 인프라망을 넘어, 본체 내부에 직접 장착되는 물리적 저장 매체들의 구조와 데이터 전송 버스의 명확한 차이점을 분석합니다.",
+      "description": "스토리지 연결 인프라망을 넘어, 본체 내부에 직접 장착되는 물리적 저장 매체들의 구조와 데이터 전송 버스의 차이점을 비교",
       "package": "storage"
     },
     {

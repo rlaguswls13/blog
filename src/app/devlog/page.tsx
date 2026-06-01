@@ -57,7 +57,8 @@ function DevlogContent() {
     allEntries.forEach(e => {
       if (e.package) pkgs.add(e.package);
     });
-    return ["All", ...Array.from(pkgs)];
+    const sortedPkgs = Array.from(pkgs).sort((a, b) => a.localeCompare(b));
+    return ["All", ...sortedPkgs];
   }, [allEntries]);
 
   // Filter entries

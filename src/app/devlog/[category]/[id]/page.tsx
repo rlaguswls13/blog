@@ -18,6 +18,9 @@ import { MqPriorityDiagram } from "@/components/diagrams/devlog/architecture/MqP
 import { TimeoutPolicyDiagram } from "@/components/diagrams/devlog/architecture/TimeoutPolicyDiagram";
 import { PubSubArchitecture } from "@/components/diagrams/devlog/architecture/PubSubArchitecture";
 import { EventBusSimulator } from "@/components/diagrams/devlog/architecture/EventBusSimulator";
+import { StorageArchitectureDiagram } from "@/components/diagrams/devlog/architecture/StorageArchitectureDiagram";
+import { StorageNetworkDiagram } from "@/components/diagrams/devlog/storage/StorageNetworkDiagram";
+import { StoragePhysicalDiagram } from "@/components/diagrams/devlog/storage/StoragePhysicalDiagram";
 import devlogData from "@/data/devlog.json";
 import { sortByDateDesc } from "@/lib/utils";
 import type { DevlogEntry, DevlogCategory } from "@/types";
@@ -35,6 +38,9 @@ const components = {
   TimeoutPolicyDiagram,
   PubSubArchitecture,
   EventBusSimulator,
+  StorageArchitectureDiagram,
+  StorageNetworkDiagram,
+  StoragePhysicalDiagram,
 };
 
 function getAllMdxFiles(dir: string): string[] {

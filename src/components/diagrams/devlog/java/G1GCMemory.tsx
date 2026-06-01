@@ -54,7 +54,7 @@ export function G1GCMemory() {
 
   return (
     <div className="diagram-container">
-      <canvas ref={canvasRef} width={600} height={240} style={{ background: "#1e1e1e", borderRadius: 8, border: "1px solid #333", maxWidth: "100%" }} />
+      <canvas ref={canvasRef} width={600} height={240} style={{ background: "var(--bg-secondary)", borderRadius: 8, border: "1px solid var(--border-color)", maxWidth: "100%" }} />
     </div>
   );
 }
