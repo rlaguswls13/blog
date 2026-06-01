@@ -26,7 +26,7 @@ const ACCENT = {
 function SecFeature({ text }: { text: string }) {
   return (
     <span className="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold tracking-wide mr-2 mb-2 shadow-sm"
-          style={{ background: 'var(--diagram-badge-bg)', border: '1px solid var(--diagram-badge-border)', color: 'var(--diagram-text-primary)' }}>
+      style={{ background: 'var(--diagram-badge-bg)', border: '1px solid var(--diagram-badge-border)', color: 'var(--diagram-text-primary)' }}>
       {text}
     </span>
   );
@@ -48,7 +48,7 @@ export function K8sSecurityDiagram() {
       `}</style>
 
       <div className="w-full mt-6 mb-8 font-sans animate-scale-up opacity-0 delay-100">
-        
+
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Header section */}
           <div className="rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-6" style={{ ...S.card, background: ACCENT.indigo.light }}>
@@ -57,7 +57,7 @@ export function K8sSecurityDiagram() {
                 Kubernetes 4C Security Model
               </h2>
               <p className="text-xs font-semibold leading-relaxed" style={S.secondary}>
-                쿠버네티스 심층 방어(Defense in Depth) 원칙에 따른 다중 계층 보안 아키텍처.<br/>
+                쿠버네티스 심층 방어(Defense in Depth) 원칙에 따른 다중 계층 보안 아키텍처.<br />
                 외부 인프라부터 내부 애플리케이션 코드까지 4단계의 방어벽을 구성합니다.
               </p>
             </div>
@@ -114,11 +114,11 @@ export function K8sSecurityDiagram() {
                     <SecFeature text="시큐어 코딩" />
                   </div>
                 </div>
-                
+
               </div>
             </div>
           </div>
-          
+
         </div>
       </div>
     </>

@@ -634,6 +634,22 @@ ul {
   font-size: 1.1rem;
 }
 
+.mdx-content h4 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-primary);
+  font-size: 1.0rem;
+  font-weight: 600;
+}
+
+.mdx-content h5 {
+  margin-top: 1.1rem;
+  margin-bottom: 0.6rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .mdx-content p {
   margin-left: 0;
   line-height: 1.8;
