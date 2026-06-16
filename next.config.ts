@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   basePath: process.env.NODE_ENV === "production" ? "/resume" : "",
-  trailingSlash: true,
+  trailingSlash: false,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
 };
 

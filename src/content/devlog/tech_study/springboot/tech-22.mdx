@@ -1,0 +1,32 @@
+---
+id: "tech-22"
+title: "파트 5. 대용량 데이터 처리 최적화 및 확장 (Scaling) (작성중)"
+date: "2026.06.16"
+tags: ["Spring", "SpringBoot", "SpringBatch", "TechStudy"]
+description: "대용량 데이터 처리 최적화 및 확장 기법에 대해 알아봅니다."
+category: "tech_study"
+---
+
+import Indent from '@/components/ui/Indent'
+
+본 문서는 대용량 데이터 처리 속도를 극대화하기 위한 스케일링(Scaling) 기법을 정리한 기록입니다.
+
+---
+
+## 1. 대규모 데이터 처리를 위한 병렬화(Scaling) 전략
+
+<Indent>
+
+단일 스레드 기반의 배치 처리로 성능의 한계가 올 때, 여러 스레드나 분산 서버를 활용하는 멀티스레드/병렬 처리 전략을 사용합니다.
+
+### ① Multi-thread Step
+하나의 Step 내부에서 여러 스레드가 Chunk 단위로 데이터를 병렬 처리하는 방식입니다.
+*   **주의점:** `ItemReader`가 Thread-safe 해야 합니다. 예를 들어 커서 기반 리더(`JdbcCursorItemReader`)보다는 스레드 안전성이 보장되는 페이징 리더(`JdbcPagingItemReader`)를 사용하는 것이 권장됩니다.
+
+### ② Parallel Steps
+서로 의존성이 없는 여러 개의 Step을 병렬로 동시에 실행하는 방식입니다. Step A와 Step B가 독립적이라면 순차적으로 실행할 필요 없이 `Flow`와 `TaskExecutor`를 조합하여 동시에 실행시켜 배치 수행 전체 시간을 단축합니다.
+
+### ③ Partitioning (마스터-워커 구조)
+데이터를 논리적 기준(예: 월별, 부서별)으로 여러 개의 파티션(Partition)으로 나누고, Master Step이 여러 Worker Step에게 파티션을 분배하여 병렬로 처리하는 방식입니다. 로컬 스레드뿐만 아니라 원격 서버 노드들로 작업을 분산(`Remote Partitioning`)시킬 수 있어 가장 높은 확장성을 제공합니다.
+
+</Indent>

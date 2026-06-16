@@ -8,9 +8,11 @@ function ProjectBackLinkInner() {
   const searchParams = useSearchParams();
   const page = searchParams.get("page") || "1";
   const q = searchParams.get("q") || "";
+  const tab = searchParams.get("tab") || "enterprise";
   
   const qParam = q ? `&q=${encodeURIComponent(q)}` : "";
-  const href = `/projects?page=${page}${qParam}`;
+  const tabParam = tab !== "enterprise" ? `&tab=${tab}` : "";
+  const href = `/projects?page=${page}${qParam}${tabParam}`;
   
   return (
     <Link href={href} className="back-link">

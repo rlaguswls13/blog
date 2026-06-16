@@ -1,0 +1,38 @@
+---
+id: "tech-23"
+title: "파트 6. 실무 배치 개발을 위한 성능 튜닝 및 테스트 (작성중)"
+date: "2026.06.16"
+tags: ["Spring", "SpringBoot", "SpringBatch", "TechStudy"]
+description: "실무 배치 개발을 위한 성능 튜닝 및 테스트 기법에 대해 알아봅니다."
+category: "tech_study"
+---
+
+import Indent from '@/components/ui/Indent'
+
+본 문서는 실무 배치 개발을 위한 성능 튜닝 및 테스트 기법에 대해 정리한 기록입니다.
+
+---
+
+## 1. 배치 성능 튜닝 포인트
+
+<Indent>
+
+*   **Page Size와 Fetch Size 조절:** DB에서 데이터를 읽어올 때 `Page Size`를 크게 잡으면 네트워크 I/O 횟수를 줄일 수 있습니다. 통상적으로 `Chunk Size`와 `Page Size`를 동일하게 맞추는 것이 성능 최적화의 기본입니다.
+*   **영속성 컨텍스트(EntityManager) 초기화 조절:** JPA를 사용할 때 대용량 데이터가 영속성 컨텍스트에 계속 쌓이면 메모리 부족(OOM) 현상이 일어날 수 있습니다. `JpaItemWriter`는 기본적으로 Chunk 처리가 끝날 때마다 flush와 clear를 호출하여 메모리 누수를 방지합니다.
+*   **Bulk Insert 적용:** 단건 Insert가 아닌 `JdbcBatchItemWriter`를 사용해 일괄 Insert(Batch Update)를 실행하면 DB와의 네트워크 통신 비용이 비약적으로 줄어듭니다.
+
+</Indent>
+
+---
+
+## 2. 스프링 배치 테스트 환경 구축
+
+<Indent>
+
+운영 환경에 배포하기 전에 배치가 정상적으로 작동하는지 검증하기 위한 완벽한 테스트 환경 구축이 필수적입니다.
+
+*   **@SpringBatchTest:** 이 어노테이션을 테스트 클래스에 부여하면, 스프링 프레임워크가 제공하는 배치 테스트 유틸리티(`JobLauncherTestUtils`, `JobRepositoryTestUtils`) 빈을 쉽게 주입받을 수 있습니다.
+*   **JobLauncherTestUtils:** 전체 Job을 실행(`launchJob()`)하거나 특정 Step만 독립적으로 실행(`launchStep()`)하여 테스트 격리성을 유지할 수 있습니다.
+*   **인메모리 DB 활용:** 단위 테스트 시 실제 DB의 메타 데이터 테이블에 접근하는 오버헤드와 간섭을 막기 위해, 주로 H2와 같은 인메모리 데이터베이스를 연결하여 테스트를 수행합니다.
+
+</Indent>

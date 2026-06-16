@@ -246,5 +246,67 @@
                 "flow_diagram": "resources/diagrams/devops-pipeline.html"
             }
         ]
+    },
+    {
+        "id": "7",
+        "project_id": "resume",
+        "tabs": [
+            {
+                "title": "Next.js 15 기반 개발자 블로그 및 포트폴리오 웹 어플리케이션 구축",
+                "sections": [
+                    {
+                        "title": "1. 도입 배경 및 과제 (Background & Problem)",
+                        "body": "기존의 정적이고 밋밋한 템플릿 기반 이력서에서 탈피하여, 직접 학습한 기술 스택(React, Next.js, CSS)을 직관적으로 드러내고 다양한 개발 기술 일지를 우아하게 아카이빙할 수 있는 독자적인 디지털 포트폴리오 아키텍처가 필요했습니다."
+                    },
+                    {
+                        "title": "2. 기술적 구현 및 적용 (Technical Implementation)",
+                        "list": [
+                            "Next.js 15 App Router 기반의 고성능 SSR/SSG 스트리밍 구조 설계",
+                            "React 19 Suspense를 연동하여 비동기 데이터 로딩 및 클라이언트 초기 렌더링 성능 최적화",
+                            "Vanilla CSS 미디어 쿼리와 변수를 이용해 성능 저하 없는 전역 테마(다크/라이트) 토글 및 글래스모피즘 UI 구축",
+                            "MDX 컴포넌트 커스터마이징을 통해 코드 하이라이트(rehype-pretty-code) 및 다이어그램(Mermaid) 등을 매끄럽게 통합"
+                        ]
+                    },
+                    {
+                        "title": "3. 성과 및 유용성 (Result & Benefit)",
+                        "list": [
+                            "최신 웹 표준 기술을 적극 도입하여 등급 측정 사이트에서 최고 속도 등급을 기록하는 경이로운 로딩 성능 증명",
+                            "자체 구축한 아카이빙 채널을 통해 기술적인 성장 기록을 안전하고 자유롭게 표현할 수 있는 인적 브랜딩 공간 확보"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "8",
+        "project_id": "fileProcessor",
+        "tabs": [
+            {
+                "title": "청크 기반 대용량 파일 분할 업로드 및 비동기 파이프라인 구현",
+                "sections": [
+                    {
+                        "title": "1. 도입 배경 및 과제 (Background & Problem)",
+                        "body": "웹 브라우저 환경에서 수 기가바이트(GB) 단위의 대용량 파일을 단일 파일 스트림으로 업로드하는 경우, 서버 사이드의 일시적인 메모리 급증 현상(Out of Memory) 및 HTTP 세션 타임아웃 장애가 빈번하게 발생하여 업로드 안정성이 심각하게 저해되는 한계가 있었습니다."
+                    },
+                    {
+                        "title": "2. 기술적 구현 및 적용 (Technical Implementation)",
+                        "list": [
+                            "프론트엔드 레벨에서 파일을 고정 크기(예: 5MB)의 청크(Chunk) 조각으로 쪼개어 멀티파트(Multipart) 병렬 전송 로직 구현",
+                            "Spring Boot 백엔드에서 전송된 청크 조각들을 임시 디스크 버퍼 공간에서 랜덤 액세스(RandomAccessFile) 방식으로 무중단 병합 처리",
+                            "업로드 중단 시 이미 전송 성공한 청크 이후부터 전송을 재개할 수 있는 이어올리기(Resume Upload) 메커니즘 연동",
+                            "비동기 논블로킹(Async/Non-blocking) 스레드 풀을 활용해 파일 검증 및 메타데이터 DB 기록 파이프라인 형성"
+                        ]
+                    },
+                    {
+                        "title": "3. 성과 및 유용성 (Result & Benefit)",
+                        "list": [
+                            "네트워크 연결이 일시적으로 끊어지더라도 파일 전체를 처음부터 다시 올릴 필요가 없는 안정적인 복원 성능 확보",
+                            "서버 내부 Heap 메모리 점유율을 파일 크기에 무관하게 항상 일정 수준(Chunk 크기) 이하로 고정하여 서비스 가용성을 획기적으로 상승"
+                        ]
+                    }
+                ]
+            }
+        ]
     }
 ]

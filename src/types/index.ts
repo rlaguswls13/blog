@@ -41,6 +41,7 @@ export interface Project {
   periods: string[];
   tags: string[];
   description: string;
+  type?: "enterprise" | "personal";
 }
 
 export interface ProjectSection {
