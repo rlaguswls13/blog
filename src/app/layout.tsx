@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "김현진 포트폴리오",
+  title: "김현진 블로그",
   description:
     "Java & Spring Boot 기반 풀스택 개발자 김현진의 포트폴리오입니다.",
 };

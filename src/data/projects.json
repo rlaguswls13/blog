@@ -53,7 +53,7 @@
       "id": "integrated-support",
       "title": "사내 통합지원시스템 고도화",
       "periods": [
-        "2023.03 - 2024.02"
+        "2023.03 - 2024.03"
       ],
       "tags": [
         "Legacy Migration",
@@ -69,7 +69,7 @@
       "id": "cloud-migration",
       "title": "사내 통합지원시스템 클라우드 환경으로 이관",
       "periods": [
-        "2023.03 - 2024.08"
+        "2023.08 - 2024.03"
       ],
       "tags": [
         "Cloud Migration",
@@ -85,7 +85,7 @@
       "id": "devops-portal",
       "title": "클라우드 관리 포털 개발 및 DevOps 자동화 체계 구축",
       "periods": [
-        "2024.03 - 2024.08"
+        "2021.03 - 2023.03"
       ],
       "tags": [
         "DevOps",
@@ -100,7 +100,7 @@
       "id": "resume",
       "title": "개인 포트폴리오 홈페이지 생성",
       "periods": [
-        "2026.05 - "
+        "2026.05 - 작업중"
       ],
       "tags": [
         "Next.js15",
