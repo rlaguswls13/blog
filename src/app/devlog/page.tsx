@@ -106,7 +106,7 @@ function DevlogContent() {
   return (
     <>
       <header>
-        <h1>기술 학습 & 문제 해결</h1>
+        <h1 className="page-title">기술 학습 & 문제 해결</h1>
         <p style={{ color: "var(--text-secondary)", marginTop: "-15px", marginBottom: "40px" }}>
           기술 공부 기록과 문제 해결 과정을 기록하는 공간입니다.
         </p>
@@ -190,7 +190,7 @@ function DevlogContent() {
                           <div className="devlog-meta" style={{ marginBottom: "10px" }}>
                             <span><CalendarIcon /> {entry.date}</span>
                           </div>
-                          <h3 style={{ marginTop: 0, marginBottom: "12px" }}>{entry.title}</h3>
+                          <div className="item-title" style={{ marginTop: 0, marginBottom: "12px" }}>{entry.title}</div>
                           <TagList tags={entry.tags} />
                           <p className="devlog-description" style={{ color: "var(--text-secondary)", marginTop: "12px", flexGrow: 1, fontSize: "0.95rem", lineHeight: "1.5" }}>
                             {entry.description}

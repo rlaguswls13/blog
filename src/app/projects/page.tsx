@@ -80,7 +80,7 @@ function ProjectsContent() {
   return (
     <>
       <header>
-        <h1>작업</h1>
+        <h1 className="page-title">작업</h1>
         <p style={{ color: "var(--text-secondary)", marginTop: "-15px", marginBottom: "40px" }}>
           {activeTab === "enterprise" ? "참여한 주요 엔터프라이즈 작업 목록입니다." : "개인적으로 진행한 개인 작업 목록입니다."}
         </p>
@@ -146,7 +146,7 @@ function ProjectsContent() {
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <div className="project-card" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-                    <h3>{p.title}</h3>
+                    <div className="item-title">{p.title}</div>
                     <p className="project-period">
                       <CalendarIcon /> {formatPeriods(p.periods)} {calculateTotalPeriod(p.periods)}
                     </p>

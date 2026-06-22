@@ -384,7 +384,7 @@
     },
     {
       "id": "prob-5",
-      "title": "WAS 서버 이중화(Session Clustering) 환경의 데이터 공유 실패 및 해결 방안",
+      "title": "WAS 서버 이중화(Session Clustering) 환경의 데이터 공유 실패 및 해결 방안 (수정중)",
       "date": "2026.05.26",
       "tags": [
         "Loadbalance",
@@ -417,14 +417,16 @@
   "competition_event": [
     {
       "id": "event-1",
-      "title": "대회/행사 기록 템플릿",
+      "title": "2026 천하제일 입코딩 대회(with GitHub Copilot) 참가 회고",
       "date": "2026.06.22",
       "tags": [
-        "Competition",
-        "Event",
-        "Template"
+        "AI Agent",
+        "GitHub Copilot",
+        "Azure",
+        "Hackathon",
+        "DevOps"
       ],
-      "description": "대회/행사 참여 기록을 작성하기 위한 기본 템플릿 페이지입니다.",
+      "description": "오직 구두 프롬프팅으로만 배포까지 완성하는 AI 챌린지, 39개 팀 중 18위 기록(69.2점) 및 AI 워크플로우에 대한 고찰",
       "package": "event"
     }
   ]

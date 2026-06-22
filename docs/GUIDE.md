@@ -2,7 +2,6 @@
 
 본 문서는 포트폴리오 프로젝트의 로컬 개발 환경 구성, 빌드 절차, 그리고 CI/CD 자동 배포 관리에 관한 상세 실행 가이드를 제공합니다.
 
----
 
 ## 로컬 개발 환경 구성 및 실행
 
@@ -19,21 +18,7 @@ Turbopack 컴파일러를 통해 초고속 핫 리로딩이 적용된 개발 서
 ```bash
 npm run dev
 ```
-- 기본값은 앱 포트 3001, debugger(inspect) 포트 30000 입니다.
-- 외부 환경변수로 포트 변경이 가능합니다.
-	- 앱 포트: PORT
-	- debugger 포트: NODE_OPTIONS
 
-예시(Windows PowerShell):
-```powershell
-$env:PORT=3001
-$env:NODE_OPTIONS="--inspect=30001"
-npm run dev
-```
-
-- inspect 옵션은 NODE_ENV가 아니라 NODE_OPTIONS에 설정해야 적용됩니다.
-
----
 
 ## 정적 파일 빌드 및 추출
 

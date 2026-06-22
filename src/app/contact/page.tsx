@@ -1,6 +1,8 @@
 "use client";
 import contactData from "@/data/contact.json";
+import Image from "next/image";
 import { GithubIcon, PhoneIcon, MailIcon } from "@/components/ui/Icons";
+import contactPicture from "../../../public/images/2022_picture.jpg";
 
 export default function ContactPage() {
   const { contact } = contactData;
@@ -8,7 +10,26 @@ export default function ContactPage() {
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto" }}>
       <div className="project-card" style={{ padding: "50px", textAlign: "center" }}>
-        <h1 style={{ borderBottom: "none", paddingBottom: 0 }}>Contact Me</h1>
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "320px",
+            margin: "0 auto 28px",
+            borderRadius: "18px",
+            overflow: "hidden",
+            border: "1px solid var(--border-color)",
+            boxShadow: "var(--card-shadow)",
+          }}
+        >
+          <Image
+            src={contactPicture}
+            alt="Contact visual"
+            style={{ width: "100%", height: "auto", display: "block" }}
+            priority
+          />
+        </div>
+
+        <div className="page-title" style={{ borderBottom: "none", paddingBottom: 0 }}>Contact Me</div>
         <p style={{ fontSize: "1.1rem", color: "var(--text-secondary)", marginBottom: "40px" }}>
           {contact.intro}
         </p>
@@ -44,7 +65,7 @@ export default function ContactPage() {
           {contact.email}
         </a>
 
-        <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
           {contact.links.map((link, idx) => (
             <a
               key={idx}

@@ -131,9 +131,9 @@ export default async function DevlogDetailPage({
         <div className="devlog-meta" style={{ marginBottom: "15px" }}>
           <span>📅 {data.date}</span>
         </div>
-        <h1 style={{ borderBottom: "none", paddingBottom: 0, marginBottom: "15px" }}>
+        <div className="page-title" style={{ borderBottom: "none", paddingBottom: 0, marginBottom: "15px" }}>
           {data.title}
-        </h1>
+        </div>
         {data.tags && <TagList tags={data.tags} />}
       </div>
 

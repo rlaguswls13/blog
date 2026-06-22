@@ -7,7 +7,7 @@ export default function ResumePage() {
   return (
     <>
       <div className="project-card" style={{ marginBottom: "40px", padding: "40px" }}>
-        <h1>경력 요약</h1>
+        <h1 className="page-title">경력 요약</h1>
         <div style={{ marginTop: "30px" }}>
           {resume.work.map((item, idx) => (
             <TimelineItem
@@ -22,7 +22,7 @@ export default function ResumePage() {
 
       <div className="grid-2">
         <div className="project-card">
-          <h2>학력</h2>
+          <div className="section-title">학력</div>
           <div style={{ marginTop: "25px" }}>
             {resume.education.map((item, idx) => (
               <TimelineItem
@@ -36,7 +36,7 @@ export default function ResumePage() {
         </div>
 
         <div className="project-card">
-          <h2>자격증</h2>
+          <div className="section-title">자격증</div>
           <div style={{ marginTop: "25px" }}>
             {resume.certification.map((item, idx) => (
               <TimelineItem

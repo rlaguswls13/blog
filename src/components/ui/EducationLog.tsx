@@ -51,7 +51,7 @@ export function EducationLog({
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
-        <h2 style={{ fontSize: "1.2rem", margin: 0, color: "var(--text-primary)", fontWeight: 600 }}>교육일지 목록</h2>
+        <div className="section-title" style={{ margin: 0 }}>교육일지 목록</div>
         <button
           onClick={() => setShowSyncModal(true)}
           className="sync-button"
@@ -76,9 +76,9 @@ export function EducationLog({
             </div>
 
             {entry.blogTitle && (
-              <h3 style={{ marginTop: "8px", marginBottom: "12px", fontSize: "1.05rem" }}>
+              <div className="item-title" style={{ marginTop: "8px", marginBottom: "12px" }}>
                 {entry.blogTitle}
-              </h3>
+              </div>
             )}
 
             <TagList tags={entry.keywords} />
@@ -145,9 +145,9 @@ export function EducationLog({
             </div>
 
             {selectedEntry.blogTitle && (
-              <h2 style={{ margin: "12px 0 16px", fontSize: "1.3rem" }}>
+              <div className="section-title" style={{ margin: "12px 0 16px" }}>
                 {selectedEntry.blogTitle}
-              </h2>
+              </div>
             )}
 
             <TagList tags={selectedEntry.keywords} />
@@ -192,9 +192,9 @@ export function EducationLog({
               <CloseIcon />
             </button>
 
-            <h2 style={{ fontSize: "1.3rem", marginTop: 0, marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
+            <div className="section-title" style={{ marginTop: 0, marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
               <RefreshIcon style={{ color: "var(--accent-primary)" }} /> Notion 교육일지 동기화 안내
-            </h2>
+            </div>
 
             <div style={{ lineHeight: "1.7", color: "var(--text-secondary)", fontSize: "0.95rem" }}>
               <p style={{ marginBottom: "12px" }}>
