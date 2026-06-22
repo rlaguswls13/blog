@@ -85,7 +85,7 @@ function findMdxFile(dir: string, id: string): string | null {
 
 export async function generateStaticParams() {
   const contentDir = path.join(process.cwd(), "src/content/devlog");
-  const categories = ["tech_study", "problem_solving"];
+  const categories = ["tech_study", "problem_solving", "competition_event"];
   const params: { category: string; id: string }[] = [];
 
   for (const category of categories) {

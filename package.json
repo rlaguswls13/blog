@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/fetch-notion.mjs && next dev",
+    "dev:no-fetch": "next dev",
     "fetch-notion": "node scripts/fetch-notion.mjs",
     "build": "node scripts/fetch-notion.mjs && next build",
     "build:no-fetch": "next build",

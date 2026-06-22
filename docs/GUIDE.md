@@ -19,7 +19,19 @@ Turbopack 컴파일러를 통해 초고속 핫 리로딩이 적용된 개발 서
 ```bash
 npm run dev
 ```
-- 실행 완료 후 브라우저를 열고 http://localhost:3000 경로로 접속하여 실시간 소스 변경 사항을 검증할 수 있습니다.
+- 기본값은 앱 포트 3001, debugger(inspect) 포트 30000 입니다.
+- 외부 환경변수로 포트 변경이 가능합니다.
+	- 앱 포트: PORT
+	- debugger 포트: NODE_OPTIONS
+
+예시(Windows PowerShell):
+```powershell
+$env:PORT=3001
+$env:NODE_OPTIONS="--inspect=30001"
+npm run dev
+```
+
+- inspect 옵션은 NODE_ENV가 아니라 NODE_OPTIONS에 설정해야 적용됩니다.
 
 ---
 

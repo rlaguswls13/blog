@@ -413,5 +413,19 @@
       "description": "수백 개에 달하는 레거시 커스텀 예외로 인해 파편화된 예외 처리 체계를 분석하고, AOP 및 GlobalExceptionHandler 도입, log4j 파사드 및 Tomcat ExceptionPageResolver 설정을 통해 직관적인 예외 처리와 B2B 대응 효율성을 극대화한 개선 사례입니다.",
       "package": "java"
     }
+  ],
+  "competition_event": [
+    {
+      "id": "event-1",
+      "title": "대회/행사 기록 템플릿",
+      "date": "2026.06.22",
+      "tags": [
+        "Competition",
+        "Event",
+        "Template"
+      ],
+      "description": "대회/행사 참여 기록을 작성하기 위한 기본 템플릿 페이지입니다.",
+      "package": "event"
+    }
   ]
 }

@@ -82,9 +82,10 @@ export interface DevlogEntry {
 export interface DevlogData {
   tech_study: DevlogEntry[];
   problem_solving: DevlogEntry[];
+  competition_event: DevlogEntry[];
 }
 
-export type DevlogCategory = "tech_study" | "problem_solving";
+export type DevlogCategory = "tech_study" | "problem_solving" | "competition_event";
 
 // ===== Devlog Detail (MDX Frontmatter) =====
 export interface DevlogFrontmatter {

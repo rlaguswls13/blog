@@ -21,6 +21,7 @@ function DevlogContent() {
   const tabs = [
     { key: "tech_study", label: "기술 학습 기록" },
     { key: "problem_solving", label: "문제 해결 기록" },
+    { key: "competition_event", label: "대회/행사" },
     { key: "education_log", label: "교육일지" },
   ];
 
