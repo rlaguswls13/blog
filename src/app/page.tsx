@@ -14,17 +14,8 @@ import { AboutHighlights } from "@/components/ui/AboutHighlights";
 export default function AboutPage() {
   const { profile, others } = profileData;
   const projectCarouselItems = projectsData.projects.slice(0, 9);
-  const storyParagraphs =
-    profile.bio_story && profile.bio_story.length > 0
-      ? profile.bio_story
-      : [profile.bio_text];
-  const highlightItems =
-    profile.bio_highlights && profile.bio_highlights.length > 0
-      ? profile.bio_highlights
-      : (profile.bio_points || []).slice(0, 3).map((point) => {
-          const [title, ...rest] = point.split(": ");
-          return { title, description: rest.join(": ") };
-        });
+  const storyParagraphs = profile.bio_story;
+  const highlightItems = profile.bio_highlights;
 
   return (
     <>

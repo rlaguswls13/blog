@@ -39,7 +39,11 @@
     "id": "38719946-ca76-80ff-854f-f8a00e1f49b1",
     "round": "[교육 26일차]",
     "date": "2026-06-22",
-    "keywords": [],
+    "keywords": [
+      "CSS",
+      "Selector",
+      "media타입"
+    ],
     "impression": "",
     "blogTitle": "",
     "notionUrl": "https://app.notion.com/p/38719946ca7680ff854ff8a00e1f49b1"
