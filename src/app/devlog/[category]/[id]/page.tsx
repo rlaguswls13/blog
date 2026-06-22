@@ -25,6 +25,7 @@ import { ContainerVsVmDiagram } from "@/components/diagrams/devlog/container/Con
 import { K8sSecurityDiagram } from "@/components/diagrams/devlog/container/K8sSecurityDiagram";
 import { CodePopup } from "@/components/layout/CodePopup";
 import { Collapsible } from "@/components/ui/Collapsible";
+import { MdxImageFigure } from "@/components/ui/MdxImageFigure";
 import devlogData from "@/data/devlog.json";
 import { sortByDateDesc } from "@/lib/utils";
 import type { DevlogEntry, DevlogCategory } from "@/types";
@@ -49,6 +50,7 @@ const components = {
   K8sSecurityDiagram,
   CodePopup,
   Collapsible,
+  MdxImageFigure,
 };
 
 function getAllMdxFiles(dir: string): string[] {
