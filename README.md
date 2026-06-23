@@ -21,7 +21,7 @@
 
 ## 디렉터리 구조
 ```text
-resume
+blog
  ┣ .github/workflows
  ┃ ┗ deploy.yml          # GitHub Actions 배포 자동화 파이프라인
  ┣ docs                  # 추가 가이드 및 명세서 보관 폴더
@@ -33,7 +33,7 @@ resume
  ┃ ┃ ┣ contact           # 연락처 정보 페이지
  ┃ ┃ ┣ devlog            # 개발 로그 대시보드 및 상세 포스트 페이지
  ┃ ┃ ┣ projects          # 프로젝트 이력 및 상세 아키텍처 뷰어
- ┃ ┃ ┣ resume            # 타임라인 기반 이력서 페이지
+ ┃ ┃ ┣ blog              # 타임라인 기반 이력서 페이지
  ┃ ┃ ┣ globals.css       # 통합 스타일 변수 및 전역 스타일시트
  ┃ ┃ ┣ layout.tsx        # 공통 레이아웃 및 내비게이션 구성
  ┃ ┃ ┗ page.tsx          # 메인 소개 페이지 (About)
