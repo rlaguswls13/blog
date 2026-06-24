@@ -56,7 +56,7 @@ export function CodePopup({ name }: CodePopupProps) {
       {/* Clickable generic content badge */}
       <button
         onClick={() => setIsOpen(true)}
-        className="inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-0.5 rounded-md font-mono text-sm font-bold bg-[var(--bg-tertiary)] text-[var(--accent-primary)] border border-[var(--border-color)] hover:border-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/10 hover:shadow-[0_0_12px_rgba(187,134,252,0.15)] transition-all duration-300 cursor-pointer select-none"
+        className="inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-0.5 rounded-md font-mono text-sm font-bold bg-[var(--bg-tertiary)] text-[var(--accent-primary)] border border-[var(--border-color)] hover:border-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/10 hover:shadow-[0_0_12px_var(--accent-glow-sm)] transition-all duration-300 cursor-pointer select-none"
         title={`${name} 코드 가이드 보기`}
       >
         <span>📄 {name}</span>
@@ -85,7 +85,7 @@ export function CodePopup({ name }: CodePopupProps) {
           />
 
           {/* Modal Content container (Wider max-w-5xl, custom neon shadow highlight) */}
-          <div className="relative w-full max-w-5xl max-h-[85vh] flex flex-col bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-[0_0_50px_rgba(187,134,252,0.25)] rounded-2xl overflow-hidden transform scale-100 transition-all duration-300 animate-[zoomIn_0.2s_ease-out]">
+          <div className="relative w-full max-w-5xl max-h-[85vh] flex flex-col bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-[0_0_50px_var(--accent-glow-md)] rounded-2xl overflow-hidden transform scale-100 transition-all duration-300 animate-[zoomIn_0.2s_ease-out]">
             
             {/* Absolute positioned close button */}
             <button

@@ -1,82 +1,227 @@
-/* globals.css ??Migrated from legacy global.css */
+/* globals.css — Design Token Architecture */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
+/* ================================================================
+   PRIMITIVE LAYER
+   Raw design values — named by color/scale, not intent.
+   These are the "atoms" of the design system.
+   Do NOT reference these directly in components or CSS rules.
+================================================================ */
 :root {
-  --bg-primary: #121212;
-  --bg-secondary: #1e1e1e;
-  --bg-tertiary: #2d2d2d;
-  --text-primary: #e0e0e0;
-  --text-secondary: #a0a0a0;
-  --accent-primary: #BB86FC;
-  --accent-secondary: #03DAC6;
-  --accent-chip-bg: rgba(187, 134, 252, 0.12);
-  --accent-chip-border: rgba(187, 134, 252, 0.25);
-  --border-color: #333333;
-  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  --nav-bg: rgba(18, 18, 18, 0.95);
-  --transition-speed: 0.3s;
+  /* Neutrals: dark scale */
+  --primitive-neutral-100: #e0e0e0;
+  --primitive-neutral-200: #a0a0a0;
+  --primitive-neutral-300: #737373;
+  --primitive-neutral-400: #525252;
+  --primitive-neutral-600: #333333;
+  --primitive-neutral-700: #2d2d2d;
+  --primitive-neutral-800: #1e1e1e;
+  --primitive-neutral-900: #121212;
+  --primitive-neutral-950: #0a0a0a;
 
-  /* === Diagram Semantic Tokens (Dark default) === */
-  --diagram-bg: #0a0a0a;
-  --diagram-card-bg: #171717;
-  --diagram-card-border: #262626;
-  --diagram-card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
-  --diagram-text-heading: #ffffff;
-  --diagram-text-primary: #e5e5e5;
-  --diagram-text-secondary: #a3a3a3;
-  --diagram-text-muted: #737373;
-  --diagram-badge-bg: rgba(255, 255, 255, 0.06);
-  --diagram-badge-border: rgba(255, 255, 255, 0.1);
-  --diagram-header-bg: #171717;
-  --diagram-header-border: #262626;
-  --diagram-layer-bg: rgba(255, 255, 255, 0.03);
-  --diagram-result-bg: rgba(99, 102, 241, 0.15);
-  --diagram-result-border: rgba(99, 102, 241, 0.25);
-  --diagram-result-text: #c7d2fe;
-  --diagram-arrow-color: #525252;
-  --diagram-progress-track: #262626;
-  --diagram-soft-shadow: none;
-  --diagram-wrapper-border: #262626;
+  /* Cool-gray: light scale */
+  --primitive-cool-0:   #ffffff;
+  --primitive-cool-50:  #f0f2f5;
+  --primitive-cool-100: #e4e6eb;
+  --primitive-cool-200: #ced0d4;
+  --primitive-cool-600: #4a4a4a;
+  --primitive-cool-900: #1a1a1a;
+
+  /* Purple: primary brand accent */
+  --primitive-purple-300: #BB86FC;
+  --primitive-purple-700: #6200EE;
+
+  /* Teal: secondary brand accent */
+  --primitive-teal-300: #03DAC6;
+  --primitive-teal-700: #018786;
+
+  /* Alpha: dark accent overlays */
+  --primitive-purple-300-a12: rgba(187, 134, 252, 0.12);
+  --primitive-purple-300-a15: rgba(187, 134, 252, 0.15);
+  --primitive-purple-300-a25: rgba(187, 134, 252, 0.25);
+  --primitive-purple-300-a30: rgba(187, 134, 252, 0.30);
+  --primitive-purple-300-a40: rgba(187, 134, 252, 0.40);
+
+  /* Alpha: light accent overlays */
+  --primitive-purple-700-a08: rgba(98, 0, 238, 0.08);
+  --primitive-purple-700-a20: rgba(98, 0, 238, 0.20);
+  --primitive-purple-700-a30: rgba(98, 0, 238, 0.30);
+  --primitive-purple-700-a40: rgba(98, 0, 238, 0.40);
+
+  /* Alpha: surface overlays */
+  --primitive-neutral-900-a95: rgba(18, 18, 18, 0.95);
+  --primitive-cool-50-a95:     rgba(240, 242, 245, 0.95);
+  --primitive-black-a20:       rgba(0, 0, 0, 0.20);
+  --primitive-black-a30:       rgba(0, 0, 0, 0.30);
+
+  /* Diagram: dark scale */
+  --primitive-diag-dark-950:         #0a0a0a;
+  --primitive-diag-dark-900:         #171717;
+  --primitive-diag-dark-800:         #262626;
+  --primitive-diag-dark-text-0:      #ffffff;
+  --primitive-diag-dark-text-100:    #e5e5e5;
+  --primitive-diag-dark-text-400:    #a3a3a3;
+  --primitive-diag-dark-text-500:    #737373;
+  --primitive-diag-dark-badge-bg:    rgba(255, 255, 255, 0.06);
+  --primitive-diag-dark-badge-bdr:   rgba(255, 255, 255, 0.10);
+  --primitive-diag-dark-layer:       rgba(255, 255, 255, 0.03);
+  --primitive-diag-dark-result-bg:   rgba(99, 102, 241, 0.15);
+  --primitive-diag-dark-result-bdr:  rgba(99, 102, 241, 0.25);
+  --primitive-diag-dark-result-text: #c7d2fe;
+  --primitive-diag-dark-arrow:       #525252;
+
+  /* Diagram: light scale */
+  --primitive-diag-light-bg:          #FAF9F6;
+  --primitive-diag-light-card:        #ffffff;
+  --primitive-diag-light-border:      #e7e5e4;
+  --primitive-diag-light-text-0:      #1c1917;
+  --primitive-diag-light-text-200:    #44403c;
+  --primitive-diag-light-text-400:    #78716c;
+  --primitive-diag-light-text-600:    #a8a29e;
+  --primitive-diag-light-badge-bg:    #f5f5f4;
+  --primitive-diag-light-badge-bdr:   #e7e5e4;
+  --primitive-diag-light-layer:       rgba(0, 0, 0, 0.02);
+  --primitive-diag-light-result-bg:   rgba(99, 102, 241, 0.06);
+  --primitive-diag-light-result-bdr:  rgba(99, 102, 241, 0.15);
+  --primitive-diag-light-result-text: #3730a3;
+  --primitive-diag-light-arrow:       #d6d3d1;
+  --primitive-diag-light-wrapper-bdr: #d6d3d1;
+
+  /* Shadows */
+  --primitive-shadow-card-dark:    0 4px 6px rgba(0, 0, 0, 0.30);
+  --primitive-shadow-card-light:   0 2px 4px rgba(0, 0, 0, 0.10), 0 8px 16px rgba(0, 0, 0, 0.10);
+  --primitive-shadow-hover:        0 8px 16px rgba(0, 0, 0, 0.30);
+  --primitive-shadow-hover-sm:     0 8px 20px rgba(0, 0, 0, 0.20);
+  --primitive-shadow-float:        0 4px 10px rgba(0, 0, 0, 0.30);
+  --primitive-shadow-modal:        0 20px 60px rgba(0, 0, 0, 0.30);
+  --primitive-shadow-diag-dark:    0 10px 40px -10px rgba(0, 0, 0, 0.30);
+  --primitive-shadow-diag-light:   0 10px 40px -10px rgba(0, 0, 0, 0.08);
+  --primitive-shadow-diag-soft:    0 4px 20px rgba(0, 0, 0, 0.04);
+  --primitive-shadow-diag-wrapper: 0 15px 40px rgba(0, 0, 0, 0.06);
+
+  /* Timing */
+  --primitive-duration-300: 0.3s;
+}
+
+/* ================================================================
+   SEMANTIC LAYER — DARK  (default)
+   Maps intent → primitive tokens.
+   Apply class="theme-dark" to <html>.
+================================================================ */
+.theme-dark {
+  /* Backgrounds */
+  --bg-primary:   var(--primitive-neutral-900);
+  --bg-secondary: var(--primitive-neutral-800);
+  --bg-tertiary:  var(--primitive-neutral-700);
+  --bg-card:      var(--primitive-neutral-700);
+
+  /* Text */
+  --text-primary:   var(--primitive-neutral-100);
+  --text-secondary: var(--primitive-neutral-200);
+
+  /* Accent */
+  --accent-primary:       var(--primitive-purple-300);
+  --accent-secondary:     var(--primitive-teal-300);
+  --accent-chip-bg:       var(--primitive-purple-300-a12);
+  --accent-chip-border:   var(--primitive-purple-300-a25);
+  --accent-glow-sm:       var(--primitive-purple-300-a15);
+  --accent-glow-md:       var(--primitive-purple-300-a25);
+  --accent-cta-shadow:    0 4px 15px var(--primitive-purple-300-a30);
+  --accent-cta-shadow-hv: 0 6px 20px var(--primitive-purple-300-a40);
+
+  /* Layout */
+  --border-color:         var(--primitive-neutral-600);
+  --card-shadow:          var(--primitive-shadow-card-dark);
+  --card-shadow-hover:    var(--primitive-shadow-hover);
+  --card-shadow-hover-sm: var(--primitive-shadow-hover-sm);
+  --float-shadow:         var(--primitive-shadow-float);
+  --modal-shadow:         var(--primitive-shadow-modal);
+  --nav-bg:               var(--primitive-neutral-900-a95);
+  --transition-speed:     var(--primitive-duration-300);
+
+  /* Diagram tokens */
+  --diagram-bg:             var(--primitive-diag-dark-950);
+  --diagram-card-bg:        var(--primitive-diag-dark-900);
+  --diagram-card-border:    var(--primitive-diag-dark-800);
+  --diagram-card-shadow:    var(--primitive-shadow-diag-dark);
+  --diagram-text-heading:   var(--primitive-diag-dark-text-0);
+  --diagram-text-primary:   var(--primitive-diag-dark-text-100);
+  --diagram-text-secondary: var(--primitive-diag-dark-text-400);
+  --diagram-text-muted:     var(--primitive-diag-dark-text-500);
+  --diagram-badge-bg:       var(--primitive-diag-dark-badge-bg);
+  --diagram-badge-border:   var(--primitive-diag-dark-badge-bdr);
+  --diagram-header-bg:      var(--primitive-diag-dark-900);
+  --diagram-header-border:  var(--primitive-diag-dark-800);
+  --diagram-layer-bg:       var(--primitive-diag-dark-layer);
+  --diagram-result-bg:      var(--primitive-diag-dark-result-bg);
+  --diagram-result-border:  var(--primitive-diag-dark-result-bdr);
+  --diagram-result-text:    var(--primitive-diag-dark-result-text);
+  --diagram-arrow-color:    var(--primitive-diag-dark-arrow);
+  --diagram-progress-track: var(--primitive-diag-dark-800);
+  --diagram-soft-shadow:    none;
+  --diagram-wrapper-border: var(--primitive-diag-dark-800);
   --diagram-wrapper-shadow: none;
 }
 
-[data-theme="light"] {
-  --bg-primary: #f0f2f5;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #e4e6eb;
-  --text-primary: #1a1a1a;
-  --text-secondary: #4a4a4a;
-  --accent-primary: #6200EE;
-  --accent-secondary: #018786;
-  --accent-chip-bg: rgba(98, 0, 238, 0.08);
-  --accent-chip-border: rgba(98, 0, 238, 0.2);
-  --border-color: #ced0d4;
-  --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
-  --nav-bg: rgba(240, 242, 245, 0.95);
+/* ================================================================
+   SEMANTIC LAYER — LIGHT
+   Maps intent → primitive tokens.
+   Apply class="theme-light" to <html>.
+================================================================ */
+.theme-light {
+  /* Backgrounds */
+  --bg-primary:   var(--primitive-cool-50);
+  --bg-secondary: var(--primitive-cool-0);
+  --bg-tertiary:  var(--primitive-cool-100);
+  --bg-card:      var(--primitive-cool-0);
 
-  /* === Diagram Semantic Tokens (Light) === */
-  --diagram-bg: #FAF9F6;
-  --diagram-card-bg: #ffffff;
-  --diagram-card-border: #e7e5e4;
-  --diagram-card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
-  --diagram-text-heading: #1c1917;
-  --diagram-text-primary: #44403c;
-  --diagram-text-secondary: #78716c;
-  --diagram-text-muted: #a8a29e;
-  --diagram-badge-bg: #f5f5f4;
-  --diagram-badge-border: #e7e5e4;
-  --diagram-header-bg: #ffffff;
-  --diagram-header-border: #e7e5e4;
-  --diagram-layer-bg: rgba(0, 0, 0, 0.02);
-  --diagram-result-bg: rgba(99, 102, 241, 0.06);
-  --diagram-result-border: rgba(99, 102, 241, 0.15);
-  --diagram-result-text: #3730a3;
-  --diagram-arrow-color: #d6d3d1;
-  --diagram-progress-track: #e7e5e4;
-  --diagram-soft-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  --diagram-wrapper-border: #d6d3d1;
-  --diagram-wrapper-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+  /* Text */
+  --text-primary:   var(--primitive-cool-900);
+  --text-secondary: var(--primitive-cool-600);
+
+  /* Accent */
+  --accent-primary:       var(--primitive-purple-700);
+  --accent-secondary:     var(--primitive-teal-700);
+  --accent-chip-bg:       var(--primitive-purple-700-a08);
+  --accent-chip-border:   var(--primitive-purple-700-a20);
+  --accent-glow-sm:       var(--primitive-purple-700-a08);
+  --accent-glow-md:       var(--primitive-purple-700-a20);
+  --accent-cta-shadow:    0 4px 15px var(--primitive-purple-700-a30);
+  --accent-cta-shadow-hv: 0 6px 20px var(--primitive-purple-700-a40);
+
+  /* Layout */
+  --border-color:         var(--primitive-cool-200);
+  --card-shadow:          var(--primitive-shadow-card-light);
+  --card-shadow-hover:    var(--primitive-shadow-hover);
+  --card-shadow-hover-sm: var(--primitive-shadow-hover-sm);
+  --float-shadow:         var(--primitive-shadow-float);
+  --modal-shadow:         var(--primitive-shadow-modal);
+  --nav-bg:               var(--primitive-cool-50-a95);
+  --transition-speed:     var(--primitive-duration-300);
+
+  /* Diagram tokens */
+  --diagram-bg:             var(--primitive-diag-light-bg);
+  --diagram-card-bg:        var(--primitive-diag-light-card);
+  --diagram-card-border:    var(--primitive-diag-light-border);
+  --diagram-card-shadow:    var(--primitive-shadow-diag-light);
+  --diagram-text-heading:   var(--primitive-diag-light-text-0);
+  --diagram-text-primary:   var(--primitive-diag-light-text-200);
+  --diagram-text-secondary: var(--primitive-diag-light-text-400);
+  --diagram-text-muted:     var(--primitive-diag-light-text-600);
+  --diagram-badge-bg:       var(--primitive-diag-light-badge-bg);
+  --diagram-badge-border:   var(--primitive-diag-light-badge-bdr);
+  --diagram-header-bg:      var(--primitive-diag-light-card);
+  --diagram-header-border:  var(--primitive-diag-light-border);
+  --diagram-layer-bg:       var(--primitive-diag-light-layer);
+  --diagram-result-bg:      var(--primitive-diag-light-result-bg);
+  --diagram-result-border:  var(--primitive-diag-light-result-bdr);
+  --diagram-result-text:    var(--primitive-diag-light-result-text);
+  --diagram-arrow-color:    var(--primitive-diag-light-arrow);
+  --diagram-progress-track: var(--primitive-diag-light-border);
+  --diagram-soft-shadow:    var(--primitive-shadow-diag-soft);
+  --diagram-wrapper-border: var(--primitive-diag-light-wrapper-bdr);
+  --diagram-wrapper-shadow: var(--primitive-shadow-diag-wrapper);
 }
 
 body {
@@ -91,6 +236,25 @@ body {
 
 html {
   scroll-padding-top: 100px;
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-primary);
+}
+
+/* WebKit global scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
 }
 
 .container {
@@ -262,6 +426,13 @@ ul {
   gap: 40px;
 }
 
+/* About page — Tech/Interests 4-column grid */
+.about-interests-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 30px;
+}
+
 /* Back Link */
 .back-link {
   display: block;
@@ -288,6 +459,18 @@ ul {
   margin-bottom: 1rem;
   overflow-x: auto;
   gap: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-primary) transparent;
+}
+.tabs-header::-webkit-scrollbar {
+  height: 3px;
+}
+.tabs-header::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tabs-header::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 3px;
 }
 
 .tab-btn {
@@ -442,7 +625,7 @@ ul {
   position: relative;
   z-index: 2;
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--card-shadow-hover);
   border-color: var(--accent-primary);
 }
 
@@ -499,7 +682,7 @@ ul {
   position: relative;
   z-index: 2;
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--card-shadow-hover);
   border-color: var(--accent-primary);
 }
 
@@ -517,7 +700,7 @@ ul {
 }
 
 .profile-card {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-card);
   padding: 30px;
   border-radius: 20px;
   border: 1px solid var(--border-color);
@@ -821,6 +1004,21 @@ ul {
   font-size: 0.85rem;
 }
 
+/* Code block scrollbar */
+.mdx-content pre::-webkit-scrollbar {
+  height: 6px;
+}
+.mdx-content pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+.mdx-content pre::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+.mdx-content pre::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
 /* Data Table */
 .data-table-container {
   margin: 2rem 0;
@@ -863,7 +1061,7 @@ ul {
 .about-project-carousel-card,
 .skills-card,
 .others-card {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 30px;
@@ -881,7 +1079,7 @@ ul {
   position: relative;
   z-index: 2;
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--card-shadow-hover);
   border-color: var(--accent-primary);
 }
 
@@ -1082,7 +1280,7 @@ ul {
 
 .about-highlights-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--card-shadow-hover-sm);
 }
 
 /* Bio story collapsible */
@@ -1635,6 +1833,10 @@ ul {
     grid-template-columns: 1fr 2fr;
   }
 
+  .about-interests-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .about-highlights-section {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1652,6 +1854,10 @@ ul {
 @media (max-width: 768px) {
   .about-top-grid {
     grid-template-columns: 1fr;
+  }
+
+  .about-interests-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .about-highlights-section {
@@ -1777,7 +1983,7 @@ ul {
     background-color: var(--accent-primary);
     color: white;
     border: none;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--float-shadow);
   }
 
   body {
@@ -2039,7 +2245,7 @@ ul {
   overflow-y: auto;
   position: relative;
   border: 1px solid var(--border-color);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--modal-shadow);
   animation: slideUp 0.25s ease;
 }
 

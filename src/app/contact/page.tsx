@@ -50,15 +50,15 @@ export default function ContactPage() {
             textDecoration: "none",
             marginBottom: "40px",
             transition: "all 0.3s",
-            boxShadow: "0 4px 15px rgba(98, 0, 238, 0.3)",
+            boxShadow: "var(--accent-cta-shadow)",
           }}
           onMouseOver={(e) => {
             e.currentTarget.style.transform = "translateY(-3px)";
-            e.currentTarget.style.boxShadow = "0 6px 20px rgba(98, 0, 238, 0.4)";
+            e.currentTarget.style.boxShadow = "var(--accent-cta-shadow-hv)";
           }}
           onMouseOut={(e) => {
             e.currentTarget.style.transform = "translateY(0)";
-            e.currentTarget.style.boxShadow = "0 4px 15px rgba(98, 0, 238, 0.3)";
+            e.currentTarget.style.boxShadow = "var(--accent-cta-shadow)";
           }}
         >
           <MailIcon width={24} height={24} />

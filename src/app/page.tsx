@@ -89,14 +89,7 @@ export default function AboutPage() {
       {/* Row 2: Skills, Education, Hobbies & Interests Grid */}
       <div style={{ marginTop: "40px" }}>
         <div className="about-section-title">Tech/Interests</div>
-        <div
-          className="grid-2"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "30px",
-          }}
-        >
+        <div className="about-interests-grid">
           {/* Card 1: Interests */}
           <div className="others-card">
             <div className="about-card-title">Interests</div>

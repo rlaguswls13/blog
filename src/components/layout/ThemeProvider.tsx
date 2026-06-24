@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 /**
  * Available themes. Add custom themes here in the future (e.g. "pink", "rainbow").
- * Each entry corresponds to a [data-theme="xxx"] block in globals.css.
+ * Each entry must have a corresponding .theme-{name} block in globals.css.
  */
 const THEMES = ["light", "dark"] as const;
 type Theme = (typeof THEMES)[number];
@@ -19,7 +19,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       ? "light"
       : "dark";
     const resolved = stored && THEMES.includes(stored) ? stored : system;
-    document.documentElement.setAttribute("data-theme", resolved);
+    // Class-based theme switching: remove all theme classes, add the resolved one
+    THEMES.forEach((t) => document.documentElement.classList.remove(`theme-${t}`));
+    document.documentElement.classList.add(`theme-${resolved}`);
     setTheme(resolved as Theme);
     setTimeout(() => {
       setMounted(true);
@@ -32,7 +34,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const currentIdx = THEMES.indexOf(theme);
     const nextIdx = (currentIdx + 1) % THEMES.length;
     const target = THEMES[nextIdx];
-    document.documentElement.setAttribute("data-theme", target);
+    THEMES.forEach((t) => document.documentElement.classList.remove(`theme-${t}`));
+    document.documentElement.classList.add(`theme-${target}`);
     localStorage.setItem("theme", target);
     setTheme(target);
   };
