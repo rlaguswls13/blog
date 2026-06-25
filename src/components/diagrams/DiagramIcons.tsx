@@ -222,4 +222,11 @@ export const Icons = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M7 11h.01M11 11h.01M15 11h.01" />
     </SvgIcon>
   ),
+  AlertTriangle: ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
+    <SvgIcon className={className} style={style}>
+      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+    </SvgIcon>
+  ),
 };

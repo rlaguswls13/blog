@@ -10,15 +10,15 @@ export function EmailHybrid() {
         <TwoColumnGrid>
           <div>
             <SectionTitle icon={<Icons.Monitor />} label="인프라 클러스터링 및 자동화" theme="cyan" />
-            <FlowCard theme="cyan" variant="soft" title="DMZ & Clustering Config" desc="설정 파일 기반 이중화 및 네트워크 분리" />
+            <FlowCard theme="cyan" variant="soft" title="DMZ & Clustering Config" desc="설정 파일 기반 이중화 및 네트워크 분리" icon={<Icons.Architecture className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="cyan" variant="solid" title="Multi-OS & Storage I/O" desc="Windows/Linux, DAS/NAS/SAN 맞춤형 튜닝" />
+            <FlowCard theme="cyan" variant="solid" title="Multi-OS & Storage I/O" desc="Windows/Linux, DAS/NAS/SAN 맞춤형 튀닝" icon={<Icons.HardDrive className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="slate" variant="dark" title="Integrated Shell Automation" desc="다중 JVM 일괄 제어 및 모니터링 스크립트" />
+            <FlowCard theme="slate" variant="dark" title="Integrated Shell Automation" desc="다중 JVM 일괄 제어 및 모니터링 스크립트" icon={<Icons.Settings className="w-5 h-5" />} />
           </div>
           <div>
             <SectionTitle icon={<Icons.BarChart />} label="DB 기반 작업 분산 & 성능 튜닝" theme="fuchsia" />
-            <FlowCard theme="fuchsia" variant="soft" title="Quartz Job & Spring Batch" desc="스케줄러 기반 배치 작업 연동" />
+            <FlowCard theme="fuchsia" variant="soft" title="Quartz Job & Spring Batch" desc="스케줄러 기반 배치 작업 연동" icon={<Icons.Refresh className="w-5 h-5" />} />
             <Arrow />
             <LayerBox label="Distribution Layer" title="Dynamic Job Distribution" theme="violet">
               <LayerItem label="DB-based Workload" desc="고정된 소스 한계 극복 (유연성 확보)" badge="DYNAMIC" theme="violet" />

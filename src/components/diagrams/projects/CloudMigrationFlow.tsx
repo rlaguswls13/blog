@@ -10,15 +10,15 @@ export function CloudMigrationFlow() {
         <TwoColumnGrid>
           <div>
             <SectionTitle icon={<Icons.Building />} label="마이그레이션 프로세스" theme="rose" />
-            <FlowCard theme="rose" variant="soft" title="Legacy On-Premise VM" desc="물리 서버 기반 운영 환경" />
+            <FlowCard theme="rose" variant="soft" title="Legacy On-Premise VM" desc="물리 서버 기반 운영 환경" icon={<Icons.HardDrive className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="rose" variant="solid" title="Cloud Assessment & Planning" desc="워크로드 분석 및 마이그레이션 전략 수립" />
+            <FlowCard theme="rose" variant="solid" title="Cloud Assessment & Planning" desc="워크로드 분석 및 마이그레이션 전략 수립" icon={<Icons.Clipboard className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="slate" variant="dark" title="Public Cloud Infrastructure" desc="클라우드 가상 서버 환경 구축 완료" />
+            <FlowCard theme="slate" variant="dark" title="Public Cloud Infrastructure" desc="클라우드 가상 서버 환경 구축 완료" icon={<Icons.Globe className="w-5 h-5" />} />
           </div>
           <div>
             <SectionTitle icon={<Icons.Container />} label="컨테이너화 & 보안 강화" theme="emerald" />
-            <FlowCard theme="emerald" variant="soft" title="Docker Container Deployment" desc="컨테이너 기반 배포 체계 구축" />
+            <FlowCard theme="emerald" variant="soft" title="Docker Container Deployment" desc="컨테이너 기반 배포 체계 구축" icon={<Icons.Container className="w-5 h-5" />} />
             <Arrow />
             <LayerBox label="Security Layer" title="네트워크 보안 & 백업" theme="emerald">
               <LayerItem label="Network Security Group" desc="IP 화이트리스트 및 포트 제어" badge="SECURED" theme="emerald" />

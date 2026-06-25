@@ -11,9 +11,13 @@ export function QuartzHAClustering() {
     if (!ctx) return;
     ctx.clearRect(0, 0, 700, 320);
 
-    ctx.font = "bold 18px Inter, Arial"; ctx.fillStyle = "#ffffff";
+    const isDark = document.documentElement.classList.contains("theme-dark");
+    const titleColor = isDark ? "#ffffff" : "#111827";
+    const subColor = isDark ? "#888888" : "#6b7280";
+
+    ctx.font = "bold 18px Inter, Arial"; ctx.fillStyle = titleColor;
     ctx.fillText("Quartz HA Clustering (Greedy Locking)", 20, 30);
-    ctx.font = "13px Inter"; ctx.fillStyle = "#888";
+    ctx.font = "13px Inter"; ctx.fillStyle = subColor;
     ctx.fillText("DB Lock 선점 방식 — First-come, First-served", 20, 52);
 
     const nodes = ["Engine 1", "Engine 2", "Engine 3", "Engine 4"];

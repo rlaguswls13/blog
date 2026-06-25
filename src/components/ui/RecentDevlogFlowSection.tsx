@@ -363,7 +363,7 @@ export function RecentDevlogFlowSection() {
 
             <div className="education-modal-section">
               <h4><CommentIcon /> 느낀점</h4>
-              <p style={{ whiteSpace: "pre-wrap", lineHeight: "1.8", color: "var(--text-secondary)" }}>
+              <p className="education-modal-impression">
                 {selectedEducation.fullDescription || "내용이 아직 없습니다."}
               </p>
               {selectedEducation.notionUrl && (
@@ -372,7 +372,6 @@ export function RecentDevlogFlowSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="education-blog-link"
-                  style={{ marginTop: "20px" }}
                 >
                   <BlogIcon /> 연습코드 보러가기 ↗
                 </a>

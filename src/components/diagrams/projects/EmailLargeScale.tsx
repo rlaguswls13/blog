@@ -10,15 +10,15 @@ export function EmailLargeScale() {
         <TwoColumnGrid>
           <div>
             <SectionTitle icon={<Icons.Radio />} label="대용량 첨부파일 처리 프로세스" theme="indigo" />
-            <FlowCard theme="indigo" variant="soft" title="Large-Scale Data Input" desc="대규모 결재 내역 및 대용량 청구서 첨부" />
+            <FlowCard theme="indigo" variant="soft" title="Large-Scale Data Input" desc="대규모 결재 내역 및 대용량 청구서 체부" icon={<Icons.Database className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="indigo" variant="solid" title="Custom Dispatch Engine" desc="Java Segment Block 방식 특화 아키텍처" />
+            <FlowCard theme="indigo" variant="solid" title="Custom Dispatch Engine" desc="Java Segment Block 방식 특화 아키텍처" icon={<Icons.Settings className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="slate" variant="dark" title="High-Availability Server" desc="STABLE_DISPATCH_QUEUE" />
+            <FlowCard theme="slate" variant="dark" title="High-Availability Server" desc="STABLE_DISPATCH_QUEUE" icon={<Icons.ServerRack className="w-5 h-5" />} />
           </div>
           <div>
             <SectionTitle icon={<Icons.Shield />} label="[Real-time] 시스템 과부하 방어 로직" theme="rose" />
-            <FlowCard theme="rose" variant="soft" title="Resource Monitoring" desc="실시간 메모리 사용량 추적 및 통제" />
+            <FlowCard theme="rose" variant="soft" title="Resource Monitoring" desc="실시간 메모리 사용량 추적 및 통제" icon={<Icons.Monitor className="w-5 h-5" />} />
             <Arrow />
             <LayerBox label="Optimization Layer" title="Heap & GC Optimization" theme="amber">
               <LayerItem label="GC Policy Tuning" desc="효율적 객체 소멸 및 자원 회수" badge="APPLIED" theme="amber" />

@@ -50,7 +50,7 @@ export function EducationLog({
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
+      <div className="education-list-header">
         <div className="section-title" style={{ margin: 0 }}>교육일지 목록</div>
         <button
           onClick={() => setShowSyncModal(true)}
@@ -65,7 +65,6 @@ export function EducationLog({
           <div
             key={entry.id}
             className="devlog-card education-card"
-            style={{ cursor: "pointer", height: "100%", display: "flex", flexDirection: "column" }}
             onClick={() => setSelectedEntry(entry)}
           >
             <div className="education-card-header">
@@ -76,7 +75,7 @@ export function EducationLog({
             </div>
 
             {entry.blogTitle && (
-              <div className="item-title" style={{ marginTop: "8px", marginBottom: "12px" }}>
+              <div className="item-title">
                 {entry.blogTitle}
               </div>
             )}
@@ -85,13 +84,6 @@ export function EducationLog({
 
             <p
               className="devlog-description"
-              style={{
-                color: "var(--text-secondary)",
-                marginTop: "12px",
-                flexGrow: 1,
-                fontSize: "0.92rem",
-                lineHeight: "1.6",
-              }}
             >
               {truncateText(entry.impression, 100)}
             </p>
@@ -154,7 +146,7 @@ export function EducationLog({
 
             <div className="education-modal-section">
               <h4><CommentIcon /> 느낀점</h4>
-              <p style={{ whiteSpace: "pre-wrap", lineHeight: "1.8", color: "var(--text-secondary)" }}>
+              <p className="education-modal-impression">
                 {selectedEntry.impression || "내용이 아직 없습니다."}
               </p>
             </div>
@@ -165,7 +157,6 @@ export function EducationLog({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="education-blog-link"
-                style={{ marginTop: "20px" }}
               >
                 <BlogIcon /> 상세내용 ↗
               </a>
@@ -181,9 +172,8 @@ export function EducationLog({
           onClick={() => setShowSyncModal(false)}
         >
           <div
-            className="education-modal"
+            className="education-modal education-sync-modal"
             onClick={(e) => e.stopPropagation()}
-            style={{ maxWidth: "500px" }}
           >
              <button
               className="education-modal-close"
@@ -192,24 +182,24 @@ export function EducationLog({
               <CloseIcon />
             </button>
 
-            <div className="section-title" style={{ marginTop: 0, marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
+            <div className="section-title education-sync-modal-title">
               <RefreshIcon style={{ color: "var(--accent-primary)" }} /> Notion 교육일지 동기화 안내
             </div>
 
-            <div style={{ lineHeight: "1.7", color: "var(--text-secondary)", fontSize: "0.95rem" }}>
+            <div className="education-sync-modal-body">
               <p style={{ marginBottom: "12px" }}>
                 현재 포트폴리오 웹사이트는 <strong>GitHub Pages 정적 호스팅</strong>으로 안전하고 빠르게 운영되고 있습니다.
               </p>
 
-              <div style={{ background: "rgba(98, 0, 238, 0.05)", border: "1px solid rgba(98, 0, 238, 0.15)", borderRadius: "8px", padding: "14px", marginBottom: "16px" }}>
-                <h4 style={{ margin: "0 0 6px", color: "var(--accent-primary)", fontSize: "0.95rem" }}><ClockIcon /> 1시간 단위 자동 동기화</h4>
-                <p style={{ margin: 0, fontSize: "0.9rem" }}>
+              <div className="education-sync-info-box">
+                <h4><ClockIcon /> 1시간 단위 자동 동기화</h4>
+                <p>
                   보안 강화를 위해 Notion API 토큰을 소스코드와 브라우저에 직접 노출하지 않고 환경 변수로 관리하고 있습니다.
                   대신 <strong>GitHub Actions 스케줄러가 1시간마다 자동으로 실행</strong>되어 노션의 최신 내용을 가져와 사이트를 업데이트합니다.
                 </p>
               </div>
 
-              <p style={{ marginBottom: "0" }}>
+              <p>
                 노션에 작성한 글은 1시간 단위 자동 빌드 스케줄러에 의해 자동으로 사이트에 반영됩니다.
               </p>
             </div>

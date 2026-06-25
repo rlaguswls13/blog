@@ -18,10 +18,9 @@ export function TabGroup({ tabs, activeTab, onTabChange }: TabGroupProps) {
               target={tab.isExternal !== false ? "_blank" : "_self"}
               rel={tab.isExternal !== false ? "noopener noreferrer" : undefined}
               className={`category-tab ${activeTab === tab.key ? "active" : ""}`}
-              style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: "4px" }}
             >
               {tab.label}
-              {tab.isExternal !== false && <span style={{ fontSize: "0.85em" }}>↗</span>}
+              {tab.isExternal !== false && <span className="category-tab-ext">↗</span>}
             </a>
           );
         }

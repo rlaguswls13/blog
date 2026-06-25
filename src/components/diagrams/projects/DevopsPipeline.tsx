@@ -10,15 +10,15 @@ export function DevopsPipeline() {
         <TwoColumnGrid>
           <div>
             <SectionTitle icon={<Icons.Refresh />} label="CI/CD 파이프라인" theme="slate" />
-            <FlowCard theme="slate" variant="soft" title="Monolithic Refactoring" desc="레거시 모놀리식 구조 모듈화 분리" />
+            <FlowCard theme="slate" variant="soft" title="Monolithic Refactoring" desc="레거시 모놀리식 구조 모듈화 분리" icon={<Icons.Package className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="amber" variant="solid" title="Jenkins Pipeline" desc="Multi-branch 파이프라인 자동 빌드/테스트" />
+            <FlowCard theme="amber" variant="solid" title="Jenkins Pipeline" desc="Multi-branch 파이프라인 자동 빌드/테스트" icon={<Icons.Refresh className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="slate" variant="dark" title="Automated Deployment" desc="스테이징/프로덕션 자동 배포 및 롤백" />
+            <FlowCard theme="slate" variant="dark" title="Automated Deployment" desc="스테이징/프로덕션 자동 배포 및 롤백" icon={<Icons.Rocket className="w-5 h-5" />} />
           </div>
           <div>
             <SectionTitle icon={<Icons.TrendingUp />} label="품질 관리 & 모니터링" theme="emerald" />
-            <FlowCard theme="emerald" variant="soft" title="Code Quality Gate" desc="SonarQube 기반 코드 품질 자동 검증" />
+            <FlowCard theme="emerald" variant="soft" title="Code Quality Gate" desc="SonarQube 기반 코드 품질 자동 검증" icon={<Icons.Shield className="w-5 h-5" />} />
             <Arrow />
             <LayerBox label="Monitoring Layer" title="운영 모니터링 체계" theme="emerald">
               <LayerItem label="Health Check Automation" desc="서비스 헬스체크 및 알림 자동화" badge="24/7" theme="emerald" />

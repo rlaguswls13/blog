@@ -11,9 +11,13 @@ export function QuartzMechanism() {
     if (!ctx) return;
     ctx.clearRect(0, 0, 700, 260);
 
-    ctx.font = "bold 18px Inter, Arial"; ctx.fillStyle = "#ffffff";
+    const isDark = document.documentElement.classList.contains("theme-dark");
+    const titleColor = isDark ? "#ffffff" : "#111827";
+    const subColor = isDark ? "#888888" : "#6b7280";
+
+    ctx.font = "bold 18px Inter, Arial"; ctx.fillStyle = titleColor;
     ctx.fillText("Spring Scheduler vs Quartz Scheduler", 20, 30);
-    ctx.font = "13px Inter"; ctx.fillStyle = "#888";
+    ctx.font = "13px Inter"; ctx.fillStyle = subColor;
     ctx.fillText("Time-based Execution Mechanism Comparison", 20, 52);
 
     // Spring Side

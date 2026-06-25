@@ -10,15 +10,15 @@ export function CSPipeline() {
         <TwoColumnGrid>
           <div>
             <SectionTitle icon={<Icons.Target />} label="이슈 인입 & 분석 플로우" theme="rose" />
-            <FlowCard theme="rose" variant="soft" title="56+ Enterprise Clients" desc="금융, 통신, 항공 등 주요 산업군 고객" />
+            <FlowCard theme="rose" variant="soft" title="56+ Enterprise Clients" desc="금융, 통신, 항공 등 주요 산업군 고객" icon={<Icons.Users className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="rose" variant="solid" title="Jira Issue Tracking" desc="우선순위 기반 이슈 분류 및 SLA 관리" />
+            <FlowCard theme="rose" variant="solid" title="Jira Issue Tracking" desc="우선순위 기반 이슈 분류 및 SLA 관리" icon={<Icons.Clipboard className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="slate" variant="dark" title="Root Cause Analysis" desc="로그 분석 기반 근본 원인 진단" />
+            <FlowCard theme="slate" variant="dark" title="Root Cause Analysis" desc="로그 분석 기반 근본 원인 진단" icon={<Icons.Target className="w-5 h-5" />} />
           </div>
           <div>
             <SectionTitle icon={<Icons.Clipboard />} label="기술 문서 자산화 & 레거시 대응" theme="cyan" />
-            <FlowCard theme="cyan" variant="soft" title="Notion Knowledge Base" desc="재현 절차 및 해결 방법 문서화" />
+            <FlowCard theme="cyan" variant="soft" title="Notion Knowledge Base" desc="재현 절차 및 해결 방법 문서화" icon={<Icons.Folder className="w-5 h-5" />} />
             <Arrow />
             <LayerBox label="Migration Support" title="레거시 마이그레이션 지원" theme="cyan">
               <LayerItem label="Version Upgrade Guide" desc="Java/Spring 버전 업그레이드 가이드 제공" badge="GUIDE" theme="cyan" />

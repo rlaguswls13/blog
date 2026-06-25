@@ -10,15 +10,15 @@ export function IntegratedPortal() {
         <TwoColumnGrid>
           <div>
             <SectionTitle icon={<Icons.Refresh />} label="레거시 마이그레이션 프로세스" theme="slate" />
-            <FlowCard theme="slate" variant="soft" title="Legacy Groupware" desc="Java 1.6 / JSP 기반 레거시 시스템" />
+            <FlowCard theme="slate" variant="soft" title="Legacy Groupware" desc="Java 1.6 / JSP 기반 레거시 시스템" icon={<Icons.Monitor className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="indigo" variant="solid" title="Tech Stack Upgrade" desc="Java 15 + React + Gradle 현대화" />
+            <FlowCard theme="indigo" variant="solid" title="Tech Stack Upgrade" desc="Java 15 + React + Gradle 현대화" icon={<Icons.TrendingUp className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="slate" variant="dark" title="Unified Portal" desc="업무/인사/사업관리 메뉴 통합 구축" />
+            <FlowCard theme="slate" variant="dark" title="Unified Portal" desc="업무/인사/사업관리 메뉴 통합 구축" icon={<Icons.Globe className="w-5 h-5" />} />
           </div>
           <div>
             <SectionTitle icon={<Icons.Package />} label="데이터 마이그레이션 & 통합" theme="amber" />
-            <FlowCard theme="amber" variant="soft" title="User Data Migration" desc="기존 사용자 데이터 무손실 이관" />
+            <FlowCard theme="amber" variant="soft" title="User Data Migration" desc="기존 사용자 데이터 무손실 이관" icon={<Icons.Database className="w-5 h-5" />} />
             <Arrow />
             <LayerBox label="Integration Layer" title="시스템 통합 전략" theme="amber">
               <LayerItem label="API Gateway Pattern" desc="마이크로서비스 간 통신 일원화" badge="GATEWAY" theme="amber" />

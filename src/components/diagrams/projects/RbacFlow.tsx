@@ -10,15 +10,15 @@ export function RbacFlow() {
         <TwoColumnGrid>
           <div>
             <SectionTitle icon={<Icons.Key />} label="인증 & 권한 파이프라인" theme="blue" />
-            <FlowCard theme="blue" variant="soft" title="External Auth (외부 API / DB)" desc="Okta 인증 정보 및 DB 권한 매핑" />
+            <FlowCard theme="blue" variant="soft" title="External Auth (외부 API / DB)" desc="Okta 인증 정보 및 DB 권한 매핑" icon={<Icons.Key className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="indigo" variant="solid" title="Spring Interceptor Chain" desc="요청별 권한 검증 및 메뉴 접근 통제" />
+            <FlowCard theme="indigo" variant="solid" title="Spring Interceptor Chain" desc="요청별 권한 검증 및 메뉴 접근 통제" icon={<Icons.Shield className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="slate" variant="dark" title="Dynamic Menu Rendering" desc="사용자 권한에 따른 UI 메뉴 동적 구성" />
+            <FlowCard theme="slate" variant="dark" title="Dynamic Menu Rendering" desc="사용자 권한에 따른 UI 메뉴 동적 구성" icon={<Icons.Laptop className="w-5 h-5" />} />
           </div>
           <div>
             <SectionTitle icon={<Icons.Settings />} label="역할 기반 데이터 모델" theme="emerald" />
-            <FlowCard theme="emerald" variant="soft" title="Role-Permission Mapping" desc="역할-권한 다대다 관계 모델링" />
+            <FlowCard theme="emerald" variant="soft" title="Role-Permission Mapping" desc="역할-권한 다대다 관계 모델링" icon={<Icons.Settings className="w-5 h-5" />} />
             <Arrow />
             <LayerBox label="Access Control" title="계층형 RBAC 구조" theme="emerald">
               <LayerItem label="Menu-Level Permission" desc="메뉴 단위 Read/Write/Admin 분리" badge="RBAC" theme="emerald" />

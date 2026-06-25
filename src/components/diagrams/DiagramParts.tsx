@@ -108,8 +108,8 @@ export function SectionTitle({ icon, label, theme }: { icon: React.ReactNode; la
   );
 }
 
-export function FlowCard({ theme = "slate", variant = "soft", title, desc }: {
-  theme?: string; variant?: "soft" | "solid" | "dark"; title: string; desc: string;
+export function FlowCard({ theme = "slate", variant = "soft", title, desc, icon }: {
+  theme?: string; variant?: "soft" | "solid" | "dark"; title: string; desc: string; icon?: React.ReactNode;
 }) {
   const t = themes[theme] || themes.slate;
 
@@ -153,7 +153,9 @@ export function FlowCard({ theme = "slate", variant = "soft", title, desc }: {
       <div
         className="w-12 h-12 rounded-xl shrink-0 flex items-center justify-center"
         style={iconBoxStyle}
-      />
+      >
+        {icon}
+      </div>
       <div>
         <h4 className="m-0 text-[14px] leading-tight" style={titleStyle}>{title}</h4>
         <p className="text-[11px] m-0 mt-1 leading-relaxed" style={descStyle}>{desc}</p>
@@ -164,11 +166,11 @@ export function FlowCard({ theme = "slate", variant = "soft", title, desc }: {
 
 export function Arrow() {
   return (
-    <div
-      className="flex justify-center items-center h-8 text-xl font-black"
-      style={{ color: 'var(--diagram-arrow-color)' }}
-    >
-      ↓
+    <div className="flex justify-center items-center h-8" style={{ color: 'var(--diagram-arrow-color)' }}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 5v14" />
+        <path d="m19 12-7 7-7-7" />
+      </svg>
     </div>
   );
 }
@@ -194,7 +196,7 @@ export function LayerBox({ label, title, theme, children }: { label: string; tit
         {label}
       </div>
       <h4
-        className="font-bold mb-4 mt-1 text-[14px] m-0"
+        className="font-bold mt-1 mb-3 text-[14px]"
         style={{ color: 'var(--diagram-text-heading)' }}
       >
         {title}

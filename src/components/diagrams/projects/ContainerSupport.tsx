@@ -10,15 +10,15 @@ export function ContainerSupport() {
         <TwoColumnGrid>
           <div>
             <SectionTitle icon={<Icons.Package />} label="인프라 전환 프로세스" theme="slate" />
-            <FlowCard theme="slate" variant="soft" title="Legacy VM / On-Premise" desc="물리/가상 서버 기반 전통적 운영" />
+            <FlowCard theme="slate" variant="soft" title="Legacy VM / On-Premise" desc="물리/가상 서버 기반 전통적 운영" icon={<Icons.HardDrive className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="cyan" variant="solid" title="Containerization Strategy" desc="Docker 이미지 빌드 및 Compose 구성" />
+            <FlowCard theme="cyan" variant="solid" title="Containerization Strategy" desc="Docker 이미지 빌드 및 Compose 구성" icon={<Icons.Container className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="slate" variant="dark" title="Container Orchestration" desc="서비스 단위 컨테이너 배포 및 관리" />
+            <FlowCard theme="slate" variant="dark" title="Container Orchestration" desc="서비스 단위 컨테이너 배포 및 관리" icon={<Icons.Architecture className="w-5 h-5" />} />
           </div>
           <div>
             <SectionTitle icon={<Icons.Wrench />} label="기술 지원 & 트러블슈팅" theme="amber" />
-            <FlowCard theme="amber" variant="soft" title="고객사 환경 분석" desc="기존 인프라 호환성 검증 및 의존성 분석" />
+            <FlowCard theme="amber" variant="soft" title="고객사 환경 분석" desc="기존 인프라 호환성 검증 및 의존성 분석" icon={<Icons.Target className="w-5 h-5" />} />
             <Arrow />
             <LayerBox label="Support Layer" title="마이그레이션 기술 지원" theme="amber">
               <LayerItem label="Dockerfile Optimization" desc="멀티스테이지 빌드로 이미지 경량화" badge="OPTIMIZED" theme="amber" />

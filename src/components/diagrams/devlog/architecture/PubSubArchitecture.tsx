@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { Icons } from "@/components/diagrams/DiagramIcons";
 
 export function PubSubArchitecture() {
   return (
@@ -40,7 +41,7 @@ export function PubSubArchitecture() {
             </span>
             <span className="text-xs font-semibold px-2 py-1 rounded"
               style={{ color: '#f43f5e', background: 'rgba(244,63,94,0.08)' }}>
-              장애 발생 시 주문 마비 💥
+              장애 발생 시 주문 마비 <Icons.AlertTriangle className="w-3.5 h-3.5 inline align-middle" />
             </span>
           </div>
 
@@ -111,7 +112,7 @@ export function PubSubArchitecture() {
             </span>
             <span className="text-xs font-semibold px-2 py-1 rounded"
               style={{ color: '#10b981', background: 'rgba(16,185,129,0.08)' }}>
-              장애 발생 시 격리 🛡️
+              장애 발생 시 격리 <Icons.Shield className="w-3.5 h-3.5 inline align-middle" />
             </span>
           </div>
 

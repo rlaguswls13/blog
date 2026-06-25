@@ -10,15 +10,15 @@ export function SsoFilter() {
         <TwoColumnGrid>
           <div>
             <SectionTitle icon={<Icons.Lock />} label="SSO 인증 파이프라인" theme="rose" />
-            <FlowCard theme="rose" variant="soft" title="Legacy Plugin Conflict" desc="기존 SAML 플러그인의 Spring Boot 비호환 이슈" />
+            <FlowCard theme="rose" variant="soft" title="Legacy Plugin Conflict" desc="기존 SAML 플러그인의 Spring Boot 비호환 이슈" icon={<Icons.Package className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="rose" variant="solid" title="Custom SSO Filter (Okta API)" desc="Servlet Filter 기반 토큰 검증 직접 구현" />
+            <FlowCard theme="rose" variant="solid" title="Custom SSO Filter (Okta API)" desc="Servlet Filter 기반 토큰 검증 직접 구현" icon={<Icons.Shield className="w-5 h-5" />} />
             <Arrow />
-            <FlowCard theme="slate" variant="dark" title="Session & Token Manager" desc="세션 생성, 갱신, 만료 일원 관리" />
+            <FlowCard theme="slate" variant="dark" title="Session & Token Manager" desc="세션 생성, 갱신, 만료 일원 관리" icon={<Icons.Key className="w-5 h-5" />} />
           </div>
           <div>
             <SectionTitle icon={<Icons.Refresh />} label="계정 동기화 & SLO" theme="violet" />
-            <FlowCard theme="violet" variant="soft" title="HR Data Sync Engine" desc="고객사 인사정보 ↔ 솔루션 계정 자동 동기화" />
+            <FlowCard theme="violet" variant="soft" title="HR Data Sync Engine" desc="고객사 인사정보 ↔ 솔루션 계정 자동 동기화" icon={<Icons.Refresh className="w-5 h-5" />} />
             <Arrow />
             <LayerBox label="Logout Layer" title="SLO (Single Logout)" theme="violet">
               <LayerItem label="Global Session Invalidation" desc="Okta 세션과 로컬 세션 동시 파기" badge="SECURE" theme="violet" />
