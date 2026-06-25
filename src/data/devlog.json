@@ -384,17 +384,20 @@
     },
     {
       "id": "prob-5",
-      "title": "WAS 서버 이중화(Session Clustering) 환경의 데이터 공유 실패 및 해결 방안 (수정중)",
+      "title": "WAS 이중화 환경에서의 세션 불일치 문제와 해결 방안",
       "date": "2026.05.26",
       "tags": [
-        "Loadbalance",
+        "Troubleshooting",
+        "WAS",
         "Tomcat",
-        "Clustering",
         "Session",
-        "Java",
-        "Troubleshooting"
+        "Clustering",
+        "JWT",
+        "Redis",
+        "LoadBalance",
+        "SpringBoot"
       ],
-      "description": "Tomcat 클러스터링 설정(Tribes)이 정상임에도 세션 공유가 실패하는 현상에 대해, Java 내부 직렬화 및 보안 검증 키 불일치 원인과 해결책을 분석합니다.",
+      "description": "WAS 이중화 환경에서 로드밸런서에 의해 요청이 분산될 때 발생하는 세션 불일치 문제를 인프라·WAS·애플리케이션 3개 레벨의 해결 방안으로 분석합니다.",
       "package": "was"
     },
     {
