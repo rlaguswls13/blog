@@ -57,6 +57,8 @@ jobs:
 
       # 5. 프로젝트 빌드 (위에서 생성된 education.json을 포함하여 빌드됨)
       - name: Build project
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run build:no-fetch
 
       # 6. 빌드 결과물 업로드 (배포 전 아티팩트화)

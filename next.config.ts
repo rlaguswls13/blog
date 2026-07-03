@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: process.env.NODE_ENV === "production" ? "/blog" : "",
+  basePath: process.env.NODE_ENV === "production" ? (process.env.BASE_PATH || "/blog") : "",
   trailingSlash: false,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
 };
