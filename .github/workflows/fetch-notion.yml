@@ -59,6 +59,7 @@ jobs:
       - name: Build project
         env:
           BASE_PATH: ${{ vars.USE_ROOT_BASE_PATH == 'true' && 'ROOT' || format('/{0}', github.event.repository.name) }}
+          ADSENSE_ACCOUNT: ${{ vars.ADSENSE_ACCOUNT }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run build:no-fetch
 
       # 6. 빌드 결과물 업로드 (배포 전 아티팩트화)
