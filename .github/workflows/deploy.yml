@@ -75,7 +75,7 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} run fetch-notion
       - name: Build with Next.js
         env:
-          BASE_PATH: /${{ github.event.repository.name }}
+          BASE_PATH: ${{ vars.USE_ROOT_BASE_PATH == 'true' && 'ROOT' || format('/{0}', github.event.repository.name) }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run build:no-fetch
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
