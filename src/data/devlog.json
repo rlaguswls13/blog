@@ -271,54 +271,67 @@
     },
     {
       "id": "tech-20",
-      "title": "파트 3. Step 구현 방식: Tasklet과 Chunk 지향 처리 (작성중)",
-      "date": "2026.06.16",
+      "title": "파트 3. Step 구현 방식: Tasklet과 Chunk 지향 처리",
+      "date": "2026.07.07",
       "tags": [
         "Spring",
         "SpringBoot",
         "SpringBatch",
         "TechStudy"
       ],
-      "description": "Step 구현 방식인 Tasklet과 Chunk 지향 처리에 대해 알아봅니다. (작성중)",
+      "description": "Step 구현 방식인 Tasklet과 Chunk 지향 처리에 대해 알아봅니다.",
       "package": "springboot"
     },
     {
       "id": "tech-21",
-      "title": "파트 4. 예외 처리와 안정성 확보 (Robustness) (작성중)",
-      "date": "2026.06.16",
+      "title": "파트 4. 예외 처리와 안정성 확보 및 메타데이터 제어 (Robustness & Status)",
+      "date": "2026.07.07",
       "tags": [
         "Spring",
         "SpringBoot",
         "SpringBatch",
         "TechStudy"
       ],
-      "description": "배치 처리에서의 예외 처리와 안정성 확보 방안에 대해 알아봅니다.",
+      "description": "배치 처리에서의 예외 처리와 안정성 확보 방안 및 메타데이터 제어에 대해 알아봅니다.",
       "package": "springboot"
     },
     {
       "id": "tech-22",
-      "title": "파트 5. 대용량 데이터 처리 최적화 및 확장 (Scaling) (작성중)",
-      "date": "2026.06.16",
+      "title": "파트 5. 대용량 데이터 처리 최적화 및 확장 (Scaling)",
+      "date": "2026.07.07",
       "tags": [
         "Spring",
         "SpringBoot",
         "SpringBatch",
         "TechStudy"
       ],
-      "description": "대용량 데이터 처리 최적화 및 확장 기법에 대해 알아봅니다.",
+      "description": "Thread와 Partition을 통한 성능 최적화 심층 분석 및 구현에 대해 알아봅니다.",
       "package": "springboot"
     },
     {
       "id": "tech-23",
-      "title": "파트 6. 실무 배치 개발을 위한 성능 튜닝 및 테스트",
-      "date": "2026.06.16",
+      "title": "파트 6. 실무 배치 개발을 위한 성능 튜닝",
+      "date": "2026.07.07",
       "tags": [
         "Spring",
         "SpringBoot",
         "SpringBatch",
         "TechStudy"
       ],
-      "description": "실무 배치 개발을 위한 성능 튜닝 및 테스트 기법에 대해 알아봅니다.",
+      "description": "실무 배치 개발을 위한 쿼리 튜닝 및 성능 최적화 기법에 대해 알아봅니다.",
+      "package": "springboot"
+    },
+    {
+      "id": "tech-24",
+      "title": "파트 7. 실행중인 스프링배치를 중단하고 싶을 때",
+      "date": "2026.07.07",
+      "tags": [
+        "Spring",
+        "SpringBoot",
+        "SpringBatch",
+        "TechStudy"
+      ],
+      "description": "JobName 기반 안전한 중단(Graceful Stop) 메커니즘을 심층 분석합니다.",
       "package": "springboot"
     }
   ],
