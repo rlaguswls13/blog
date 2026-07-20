@@ -85,3 +85,25 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+  sync:
+    needs: deploy
+    if: ${{ vars.TARGET_REPO != '' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Push source to target repository
+        env:
+          TARGET_REPO_PAT: ${{ secrets.COMMERCIAL_REPO_PAT }}
+          TARGET_REPO: ${{ vars.TARGET_REPO }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: |
+          git remote add commercial \
+            "https://x-access-token:${TARGET_REPO_PAT}@github.com/${REPOSITORY_OWNER}/${TARGET_REPO}.git"
+            
+          git push commercial HEAD:main --forc
