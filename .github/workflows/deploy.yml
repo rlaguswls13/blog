@@ -86,15 +86,13 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
   sync:
+    environment:
+      name: github-pages
     needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
       - name: Validate configuration
         env:
           TARGET_REPO: ${{ vars.TARGET_REPO }}
