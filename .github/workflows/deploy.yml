@@ -85,6 +85,22 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+  debug-sync:
+    if: ${{ always() }}
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show conditions
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          WORKFLOW_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
+          TARGET_REPO: ${{ vars.TARGET_REPO }}
+        run: |
+          echo "event=$EVENT_NAME"
+          echo "workflow conclusion=$WORKFLOW_CONCLUSION"
+          echo "deploy result=$DEPLOY_RESULT"
+          echo "target configured=$([[ -n "$TARGET_REPO" ]] && echo yes || echo no)"
   sync:
     needs: deploy
     if: ${{ vars.TARGET_REPO != '' }}
@@ -105,5 +121,5 @@ jobs:
         run: |
           git remote add commercial \
             "https://x-access-token:${TARGET_REPO_PAT}@github.com/${REPOSITORY_OWNER}/${TARGET_REPO}.git"
-            
+
           git push commercial HEAD:main --forc
