@@ -6,6 +6,11 @@ on:
     types:
       - completed
 
+# Prevent parallel executions and ensure sequential sync (prevents git push conflicts)
+concurrency:
+  group: "sync-commercial"
+  cancel-in-progress: false
+
 jobs:
   sync:
     if: ${{ github.event.workflow_run.conclusion == 'success' && vars.TARGET_REPO != '' }}
