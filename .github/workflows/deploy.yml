@@ -93,6 +93,9 @@ jobs:
     steps:
       - name: Checkout source repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
       - name: Validate configuration
         env:
           TARGET_REPO: ${{ vars.TARGET_REPO }}
