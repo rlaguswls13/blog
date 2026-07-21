@@ -98,16 +98,14 @@ export function EducationLog({
               {truncateText(entry.impression, 100)}
             </p>
 
-            {entry.notionUrl && (
-              <a
-                href={entry.notionUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+            {entry.slug && (
+              <Link
+                href={`/devlog/education/${entry.slug}?tab=education_log`}
                 className="education-blog-link"
                 onClick={(e) => e.stopPropagation()}
               >
                 <BlogIcon /> 상세내용 ↗
-              </a>
+              </Link>
             )}
           </div>
         ))}
@@ -161,15 +159,13 @@ export function EducationLog({
               </p>
             </div>
 
-            {selectedEntry.notionUrl && (
-              <a
-                href={selectedEntry.notionUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+            {selectedEntry.slug && (
+              <Link
+                href={`/devlog/education/${selectedEntry.slug}?tab=education_log`}
                 className="education-blog-link"
               >
                 <BlogIcon /> 상세내용 ↗
-              </a>
+              </Link>
             )}
           </div>
         </div>

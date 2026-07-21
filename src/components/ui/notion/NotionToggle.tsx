@@ -1,7 +1,6 @@
 import React from "react";
 
 export function NotionToggle({ title, children, level }: { title: string; children: React.ReactNode; level?: number | string }) {
-  console.log("NOTION_TOGGLE Render ->", { title, level, type: typeof level });
   // Auto-detect markdown headings if level is not explicitly provided
   let computedLevel = level ? Number(level) : 0;
   let displayTitle = title;
