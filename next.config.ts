@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
-// BASE_PATH="ROOT" 는 커스텀 도메인 루트(예: beji-blog.me) 서빙을 의미 (basePath 없음)
-// BASE_PATH 가 없으면 기존과 동일하게 "/blog" 사용
+// 사용자 GitHub Pages 저장소(ralguswls13.github.io)는 기본적으로 루트에서 서비스합니다.
+// 별도 프로젝트 경로가 필요한 배포에서만 BASE_PATH="/repository-name" 형태로 지정합니다.
 const rawBasePath = process.env.BASE_PATH;
-const resolvedBasePath = rawBasePath === "ROOT" ? "" : rawBasePath || "/blog";
+const resolvedBasePath = rawBasePath === "ROOT" ? "" : rawBasePath || "";
 
 const nextConfig: NextConfig = {
   output: "export",

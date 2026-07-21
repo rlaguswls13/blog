@@ -3258,6 +3258,19 @@ body {
   margin: 0 auto;
 }
 
+.legacy-redirect-page {
+  min-height: 45vh;
+  display: grid;
+  place-content: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.legacy-redirect-page p {
+  margin: 0;
+}
+
 .contact-intro {
   margin-bottom: 34px;
   color: var(--text-secondary);
