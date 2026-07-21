@@ -6,6 +6,18 @@ import { convertPageToMarkdown } from "../lib/notion-to-md.mjs";
 export async function syncBlog(client, sourceId) {
   console.log(`[syncBlog] Fetching database for ${sourceId}...`);
   
+  const devlogJsonPath = path.join(process.cwd(), "src", "data", "devlog.json");
+  let devlogData = {};
+  if (fs.existsSync(devlogJsonPath)) {
+    devlogData = JSON.parse(fs.readFileSync(devlogJsonPath, "utf-8"));
+  }
+  
+  let existingBlogEntries = devlogData.blog || [];
+  const entryMap = new Map();
+  existingBlogEntries.forEach(entry => entryMap.set(entry.id, entry));
+
+  const allEntries = [];
+
   try {
     const rawPages = await client.queryDatabase(sourceId, {
       sorts: [{ timestamp: "last_edited_time", direction: "descending" }],
@@ -16,9 +28,19 @@ export async function syncBlog(client, sourceId) {
     const outDir = path.join(process.cwd(), "src", "content", "devlog", "blog");
     fs.mkdirSync(outDir, { recursive: true });
 
-    const newBlogEntries = [];
+    let updatedCount = 0;
 
     for (const page of rawPages) {
+      const slug = page.id.replace(/-/g, "");
+      const existingEntry = entryMap.get(slug);
+
+      if (existingEntry && existingEntry.lastEditedTime === page.last_edited_time) {
+        allEntries.push(existingEntry);
+        continue;
+      }
+
+      updatedCount++;
+
       const props = page.properties || {};
       
       let title = "Untitled Page";
@@ -41,8 +63,6 @@ export async function syncBlog(client, sourceId) {
       if (tagsProp && tagsProp.multi_select) {
         tags = tagsProp.multi_select.map(t => t.name);
       }
-
-      const slug = page.id.replace(/-/g, "");
       
       const description = props["느낀점"]?.rich_text?.[0]?.plain_text || 
                           props["요약"]?.rich_text?.[0]?.plain_text ||
@@ -64,27 +84,22 @@ export async function syncBlog(client, sourceId) {
       const filePath = path.join(outDir, `${slug}.mdx`);
       fs.writeFileSync(filePath, mdxContent, "utf-8");
 
-      newBlogEntries.push({
+      allEntries.push({
         id: slug,
         title: title,
         date: date,
         tags: tags,
         description: description,
-        package: "blog"
+        package: "blog",
+        lastEditedTime: page.last_edited_time
       });
     }
     
-    // Sync metadata to devlog.json
-    const devlogJsonPath = path.join(process.cwd(), "src", "data", "devlog.json");
-    let devlogData = {};
-    if (fs.existsSync(devlogJsonPath)) {
-      devlogData = JSON.parse(fs.readFileSync(devlogJsonPath, "utf-8"));
-    }
-    devlogData.blog = newBlogEntries;
+    devlogData.blog = allEntries;
+    devlogData.blog.sort((a, b) => new Date(b.date) - new Date(a.date));
+
     fs.writeFileSync(devlogJsonPath, JSON.stringify(devlogData, null, 2), "utf-8");
-    console.log(`[syncBlog] Successfully synced metadata to devlog.json.`);
-    
-    console.log(`[syncBlog] Successfully generated ${rawPages.length} MDX files.`);
+    console.log(`[syncBlog] Successfully synced metadata to devlog.json. (${updatedCount} updated, total ${allEntries.length})`);
 
   } catch (err) {
     console.error(`[syncBlog] Error querying DB ${sourceId}:`, err.message);

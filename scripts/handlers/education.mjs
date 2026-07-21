@@ -7,6 +7,19 @@ export async function syncEducation(client, sourceId) {
   console.log(`[syncEducation] Fetching database for ${sourceId}...`);
   const allEntries = [];
   
+  const outPath = path.join(process.cwd(), "src", "data", "notion", "education.json");
+  let existingEntries = [];
+  if (fs.existsSync(outPath)) {
+    try {
+      existingEntries = JSON.parse(fs.readFileSync(outPath, "utf-8"));
+    } catch (e) {
+      console.error("[syncEducation] Error reading existing JSON:", e);
+    }
+  }
+
+  const entryMap = new Map();
+  existingEntries.forEach(entry => entryMap.set(entry.id, entry));
+
   let processedAsDb = false;
   try {
     const rawPages = await client.queryDatabase(sourceId, {
@@ -19,7 +32,19 @@ export async function syncEducation(client, sourceId) {
     const outDir = path.join(process.cwd(), "src", "content", "devlog", "education");
     fs.mkdirSync(outDir, { recursive: true });
 
+    let updatedCount = 0;
+
     for (const page of rawPages) {
+      const slug = page.id.replace(/-/g, "");
+      const existingEntry = entryMap.get(page.id);
+
+      if (existingEntry && existingEntry.lastEditedTime === page.last_edited_time) {
+        allEntries.push(existingEntry);
+        continue;
+      }
+
+      updatedCount++;
+
       const props = page.properties || {};
       let title = "";
       for (const val of Object.values(props)) {
@@ -29,9 +54,7 @@ export async function syncEducation(client, sourceId) {
         }
       }
 
-      const slug = page.id.replace(/-/g, "");
-
-      allEntries.push({
+      const newEntry = {
         id: page.id,
         title: title || "Untitled Page",
         slug: slug,
@@ -39,7 +62,7 @@ export async function syncEducation(client, sourceId) {
         lastEditedTime: page.last_edited_time,
         properties: props,
         url: page.url,
-      });
+      };
 
       console.log(`  -> Downloading blocks for education: ${title} (${slug})`);
       const markdownContent = await convertPageToMarkdown(client, page.id);
@@ -68,14 +91,17 @@ export async function syncEducation(client, sourceId) {
 
       const filePath = path.join(outDir, `${slug}.mdx`);
       fs.writeFileSync(filePath, mdxContent, "utf-8");
+
+      allEntries.push(newEntry);
     }
-    console.log(`[syncEducation] Successfully generated ${rawPages.length} MDX files.`);
+    console.log(`[syncEducation] Successfully generated ${updatedCount} updated MDX files (total ${rawPages.length}).`);
   } catch (err) {
     console.error(`[syncEducation] Error querying DB ${sourceId}:`, err.message);
   }
 
+  allEntries.sort((a, b) => new Date(b.lastEditedTime || b.date) - new Date(a.lastEditedTime || a.date));
+
   if (allEntries.length > 0) {
-    const outPath = path.join(process.cwd(), "src", "data", "notion", "education.json");
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, JSON.stringify(allEntries, null, 2), "utf-8");
     console.log(`[syncEducation] Saved ${allEntries.length} items to ${outPath}`);

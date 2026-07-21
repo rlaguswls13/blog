@@ -81,20 +81,25 @@
     "url": "https://app.notion.com/p/3a319946ca76807b8e7ac1d05c32e441"
   },
   {
-    "id": "3a319946-ca76-806d-b9ec-f8824115ebea",
-    "title": "요구사항 정의서란?",
-    "slug": "3a319946ca76806db9ecf8824115ebea",
+    "id": "39119946-ca76-8076-af6b-f1cf7f4e52c4",
+    "title": "WAS, WEB은 무엇인가?",
+    "slug": "39119946ca768076af6bf1cf7f4e52c4",
     "category": "education",
-    "lastEditedTime": "2026-07-20T12:22:00.000Z",
+    "lastEditedTime": "2026-07-20T12:24:00.000Z",
     "properties": {
       "키워드": {
         "id": "HGt%3A",
         "type": "multi_select",
         "multi_select": [
           {
-            "id": "6306a574-c94d-4011-919f-55e17d2fbf22",
-            "name": "PRD",
-            "color": "yellow"
+            "id": "8f474a65-bf54-450c-856e-6ab864e45175",
+            "name": "WAS",
+            "color": "blue"
+          },
+          {
+            "id": "4b363952-18c0-4f83-829b-31c9a8bba3f7",
+            "name": "WEB",
+            "color": "pink"
           }
         ]
       },
@@ -107,7 +112,7 @@
         "id": "ZzEu",
         "type": "date",
         "date": {
-          "start": "2026-07-10",
+          "start": "2026-07-03",
           "end": null,
           "time_zone": null
         }
@@ -119,7 +124,7 @@
           {
             "type": "text",
             "text": {
-              "content": "[교육 41일차]",
+              "content": "[교육 35일차]",
               "link": null
             },
             "annotations": {
@@ -130,7 +135,7 @@
               "code": false,
               "color": "default"
             },
-            "plain_text": "[교육 41일차]",
+            "plain_text": "[교육 35일차]",
             "href": null
           }
         ]
@@ -142,7 +147,7 @@
           {
             "type": "text",
             "text": {
-              "content": "요구사항 정의서란?",
+              "content": "WAS, WEB은 무엇인가?",
               "link": null
             },
             "annotations": {
@@ -153,13 +158,13 @@
               "code": false,
               "color": "default"
             },
-            "plain_text": "요구사항 정의서란?",
+            "plain_text": "WAS, WEB은 무엇인가?",
             "href": null
           }
         ]
       }
     },
-    "url": "https://app.notion.com/p/3a319946ca76806db9ecf8824115ebea"
+    "url": "https://app.notion.com/p/WAS-WEB-39119946ca768076af6bf1cf7f4e52c4"
   },
   {
     "id": "3a319946-ca76-80a6-b7b3-f98589e30442",
@@ -602,25 +607,20 @@
     "url": "https://app.notion.com/p/MVC-39519946ca7680febec1c485280ca77b"
   },
   {
-    "id": "39119946-ca76-8076-af6b-f1cf7f4e52c4",
-    "title": "WAS, WEB은 무엇인가?",
-    "slug": "39119946ca768076af6bf1cf7f4e52c4",
+    "id": "3a319946-ca76-806d-b9ec-f8824115ebea",
+    "title": "요구사항 정의서란?",
+    "slug": "3a319946ca76806db9ecf8824115ebea",
     "category": "education",
-    "lastEditedTime": "2026-07-20T12:24:00.000Z",
+    "lastEditedTime": "2026-07-20T12:22:00.000Z",
     "properties": {
       "키워드": {
         "id": "HGt%3A",
         "type": "multi_select",
         "multi_select": [
           {
-            "id": "8f474a65-bf54-450c-856e-6ab864e45175",
-            "name": "WAS",
-            "color": "blue"
-          },
-          {
-            "id": "4b363952-18c0-4f83-829b-31c9a8bba3f7",
-            "name": "WEB",
-            "color": "pink"
+            "id": "6306a574-c94d-4011-919f-55e17d2fbf22",
+            "name": "PRD",
+            "color": "yellow"
           }
         ]
       },
@@ -633,7 +633,7 @@
         "id": "ZzEu",
         "type": "date",
         "date": {
-          "start": "2026-07-03",
+          "start": "2026-07-10",
           "end": null,
           "time_zone": null
         }
@@ -645,7 +645,7 @@
           {
             "type": "text",
             "text": {
-              "content": "[교육 35일차]",
+              "content": "[교육 41일차]",
               "link": null
             },
             "annotations": {
@@ -656,7 +656,7 @@
               "code": false,
               "color": "default"
             },
-            "plain_text": "[교육 35일차]",
+            "plain_text": "[교육 41일차]",
             "href": null
           }
         ]
@@ -668,7 +668,7 @@
           {
             "type": "text",
             "text": {
-              "content": "WAS, WEB은 무엇인가?",
+              "content": "요구사항 정의서란?",
               "link": null
             },
             "annotations": {
@@ -679,117 +679,13 @@
               "code": false,
               "color": "default"
             },
-            "plain_text": "WAS, WEB은 무엇인가?",
+            "plain_text": "요구사항 정의서란?",
             "href": null
           }
         ]
       }
     },
-    "url": "https://app.notion.com/p/WAS-WEB-39119946ca768076af6bf1cf7f4e52c4"
-  },
-  {
-    "id": "39119946-ca76-806d-bd0f-c549ddde2532",
-    "title": "JDBC란?",
-    "slug": "39119946ca76806dbd0fc549ddde2532",
-    "category": "education",
-    "lastEditedTime": "2026-07-02T05:47:00.000Z",
-    "properties": {
-      "키워드": {
-        "id": "HGt%3A",
-        "type": "multi_select",
-        "multi_select": [
-          {
-            "id": "91a114f0-f499-4dc0-9629-7c16796d7a82",
-            "name": "JDBC",
-            "color": "yellow"
-          },
-          {
-            "id": "84155afe-5075-445c-98df-4e515a7c0d9d",
-            "name": "SpringFramework",
-            "color": "blue"
-          }
-        ]
-      },
-      "느낀점": {
-        "id": "JzD%5D",
-        "type": "rich_text",
-        "rich_text": [
-          {
-            "type": "text",
-            "text": {
-              "content": " JDBC를 쓸 때는 매번 연결을 맺고 끊을 때 발생하는 네트워크 오버헤드와 자원 누수(Leak) 문제를 가장 유의해야 합니다. 이를 방지하기 위해 HikariCP 같은 커넥션 풀 관리 툴을 적절히 활용하면, 미리 생성된 연결을 재사용하면서 성능을 극대화하고 복잡한 데이터베이스 설정을 하이레벨에서 깔끔하게 통제할 수 있습니다. 결과적으로 로우레벨의 무거운 소켓 제어 로직을 검증된 관리 툴의 룰 베이스 위로 올리는 것이 대규모 서비스의 안정성과 유지보수 면에서 훨씬 유리하다고 할 수 있습니다.",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": " JDBC를 쓸 때는 매번 연결을 맺고 끊을 때 발생하는 네트워크 오버헤드와 자원 누수(Leak) 문제를 가장 유의해야 합니다. 이를 방지하기 위해 HikariCP 같은 커넥션 풀 관리 툴을 적절히 활용하면, 미리 생성된 연결을 재사용하면서 성능을 극대화하고 복잡한 데이터베이스 설정을 하이레벨에서 깔끔하게 통제할 수 있습니다. 결과적으로 로우레벨의 무거운 소켓 제어 로직을 검증된 관리 툴의 룰 베이스 위로 올리는 것이 대규모 서비스의 안정성과 유지보수 면에서 훨씬 유리하다고 할 수 있습니다.",
-            "href": null
-          }
-        ]
-      },
-      "교육일": {
-        "id": "ZzEu",
-        "type": "date",
-        "date": {
-          "start": "2026-07-02",
-          "end": null,
-          "time_zone": null
-        }
-      },
-      "회차": {
-        "id": "cse%7D",
-        "type": "rich_text",
-        "rich_text": [
-          {
-            "type": "text",
-            "text": {
-              "content": "[교육 34일차]",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "[교육 34일차]",
-            "href": null
-          }
-        ]
-      },
-      "블로깅 페이지": {
-        "id": "title",
-        "type": "title",
-        "title": [
-          {
-            "type": "text",
-            "text": {
-              "content": "JDBC란?",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "JDBC란?",
-            "href": null
-          }
-        ]
-      }
-    },
-    "url": "https://app.notion.com/p/JDBC-39119946ca76806dbd0fc549ddde2532"
+    "url": "https://app.notion.com/p/3a319946ca76806db9ecf8824115ebea"
   },
   {
     "id": "39119946-ca76-804e-a9fa-fb60b5f42a2a",
@@ -1003,6 +899,110 @@
       }
     },
     "url": "https://app.notion.com/p/js-38e19946ca7680e1a523fdf74099c07f"
+  },
+  {
+    "id": "39119946-ca76-806d-bd0f-c549ddde2532",
+    "title": "JDBC란?",
+    "slug": "39119946ca76806dbd0fc549ddde2532",
+    "category": "education",
+    "lastEditedTime": "2026-07-02T05:47:00.000Z",
+    "properties": {
+      "키워드": {
+        "id": "HGt%3A",
+        "type": "multi_select",
+        "multi_select": [
+          {
+            "id": "91a114f0-f499-4dc0-9629-7c16796d7a82",
+            "name": "JDBC",
+            "color": "yellow"
+          },
+          {
+            "id": "84155afe-5075-445c-98df-4e515a7c0d9d",
+            "name": "SpringFramework",
+            "color": "blue"
+          }
+        ]
+      },
+      "느낀점": {
+        "id": "JzD%5D",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": " JDBC를 쓸 때는 매번 연결을 맺고 끊을 때 발생하는 네트워크 오버헤드와 자원 누수(Leak) 문제를 가장 유의해야 합니다. 이를 방지하기 위해 HikariCP 같은 커넥션 풀 관리 툴을 적절히 활용하면, 미리 생성된 연결을 재사용하면서 성능을 극대화하고 복잡한 데이터베이스 설정을 하이레벨에서 깔끔하게 통제할 수 있습니다. 결과적으로 로우레벨의 무거운 소켓 제어 로직을 검증된 관리 툴의 룰 베이스 위로 올리는 것이 대규모 서비스의 안정성과 유지보수 면에서 훨씬 유리하다고 할 수 있습니다.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": " JDBC를 쓸 때는 매번 연결을 맺고 끊을 때 발생하는 네트워크 오버헤드와 자원 누수(Leak) 문제를 가장 유의해야 합니다. 이를 방지하기 위해 HikariCP 같은 커넥션 풀 관리 툴을 적절히 활용하면, 미리 생성된 연결을 재사용하면서 성능을 극대화하고 복잡한 데이터베이스 설정을 하이레벨에서 깔끔하게 통제할 수 있습니다. 결과적으로 로우레벨의 무거운 소켓 제어 로직을 검증된 관리 툴의 룰 베이스 위로 올리는 것이 대규모 서비스의 안정성과 유지보수 면에서 훨씬 유리하다고 할 수 있습니다.",
+            "href": null
+          }
+        ]
+      },
+      "교육일": {
+        "id": "ZzEu",
+        "type": "date",
+        "date": {
+          "start": "2026-07-02",
+          "end": null,
+          "time_zone": null
+        }
+      },
+      "회차": {
+        "id": "cse%7D",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "[교육 34일차]",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "[교육 34일차]",
+            "href": null
+          }
+        ]
+      },
+      "블로깅 페이지": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "JDBC란?",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "JDBC란?",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/JDBC-39119946ca76806dbd0fc549ddde2532"
   },
   {
     "id": "38e19946-ca76-8000-b2fa-dd797469364b",
@@ -3702,568 +3702,6 @@
     "url": "https://app.notion.com/p/36f19946ca76807b9740c769bb81319a"
   },
   {
-    "id": "36e19946-ca76-8099-b9e1-ed827b7817fd",
-    "title": "java 상속을 활용한 기능 구현",
-    "slug": "36e19946ca768099b9e1ed827b7817fd",
-    "category": "education",
-    "lastEditedTime": "2026-06-01T08:39:00.000Z",
-    "properties": {
-      "키워드": {
-        "id": "HGt%3A",
-        "type": "multi_select",
-        "multi_select": [
-          {
-            "id": "ff349536-adaa-4e51-99eb-a54f1b747b97",
-            "name": "상속",
-            "color": "pink"
-          }
-        ]
-      },
-      "느낀점": {
-        "id": "JzD%5D",
-        "type": "rich_text",
-        "rich_text": [
-          {
-            "type": "text",
-            "text": {
-              "content": "9일차 까지 진행한 문제풀이에서 적용한 코드 컨벤션을 유지하면서 더 유연성있는 코드 작성을 위해서 spring 미사용시 Bean 등록하여 사용할 수 있는 것처럼 AppConfig 라는 의존성 팩토리 클래스생성하여 매번 new 생성자를 생성하지 않고 실행시 최초 생성하여 주입받는 형태로 개선을 유도해봤습니다. 그리고 상속을 통해서 반복되는 필드 작성을 피하고, 동일한 method이지만 상속된 자식 객체에서 변형된 method를 작성하여, 원하는 공식을 알맞게 적용할 수 있었습니다.",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "9일차 까지 진행한 문제풀이에서 적용한 코드 컨벤션을 유지하면서 더 유연성있는 코드 작성을 위해서 spring 미사용시 Bean 등록하여 사용할 수 있는 것처럼 AppConfig 라는 의존성 팩토리 클래스생성하여 매번 new 생성자를 생성하지 않고 실행시 최초 생성하여 주입받는 형태로 개선을 유도해봤습니다. 그리고 상속을 통해서 반복되는 필드 작성을 피하고, 동일한 method이지만 상속된 자식 객체에서 변형된 method를 작성하여, 원하는 공식을 알맞게 적용할 수 있었습니다.",
-            "href": null
-          }
-        ]
-      },
-      "교육일": {
-        "id": "ZzEu",
-        "type": "date",
-        "date": {
-          "start": "2026-05-28",
-          "end": null,
-          "time_zone": null
-        }
-      },
-      "회차": {
-        "id": "cse%7D",
-        "type": "rich_text",
-        "rich_text": [
-          {
-            "type": "text",
-            "text": {
-              "content": "[교육 10일차]",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "[교육 10일차]",
-            "href": null
-          }
-        ]
-      },
-      "블로깅 페이지": {
-        "id": "title",
-        "type": "title",
-        "title": [
-          {
-            "type": "text",
-            "text": {
-              "content": "java 상속을 활용한 기능 구현",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "java 상속을 활용한 기능 구현",
-            "href": null
-          }
-        ]
-      }
-    },
-    "url": "https://app.notion.com/p/java-36e19946ca768099b9e1ed827b7817fd"
-  },
-  {
-    "id": "36d19946-ca76-8055-9155-e3820742c2be",
-    "title": "java 복합 기능 구현",
-    "slug": "36d19946ca7680559155e3820742c2be",
-    "category": "education",
-    "lastEditedTime": "2026-06-01T08:39:00.000Z",
-    "properties": {
-      "키워드": {
-        "id": "HGt%3A",
-        "type": "multi_select",
-        "multi_select": [
-          {
-            "id": "79db64bf-f92f-4c5c-ac32-bd707203f264",
-            "name": "객체배열",
-            "color": "red"
-          },
-          {
-            "id": "22547b7c-600b-4da1-9119-55892dd01074",
-            "name": "MVC",
-            "color": "default"
-          }
-        ]
-      },
-      "느낀점": {
-        "id": "JzD%5D",
-        "type": "rich_text",
-        "rich_text": [
-          {
-            "type": "text",
-            "text": {
-              "content": "8~9일차 문제풀이에서 사용했던 코드를 하나의 console로 이용할 수 있도록 프로그램을 개선해봤습니다. 사용자 입력을 해석해 비즈니스 로직으로 분기하는 ",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "8~9일차 문제풀이에서 사용했던 코드를 하나의 console로 이용할 수 있도록 프로그램을 개선해봤습니다. 사용자 입력을 해석해 비즈니스 로직으로 분기하는 ",
-            "href": null
-          },
-          {
-            "type": "text",
-            "text": {
-              "content": "Controller",
-              "link": null
-            },
-            "annotations": {
-              "bold": true,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "Controller",
-            "href": null
-          },
-          {
-            "type": "text",
-            "text": {
-              "content": "와 도메인 데이터를 관리하는 ",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "와 도메인 데이터를 관리하는 ",
-            "href": null
-          },
-          {
-            "type": "text",
-            "text": {
-              "content": "Model",
-              "link": null
-            },
-            "annotations": {
-              "bold": true,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "Model",
-            "href": null
-          },
-          {
-            "type": "text",
-            "text": {
-              "content": "의 역할을 명확히 분리해 본 것은 향후 ",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "의 역할을 명확히 분리해 본 것은 향후 ",
-            "href": null
-          },
-          {
-            "type": "text",
-            "text": {
-              "content": "React/Next.js 프론트엔드",
-              "link": null
-            },
-            "annotations": {
-              "bold": true,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "React/Next.js 프론트엔드",
-            "href": null
-          },
-          {
-            "type": "text",
-            "text": {
-              "content": "와 ",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "와 ",
-            "href": null
-          },
-          {
-            "type": "text",
-            "text": {
-              "content": "SQL 기반 데이터베이스",
-              "link": null
-            },
-            "annotations": {
-              "bold": true,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "SQL 기반 데이터베이스",
-            "href": null
-          },
-          {
-            "type": "text",
-            "text": {
-              "content": "를 결합한 풀스택 제품으로 확장성도 고려해볼 수 있었습니다. 다만, 현업에서는 MSA(마이크로서비스 아키텍처)를 추구하는 방향이기에  현재의 모놀리식 구조를 MSA로 전환할 수 있도록 도메인별 유연성을 고려한 패키지 구성까지 미리 나누어 설계해보는 전략을 더 고민해봐도 좋을 것같습니다.",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "를 결합한 풀스택 제품으로 확장성도 고려해볼 수 있었습니다. 다만, 현업에서는 MSA(마이크로서비스 아키텍처)를 추구하는 방향이기에  현재의 모놀리식 구조를 MSA로 전환할 수 있도록 도메인별 유연성을 고려한 패키지 구성까지 미리 나누어 설계해보는 전략을 더 고민해봐도 좋을 것같습니다.",
-            "href": null
-          }
-        ]
-      },
-      "교육일": {
-        "id": "ZzEu",
-        "type": "date",
-        "date": {
-          "start": "2026-05-27",
-          "end": null,
-          "time_zone": null
-        }
-      },
-      "회차": {
-        "id": "cse%7D",
-        "type": "rich_text",
-        "rich_text": [
-          {
-            "type": "text",
-            "text": {
-              "content": "[교육 9일차]",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "[교육 9일차]",
-            "href": null
-          }
-        ]
-      },
-      "블로깅 페이지": {
-        "id": "title",
-        "type": "title",
-        "title": [
-          {
-            "type": "text",
-            "text": {
-              "content": "java 복합 기능 구현",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "java 복합 기능 구현",
-            "href": null
-          }
-        ]
-      }
-    },
-    "url": "https://app.notion.com/p/java-36d19946ca7680559155e3820742c2be"
-  },
-  {
-    "id": "36819946-ca76-80ad-822e-eb9d40d24cdb",
-    "title": "java 소스로 기능구현",
-    "slug": "36819946ca7680ad822eeb9d40d24cdb",
-    "category": "education",
-    "lastEditedTime": "2026-06-01T08:39:00.000Z",
-    "properties": {
-      "키워드": {
-        "id": "HGt%3A",
-        "type": "multi_select",
-        "multi_select": [
-          {
-            "id": "4f16c3fa-1e7c-4e0b-a47b-167645884deb",
-            "name": "소스 유연성",
-            "color": "green"
-          },
-          {
-            "id": "4d29d25d-b8eb-4aec-8041-2b5a5d70c314",
-            "name": "오버로딩",
-            "color": "green"
-          },
-          {
-            "id": "622d39c0-77a6-4d71-bc48-ccb0b7eb9d49",
-            "name": "오버라이트",
-            "color": "red"
-          }
-        ]
-      },
-      "느낀점": {
-        "id": "JzD%5D",
-        "type": "rich_text",
-        "rich_text": [
-          {
-            "type": "text",
-            "text": {
-              "content": "휴먼 에러의 주원인인 하드코딩과 복잡성을 제거하기 위해 Enum, Record, Constant를 적극 활용하여 문자열 변수를 안정적으로 코드화했습니다. 아울러 클래스를 세분화하고 상속 및 인터페이스 구조를 적용함으로써 각 로직의 결합도를 낮추고 기능을 단순화했으며, 단순 구현을 넘어 실제 사용자 경험(UX)까지 고려한 지속성 있는 프로그램 흐름으로 기능을 개선해봤습니다. 이를 바탕으로 추후 실무에서는 레거시 로직에 영향을 최소화하면서 안정적으로 리팩토링 가능한 방법을 더 고민해 볼 필요가 있을 것같습니다.",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "휴먼 에러의 주원인인 하드코딩과 복잡성을 제거하기 위해 Enum, Record, Constant를 적극 활용하여 문자열 변수를 안정적으로 코드화했습니다. 아울러 클래스를 세분화하고 상속 및 인터페이스 구조를 적용함으로써 각 로직의 결합도를 낮추고 기능을 단순화했으며, 단순 구현을 넘어 실제 사용자 경험(UX)까지 고려한 지속성 있는 프로그램 흐름으로 기능을 개선해봤습니다. 이를 바탕으로 추후 실무에서는 레거시 로직에 영향을 최소화하면서 안정적으로 리팩토링 가능한 방법을 더 고민해 볼 필요가 있을 것같습니다.",
-            "href": null
-          }
-        ]
-      },
-      "교육일": {
-        "id": "ZzEu",
-        "type": "date",
-        "date": {
-          "start": "2026-05-26",
-          "end": null,
-          "time_zone": null
-        }
-      },
-      "회차": {
-        "id": "cse%7D",
-        "type": "rich_text",
-        "rich_text": [
-          {
-            "type": "text",
-            "text": {
-              "content": "[교육 8일차]",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "[교육 8일차]",
-            "href": null
-          }
-        ]
-      },
-      "블로깅 페이지": {
-        "id": "title",
-        "type": "title",
-        "title": [
-          {
-            "type": "text",
-            "text": {
-              "content": "java 소스로 기능구현",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "java 소스로 기능구현",
-            "href": null
-          }
-        ]
-      }
-    },
-    "url": "https://app.notion.com/p/java-36819946ca7680ad822eeb9d40d24cdb"
-  },
-  {
-    "id": "36419946-ca76-80f6-a116-fe0b8c2c9648",
-    "title": "java 생성자를 활용한 문제풀이",
-    "slug": "36419946ca7680f6a116fe0b8c2c9648",
-    "category": "education",
-    "lastEditedTime": "2026-06-01T08:39:00.000Z",
-    "properties": {
-      "키워드": {
-        "id": "HGt%3A",
-        "type": "multi_select",
-        "multi_select": [
-          {
-            "id": "6940208c-a7cb-41ab-a68b-5154a0f2638e",
-            "name": "메서드",
-            "color": "orange"
-          },
-          {
-            "id": "51df1f1b-5c78-48d2-869a-0161b80c9c03",
-            "name": "생성자",
-            "color": "brown"
-          },
-          {
-            "id": "bc5b4fea-ced1-4af6-9a35-2971b8f6eb9b",
-            "name": "lombok",
-            "color": "purple"
-          },
-          {
-            "id": "f85ae1f0-2027-45f7-80e3-38b004fb27e6",
-            "name": "builder패턴",
-            "color": "gray"
-          }
-        ]
-      },
-      "느낀점": {
-        "id": "JzD%5D",
-        "type": "rich_text",
-        "rich_text": [
-          {
-            "type": "text",
-            "text": {
-              "content": " 자바의 기본인 getter, setter, 생성자의 본질을 다시금 되짚어보는 뜻깊은 시간이었습니다. 첫 개발을 할때는 코드를 일일이 직접 손으로 작성하곤 했지만, 이제는 Lombok 라이브러리와 Builder 패턴을 활용해 반복적인 코드를 획기적으로 줄이고 생산성과 소스 관리의 효율성을 동시에 높일수 있다는 부분 한번 더 느꼈습니다. 그리고 java로 코드 작성할 때는 매번 메모리 관리 및 성능에 대해서 고민을 하면서 작성을 했는데 , 테스트 시 내부 클래스로 빠르게 검증한 뒤 독립된 클래스로 분리하는 과정을 통해, 코드의 재사용성을 높이는 것은 물론 무분별한 static 선언을 방지하여 메모리 효율까지 함께 고민해 볼 수 있었던 거 같습니다.",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": " 자바의 기본인 getter, setter, 생성자의 본질을 다시금 되짚어보는 뜻깊은 시간이었습니다. 첫 개발을 할때는 코드를 일일이 직접 손으로 작성하곤 했지만, 이제는 Lombok 라이브러리와 Builder 패턴을 활용해 반복적인 코드를 획기적으로 줄이고 생산성과 소스 관리의 효율성을 동시에 높일수 있다는 부분 한번 더 느꼈습니다. 그리고 java로 코드 작성할 때는 매번 메모리 관리 및 성능에 대해서 고민을 하면서 작성을 했는데 , 테스트 시 내부 클래스로 빠르게 검증한 뒤 독립된 클래스로 분리하는 과정을 통해, 코드의 재사용성을 높이는 것은 물론 무분별한 static 선언을 방지하여 메모리 효율까지 함께 고민해 볼 수 있었던 거 같습니다.",
-            "href": null
-          }
-        ]
-      },
-      "교육일": {
-        "id": "ZzEu",
-        "type": "date",
-        "date": {
-          "start": "2026-05-20",
-          "end": null,
-          "time_zone": null
-        }
-      },
-      "회차": {
-        "id": "cse%7D",
-        "type": "rich_text",
-        "rich_text": [
-          {
-            "type": "text",
-            "text": {
-              "content": "[교육 7일차]",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "[교육 7일차]",
-            "href": null
-          }
-        ]
-      },
-      "블로깅 페이지": {
-        "id": "title",
-        "type": "title",
-        "title": [
-          {
-            "type": "text",
-            "text": {
-              "content": "java 생성자를 활용한 문제풀이",
-              "link": null
-            },
-            "annotations": {
-              "bold": false,
-              "italic": false,
-              "strikethrough": false,
-              "underline": false,
-              "code": false,
-              "color": "default"
-            },
-            "plain_text": "java 생성자를 활용한 문제풀이",
-            "href": null
-          }
-        ]
-      }
-    },
-    "url": "https://app.notion.com/p/java-36419946ca7680f6a116fe0b8c2c9648"
-  },
-  {
     "id": "36419946-ca76-801f-84b2-e07084d1a544",
     "title": "java 2차원 배열을 활용한 문제풀이",
     "slug": "36419946ca76801f84b2e07084d1a544",
@@ -5033,5 +4471,567 @@
       }
     },
     "url": "https://app.notion.com/p/Java-35e19946ca76807b9fe4f64d17b2e1b6"
+  },
+  {
+    "id": "36e19946-ca76-8099-b9e1-ed827b7817fd",
+    "title": "java 상속을 활용한 기능 구현",
+    "slug": "36e19946ca768099b9e1ed827b7817fd",
+    "category": "education",
+    "lastEditedTime": "2026-06-01T08:39:00.000Z",
+    "properties": {
+      "키워드": {
+        "id": "HGt%3A",
+        "type": "multi_select",
+        "multi_select": [
+          {
+            "id": "ff349536-adaa-4e51-99eb-a54f1b747b97",
+            "name": "상속",
+            "color": "pink"
+          }
+        ]
+      },
+      "느낀점": {
+        "id": "JzD%5D",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "9일차 까지 진행한 문제풀이에서 적용한 코드 컨벤션을 유지하면서 더 유연성있는 코드 작성을 위해서 spring 미사용시 Bean 등록하여 사용할 수 있는 것처럼 AppConfig 라는 의존성 팩토리 클래스생성하여 매번 new 생성자를 생성하지 않고 실행시 최초 생성하여 주입받는 형태로 개선을 유도해봤습니다. 그리고 상속을 통해서 반복되는 필드 작성을 피하고, 동일한 method이지만 상속된 자식 객체에서 변형된 method를 작성하여, 원하는 공식을 알맞게 적용할 수 있었습니다.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "9일차 까지 진행한 문제풀이에서 적용한 코드 컨벤션을 유지하면서 더 유연성있는 코드 작성을 위해서 spring 미사용시 Bean 등록하여 사용할 수 있는 것처럼 AppConfig 라는 의존성 팩토리 클래스생성하여 매번 new 생성자를 생성하지 않고 실행시 최초 생성하여 주입받는 형태로 개선을 유도해봤습니다. 그리고 상속을 통해서 반복되는 필드 작성을 피하고, 동일한 method이지만 상속된 자식 객체에서 변형된 method를 작성하여, 원하는 공식을 알맞게 적용할 수 있었습니다.",
+            "href": null
+          }
+        ]
+      },
+      "교육일": {
+        "id": "ZzEu",
+        "type": "date",
+        "date": {
+          "start": "2026-05-28",
+          "end": null,
+          "time_zone": null
+        }
+      },
+      "회차": {
+        "id": "cse%7D",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "[교육 10일차]",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "[교육 10일차]",
+            "href": null
+          }
+        ]
+      },
+      "블로깅 페이지": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "java 상속을 활용한 기능 구현",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "java 상속을 활용한 기능 구현",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/java-36e19946ca768099b9e1ed827b7817fd"
+  },
+  {
+    "id": "36d19946-ca76-8055-9155-e3820742c2be",
+    "title": "java 복합 기능 구현",
+    "slug": "36d19946ca7680559155e3820742c2be",
+    "category": "education",
+    "lastEditedTime": "2026-06-01T08:39:00.000Z",
+    "properties": {
+      "키워드": {
+        "id": "HGt%3A",
+        "type": "multi_select",
+        "multi_select": [
+          {
+            "id": "79db64bf-f92f-4c5c-ac32-bd707203f264",
+            "name": "객체배열",
+            "color": "red"
+          },
+          {
+            "id": "22547b7c-600b-4da1-9119-55892dd01074",
+            "name": "MVC",
+            "color": "default"
+          }
+        ]
+      },
+      "느낀점": {
+        "id": "JzD%5D",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "8~9일차 문제풀이에서 사용했던 코드를 하나의 console로 이용할 수 있도록 프로그램을 개선해봤습니다. 사용자 입력을 해석해 비즈니스 로직으로 분기하는 ",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "8~9일차 문제풀이에서 사용했던 코드를 하나의 console로 이용할 수 있도록 프로그램을 개선해봤습니다. 사용자 입력을 해석해 비즈니스 로직으로 분기하는 ",
+            "href": null
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "Controller",
+              "link": null
+            },
+            "annotations": {
+              "bold": true,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Controller",
+            "href": null
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "와 도메인 데이터를 관리하는 ",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "와 도메인 데이터를 관리하는 ",
+            "href": null
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "Model",
+              "link": null
+            },
+            "annotations": {
+              "bold": true,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Model",
+            "href": null
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "의 역할을 명확히 분리해 본 것은 향후 ",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "의 역할을 명확히 분리해 본 것은 향후 ",
+            "href": null
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "React/Next.js 프론트엔드",
+              "link": null
+            },
+            "annotations": {
+              "bold": true,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "React/Next.js 프론트엔드",
+            "href": null
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "와 ",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "와 ",
+            "href": null
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "SQL 기반 데이터베이스",
+              "link": null
+            },
+            "annotations": {
+              "bold": true,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "SQL 기반 데이터베이스",
+            "href": null
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "를 결합한 풀스택 제품으로 확장성도 고려해볼 수 있었습니다. 다만, 현업에서는 MSA(마이크로서비스 아키텍처)를 추구하는 방향이기에  현재의 모놀리식 구조를 MSA로 전환할 수 있도록 도메인별 유연성을 고려한 패키지 구성까지 미리 나누어 설계해보는 전략을 더 고민해봐도 좋을 것같습니다.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "를 결합한 풀스택 제품으로 확장성도 고려해볼 수 있었습니다. 다만, 현업에서는 MSA(마이크로서비스 아키텍처)를 추구하는 방향이기에  현재의 모놀리식 구조를 MSA로 전환할 수 있도록 도메인별 유연성을 고려한 패키지 구성까지 미리 나누어 설계해보는 전략을 더 고민해봐도 좋을 것같습니다.",
+            "href": null
+          }
+        ]
+      },
+      "교육일": {
+        "id": "ZzEu",
+        "type": "date",
+        "date": {
+          "start": "2026-05-27",
+          "end": null,
+          "time_zone": null
+        }
+      },
+      "회차": {
+        "id": "cse%7D",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "[교육 9일차]",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "[교육 9일차]",
+            "href": null
+          }
+        ]
+      },
+      "블로깅 페이지": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "java 복합 기능 구현",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "java 복합 기능 구현",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/java-36d19946ca7680559155e3820742c2be"
+  },
+  {
+    "id": "36819946-ca76-80ad-822e-eb9d40d24cdb",
+    "title": "java 소스로 기능구현",
+    "slug": "36819946ca7680ad822eeb9d40d24cdb",
+    "category": "education",
+    "lastEditedTime": "2026-06-01T08:39:00.000Z",
+    "properties": {
+      "키워드": {
+        "id": "HGt%3A",
+        "type": "multi_select",
+        "multi_select": [
+          {
+            "id": "4f16c3fa-1e7c-4e0b-a47b-167645884deb",
+            "name": "소스 유연성",
+            "color": "green"
+          },
+          {
+            "id": "4d29d25d-b8eb-4aec-8041-2b5a5d70c314",
+            "name": "오버로딩",
+            "color": "green"
+          },
+          {
+            "id": "622d39c0-77a6-4d71-bc48-ccb0b7eb9d49",
+            "name": "오버라이트",
+            "color": "red"
+          }
+        ]
+      },
+      "느낀점": {
+        "id": "JzD%5D",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "휴먼 에러의 주원인인 하드코딩과 복잡성을 제거하기 위해 Enum, Record, Constant를 적극 활용하여 문자열 변수를 안정적으로 코드화했습니다. 아울러 클래스를 세분화하고 상속 및 인터페이스 구조를 적용함으로써 각 로직의 결합도를 낮추고 기능을 단순화했으며, 단순 구현을 넘어 실제 사용자 경험(UX)까지 고려한 지속성 있는 프로그램 흐름으로 기능을 개선해봤습니다. 이를 바탕으로 추후 실무에서는 레거시 로직에 영향을 최소화하면서 안정적으로 리팩토링 가능한 방법을 더 고민해 볼 필요가 있을 것같습니다.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "휴먼 에러의 주원인인 하드코딩과 복잡성을 제거하기 위해 Enum, Record, Constant를 적극 활용하여 문자열 변수를 안정적으로 코드화했습니다. 아울러 클래스를 세분화하고 상속 및 인터페이스 구조를 적용함으로써 각 로직의 결합도를 낮추고 기능을 단순화했으며, 단순 구현을 넘어 실제 사용자 경험(UX)까지 고려한 지속성 있는 프로그램 흐름으로 기능을 개선해봤습니다. 이를 바탕으로 추후 실무에서는 레거시 로직에 영향을 최소화하면서 안정적으로 리팩토링 가능한 방법을 더 고민해 볼 필요가 있을 것같습니다.",
+            "href": null
+          }
+        ]
+      },
+      "교육일": {
+        "id": "ZzEu",
+        "type": "date",
+        "date": {
+          "start": "2026-05-26",
+          "end": null,
+          "time_zone": null
+        }
+      },
+      "회차": {
+        "id": "cse%7D",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "[교육 8일차]",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "[교육 8일차]",
+            "href": null
+          }
+        ]
+      },
+      "블로깅 페이지": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "java 소스로 기능구현",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "java 소스로 기능구현",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/java-36819946ca7680ad822eeb9d40d24cdb"
+  },
+  {
+    "id": "36419946-ca76-80f6-a116-fe0b8c2c9648",
+    "title": "java 생성자를 활용한 문제풀이",
+    "slug": "36419946ca7680f6a116fe0b8c2c9648",
+    "category": "education",
+    "lastEditedTime": "2026-06-01T08:39:00.000Z",
+    "properties": {
+      "키워드": {
+        "id": "HGt%3A",
+        "type": "multi_select",
+        "multi_select": [
+          {
+            "id": "6940208c-a7cb-41ab-a68b-5154a0f2638e",
+            "name": "메서드",
+            "color": "orange"
+          },
+          {
+            "id": "51df1f1b-5c78-48d2-869a-0161b80c9c03",
+            "name": "생성자",
+            "color": "brown"
+          },
+          {
+            "id": "bc5b4fea-ced1-4af6-9a35-2971b8f6eb9b",
+            "name": "lombok",
+            "color": "purple"
+          },
+          {
+            "id": "f85ae1f0-2027-45f7-80e3-38b004fb27e6",
+            "name": "builder패턴",
+            "color": "gray"
+          }
+        ]
+      },
+      "느낀점": {
+        "id": "JzD%5D",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": " 자바의 기본인 getter, setter, 생성자의 본질을 다시금 되짚어보는 뜻깊은 시간이었습니다. 첫 개발을 할때는 코드를 일일이 직접 손으로 작성하곤 했지만, 이제는 Lombok 라이브러리와 Builder 패턴을 활용해 반복적인 코드를 획기적으로 줄이고 생산성과 소스 관리의 효율성을 동시에 높일수 있다는 부분 한번 더 느꼈습니다. 그리고 java로 코드 작성할 때는 매번 메모리 관리 및 성능에 대해서 고민을 하면서 작성을 했는데 , 테스트 시 내부 클래스로 빠르게 검증한 뒤 독립된 클래스로 분리하는 과정을 통해, 코드의 재사용성을 높이는 것은 물론 무분별한 static 선언을 방지하여 메모리 효율까지 함께 고민해 볼 수 있었던 거 같습니다.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": " 자바의 기본인 getter, setter, 생성자의 본질을 다시금 되짚어보는 뜻깊은 시간이었습니다. 첫 개발을 할때는 코드를 일일이 직접 손으로 작성하곤 했지만, 이제는 Lombok 라이브러리와 Builder 패턴을 활용해 반복적인 코드를 획기적으로 줄이고 생산성과 소스 관리의 효율성을 동시에 높일수 있다는 부분 한번 더 느꼈습니다. 그리고 java로 코드 작성할 때는 매번 메모리 관리 및 성능에 대해서 고민을 하면서 작성을 했는데 , 테스트 시 내부 클래스로 빠르게 검증한 뒤 독립된 클래스로 분리하는 과정을 통해, 코드의 재사용성을 높이는 것은 물론 무분별한 static 선언을 방지하여 메모리 효율까지 함께 고민해 볼 수 있었던 거 같습니다.",
+            "href": null
+          }
+        ]
+      },
+      "교육일": {
+        "id": "ZzEu",
+        "type": "date",
+        "date": {
+          "start": "2026-05-20",
+          "end": null,
+          "time_zone": null
+        }
+      },
+      "회차": {
+        "id": "cse%7D",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "[교육 7일차]",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "[교육 7일차]",
+            "href": null
+          }
+        ]
+      },
+      "블로깅 페이지": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "java 생성자를 활용한 문제풀이",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "java 생성자를 활용한 문제풀이",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/java-36419946ca7680f6a116fe0b8c2c9648"
   }
 ]
