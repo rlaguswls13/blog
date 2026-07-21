@@ -66,10 +66,27 @@ jobs:
           NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run fetch-notion
 
+      - name: Resolve GitHub Pages base path
+        id: resolve-pages-path
+        env:
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+          FORCE_ROOT: ${{ vars.USE_ROOT_BASE_PATH }}
+        run: |
+          repository_name="${REPOSITORY_NAME,,}"
+          root_repository="${REPOSITORY_OWNER,,}.github.io"
+          force_root="${FORCE_ROOT,,}"
+
+          if [ "$force_root" = "true" ] || [ "$repository_name" = "$root_repository" ]; then
+            echo "base_path=ROOT" >> "$GITHUB_OUTPUT"
+          else
+            echo "base_path=/$REPOSITORY_NAME" >> "$GITHUB_OUTPUT"
+          fi
+
       # 5. 프로젝트 빌드 (위에서 생성된 education.json을 포함하여 빌드됨)
       - name: Build project
         env:
-          BASE_PATH: ${{ vars.USE_ROOT_BASE_PATH == 'true' && 'ROOT' || format('/{0}', github.event.repository.name) }}
+          BASE_PATH: ${{ steps.resolve-pages-path.outputs.base_path }}
           ADSENSE_ACCOUNT: ${{ vars.ADSENSE_ACCOUNT }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run build:no-fetch
 
