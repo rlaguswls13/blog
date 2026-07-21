@@ -110,6 +110,8 @@ export default async function DevlogDetailPage({
   params: Promise<{ category: string; id: string }>;
 }) {
   const { category, id } = await params;
+
+  // Handle MDX rendering
   const categoryDir = path.join(process.cwd(), `src/content/devlog/${category}`);
   const filePath = findMdxFile(categoryDir, id);
 

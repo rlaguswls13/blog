@@ -114,3 +114,49 @@ export function truncateMiddle(str: string, maxLength: number = 25): string {
   return str.substring(0, frontChars) + "..." + str.substring(str.length - backChars);
 }
 
+export function extractNotionText(richTextArray?: any[]): string {
+  if (!richTextArray || !Array.isArray(richTextArray)) return "";
+  return richTextArray
+    .map((item) => item?.plain_text || item?.text?.content || "")
+    .join("")
+    .trim();
+}
+
+export function normalizeEducationEntry(entry: any) {
+  if (!entry) return null;
+  const props = entry.properties || {};
+
+  const roundProp = props["회차"]?.rich_text;
+  const round = extractNotionText(roundProp) || entry.round || entry.title || "교육일지";
+
+  const dateProp = props["교육일"]?.date?.start;
+  const date = dateProp || entry.date || "";
+
+  const keywordsProp = props["키워드"]?.multi_select;
+  const keywords = Array.isArray(keywordsProp)
+    ? keywordsProp.map((ms: any) => ms.name)
+    : entry.keywords || entry.tags || [];
+
+  const impressionProp = props["느낀점"]?.rich_text;
+  const impression = extractNotionText(impressionProp) || entry.impression || entry.description || "";
+
+  const blogTitleProp = props["연습 코드"]?.title;
+  const blogTitle = extractNotionText(blogTitleProp) || entry.blogTitle || entry.title || "제목 없음";
+
+  const slug = entry.slug || entry.id?.replace(/-/g, "") || "";
+  const notionUrl = entry.notionUrl || (slug ? `https://notion.so/${slug}` : "");
+
+  return {
+    id: entry.id,
+    title: entry.title || blogTitle,
+    slug,
+    round,
+    date,
+    keywords,
+    impression,
+    blogTitle,
+    notionUrl,
+  };
+}
+
+

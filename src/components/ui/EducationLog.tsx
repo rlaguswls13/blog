@@ -1,19 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import educationData from "@/data/education.json";
+import { useMemo, useState } from "react";
+import educationData from "@/data/notion/education.json";
 import { CalendarIcon, RefreshIcon, BlogIcon, CommentIcon, CloseIcon, ClockIcon } from "@/components/ui/Icons";
 import { TagList } from "@/components/ui/TagBadge";
 import { Pagination } from "@/components/ui/Pagination";
+import { normalizeEducationEntry } from "@/lib/utils";
+import Link from "next/link";
 
 interface EducationEntry {
   id: string;
+  title: string;
   round: string;
   date: string;
   keywords: string[];
   impression: string;
   blogTitle: string;
   notionUrl: string;
+  slug: string;
 }
 
 interface EducationLogProps {
@@ -29,7 +33,13 @@ export function EducationLog({
   const [showSyncModal, setShowSyncModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const entries = educationData as EducationEntry[];
+  const entries = useMemo(() => {
+    if (!Array.isArray(educationData)) return [];
+    return (educationData as any[])
+      .map((item) => normalizeEducationEntry(item))
+      .filter((item): item is EducationEntry => item !== null);
+  }, []);
+
   const totalPages = Math.ceil(entries.length / itemsPerPage);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -195,7 +205,7 @@ export function EducationLog({
                 <h4><ClockIcon /> 1시간 단위 자동 동기화</h4>
                 <p>
                   보안 강화를 위해 Notion API 토큰을 소스코드와 브라우저에 직접 노출하지 않고 환경 변수로 관리하고 있습니다.
-                  대신 <strong>GitHub Actions 스케줄러가 1시간마다 자동으로 실행</strong>되어 노션의 최신 내용을 가져와 사이트를 업데이트합니다.
+                  대신 <strong>GitHub Actions 스케줄러가 자동으로 실행</strong>되어 노션의 최신 내용을 가져와 사이트를 업데이트합니다.
                 </p>
               </div>
 

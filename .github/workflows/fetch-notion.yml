@@ -49,10 +49,21 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       # 4. 노션 데이터 동적 Fetch 및 실시간 저장 (src/data/education.json 생성)
+      - name: Restore Notion Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache/notion
+            public/notion-assets
+            src/content/generated
+          key: notion-v1-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            notion-v1-${{ runner.os }}-
       - name: Fetch Notion Data
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_PAGE_ID: ${{ secrets.NOTION_PAGE_ID }}
+          NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run fetch-notion
 
       # 5. 프로젝트 빌드 (위에서 생성된 education.json을 포함하여 빌드됨)

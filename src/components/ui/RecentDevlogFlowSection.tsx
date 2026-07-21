@@ -3,10 +3,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import devlogData from "@/data/devlog.json";
-import educationData from "@/data/education.json";
+import educationData from "@/data/notion/education.json";
+import blogData from "@/data/notion/blog.json";
 import type { DevlogEntry, DevlogCategory } from "@/types";
 import { TagList } from "@/components/ui/TagBadge";
 import { BlogIcon, CalendarIcon, CloseIcon, CommentIcon } from "@/components/ui/Icons";
+
+import { normalizeEducationEntry } from "@/lib/utils";
 
 type FlowItem = {
   id: string;
@@ -27,21 +30,12 @@ type FlowSection = {
   items: FlowItem[];
 };
 
-type EducationItem = {
-  id: string;
-  round?: string;
-  date: string;
-  keywords?: string[];
-  impression?: string;
-  blogTitle?: string;
-  notionUrl?: string;
-};
-
-const DEVLOG_TAB_ORDER: { key: DevlogCategory | "education_log"; label: string }[] = [
+const DEVLOG_TAB_ORDER: { key: DevlogCategory | "education_log" | "blog"; label: string }[] = [
   { key: "tech_study", label: "기술 학습 기록" },
   { key: "problem_solving", label: "문제 해결 기록" },
   { key: "competition_event", label: "대회/행사" },
   { key: "education_log", label: "교육일지" },
+  { key: "blog", label: "블로그" },
 ];
 
 const CARDS_PER_VIEW = 3;
@@ -83,10 +77,12 @@ function chunkArray<T>(items: T[], chunkSize: number): T[][] {
 
 function normalizeDevlogSections(): FlowSection[] {
   const devlogMap = devlogData as Record<DevlogCategory, DevlogEntry[]>;
-  const education = (educationData as EducationItem[])
+  const rawEduList = Array.isArray(educationData) ? (educationData as any[]) : [];
+  const education = rawEduList
+    .map((rawItem) => normalizeEducationEntry(rawItem))
+    .filter((entry): entry is NonNullable<ReturnType<typeof normalizeEducationEntry>> => entry !== null)
     .map((entry) => {
-      const rawSummary =
-        entry.impression?.trim() || entry.blogTitle?.trim() || "작성중";
+      const rawSummary = entry.impression?.trim() || entry.blogTitle?.trim() || "작성중";
 
       return {
         id: entry.id,
@@ -103,6 +99,21 @@ function normalizeDevlogSections(): FlowSection[] {
     })
     .sort((a, b) => parseFlexibleDate(b.date) - parseFlexibleDate(a.date));
 
+  const mapNotionData = (rawData: any, category: string) => {
+    return (Array.isArray(rawData) ? rawData : []).map((item: any) => {
+      const desc = item.properties?.["느낀점"]?.rich_text?.[0]?.plain_text || 
+                   item.properties?.["요약"]?.rich_text?.[0]?.plain_text ||
+                   "작성된 내용이 없습니다.";
+      return {
+        id: item.slug || item.id,
+        title: item.title,
+        date: item.date || item.lastEditedTime?.split("T")[0] || "",
+        description: truncateText(desc, 50),
+        href: `/devlog/${category}/${item.slug || item.id}`,
+      };
+    }).sort((a, b) => parseFlexibleDate(b.date) - parseFlexibleDate(a.date));
+  };
+
   const sections = DEVLOG_TAB_ORDER.map(({ key, label }) => {
     if (key === "education_log") {
       return {
@@ -111,13 +122,16 @@ function normalizeDevlogSections(): FlowSection[] {
         items: education,
       };
     }
+    if (key === "blog") {
+      return { key, label, items: mapNotionData(blogData, "blog") };
+    }
 
-    const list = (devlogMap[key] || [])
+    const list = (devlogMap[key as DevlogCategory] || [])
       .map((entry) => ({
         id: entry.id,
         title: entry.title,
-        date: entry.date,
-        description: entry.description,
+        date: entry.date || "",
+        description: entry.description || "",
         href: `/devlog/${key}/${entry.id}`,
       }))
       .sort((a, b) => parseFlexibleDate(b.date) - parseFlexibleDate(a.date));

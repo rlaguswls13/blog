@@ -68,10 +68,21 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Restore Notion Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache/notion
+            public/notion-assets
+            src/content/generated
+          key: notion-v1-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            notion-v1-${{ runner.os }}-
       - name: Fetch Notion Data
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_PAGE_ID: ${{ secrets.NOTION_PAGE_ID }}
+          NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run fetch-notion
       - name: Build with Next.js
         env:

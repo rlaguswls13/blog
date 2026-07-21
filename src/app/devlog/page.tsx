@@ -11,8 +11,9 @@ import Link from "next/link";
 import { Pagination } from "@/components/ui/Pagination";
 import { useSearchParams, useRouter } from "next/navigation";
 import type { DevlogCategory, DevlogEntry } from "@/types";
-
-type TabKey = DevlogCategory | "education_log";
+import educationData from "@/data/notion/education.json";
+import blogData from "@/data/notion/blog.json";
+type TabKey = DevlogCategory | "education_log" | "blog";
 
 function DevlogContent() {
   const searchParams = useSearchParams();
@@ -23,9 +24,10 @@ function DevlogContent() {
     { key: "problem_solving", label: "문제 해결 기록" },
     { key: "competition_event", label: "대회/행사" },
     { key: "education_log", label: "교육일지" },
+    { key: "blog", label: "블로그" },
   ];
 
-  const initialTab = searchParams.get("tab") || tabs.find(t => t.key !== "education_log" && (devlogData[t.key as DevlogCategory]?.length || 0) > 0)?.key || tabs[0].key;
+  const initialTab = searchParams.get("tab") || tabs[0].key;
   const initialPkg = searchParams.get("pkg") || "All";
   const initialSearch = searchParams.get("q") || "";
   const initialPage = parseInt(searchParams.get("page") || "1", 10);
@@ -48,9 +50,28 @@ function DevlogContent() {
     }
   }, [activeTab, activePkg, searchQuery, currentPage, router, searchParams]);
 
-  const allEntries = activeTab === "education_log"
-    ? []
-    : sortByDateDesc(devlogData[activeTab as DevlogCategory] as DevlogEntry[]);
+  const allEntries = useMemo(() => {
+    let entries: DevlogEntry[] = [];
+    if (activeTab === "education_log") {
+      return [];
+    }
+    
+    if (activeTab === "blog") {
+      entries = (Array.isArray(blogData) ? blogData : []).map((item: any) => ({
+        id: item.slug || item.id,
+        title: item.title,
+        date: item.date || item.lastEditedTime?.split("T")[0] || "",
+        description: item.properties?.["느낀점"]?.rich_text?.[0]?.plain_text || 
+                     item.properties?.["요약"]?.rich_text?.[0]?.plain_text ||
+                     "작성된 내용이 없습니다.",
+        tags: item.tags || (item.properties?.["키워드"]?.multi_select?.map((ms: any) => ms.name) || []),
+        package: item.category || activeTab
+      }));
+    } else {
+      entries = devlogData[activeTab as DevlogCategory] as DevlogEntry[] || [];
+    }
+    return sortByDateDesc(entries);
+  }, [activeTab]);
   
   // Extract unique packages
   const packages = useMemo(() => {

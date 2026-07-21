@@ -127,3 +127,16 @@ export interface ContactData {
     links: ContactLink[];
   };
 }
+
+// ===== Notion Types =====
+export interface NotionIndexItem {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  tags?: string[];
+  date?: string;
+  lastEditedTime?: string;
+  coverImage?: string | null;
+  icon?: string | null;
+}
