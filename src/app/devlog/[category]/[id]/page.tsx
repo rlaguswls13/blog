@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { isValidElement, type ComponentPropsWithoutRef } from "react";
 import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
@@ -33,9 +34,11 @@ import { NotionCallout } from "@/components/ui/notion/NotionCallout";
 import { NotionDivider } from "@/components/ui/notion/NotionDivider";
 import { NotionIndent } from "@/components/ui/notion/NotionIndent";
 import { NotionCode } from "@/components/ui/notion/NotionCode";
-import devlogData from "@/data/devlog.json";
-import { sortByDateDesc } from "@/lib/utils";
-import type { DevlogEntry, DevlogCategory } from "@/types";
+import { GiscusComments } from "@/components/ui/GiscusComments";
+
+type PrettyCodeFigureProps = ComponentPropsWithoutRef<"figure"> & {
+  "data-rehype-pretty-code-figure"?: string;
+};
 
 const components = {
   G1GCMemory,
@@ -64,9 +67,11 @@ const components = {
   NotionCallout,
   NotionDivider,
   NotionIndent,
-  figure: (props: any) => {
+  figure: (props: PrettyCodeFigureProps) => {
     if (props["data-rehype-pretty-code-figure"] !== undefined) {
-      const language = props.children?.props?.["data-language"] || "text";
+      const language = isValidElement<{ "data-language"?: string }>(props.children)
+        ? props.children.props["data-language"] || "text"
+        : "text";
       return <NotionCode language={language}>{props.children}</NotionCode>;
     }
     return <figure {...props} />;
@@ -149,7 +154,7 @@ export default async function DevlogDetailPage({
   const { data, content } = matter(fileContent);
 
   return (
-    <>
+    <article className="detail-content-page devlog-detail-page">
       <DevlogBackLink category={category} />
       <header className="detail-page-heading project-card" style={{ marginBottom: "40px" }}>
         <span className="page-heading-eyebrow">DEVLOG · {category.replaceAll("_", " ")}</span>
@@ -181,6 +186,7 @@ export default async function DevlogDetailPage({
           }}
         />
       </div>
-    </>
+      <GiscusComments />
+    </article>
   );
 }

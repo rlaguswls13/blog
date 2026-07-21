@@ -50,7 +50,7 @@ export default function ContactPage() {
             gap: "10px",
             padding: "15px 30px",
             backgroundColor: "var(--accent-primary)",
-            color: "white",
+            color: "var(--text-on-accent)",
             borderRadius: "30px",
             fontWeight: 700,
             textDecoration: "none",
@@ -92,7 +92,7 @@ export default function ContactPage() {
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.backgroundColor = "var(--accent-primary)";
-                e.currentTarget.style.color = "white";
+                e.currentTarget.style.color = "var(--text-on-accent)";
               }}
               onMouseOut={(e) => {
                 e.currentTarget.style.backgroundColor = "var(--bg-tertiary)";

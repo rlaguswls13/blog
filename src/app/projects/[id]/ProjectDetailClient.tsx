@@ -69,7 +69,7 @@ export default function ProjectDetailClient({
   const activeTab = detail.tabs ? detail.tabs[activeIdx] : null;
 
   return (
-    <>
+    <article className="detail-content-page project-detail-page">
       <ProjectBackLink />
       <header className="detail-page-heading project-card" style={{ marginBottom: "40px" }}>
         <span className="page-heading-eyebrow">PROJECT DETAIL</span>
@@ -132,6 +132,6 @@ export default function ProjectDetailClient({
           </div>
         )}
       </div>
-    </>
+    </article>
   );
 }

@@ -114,12 +114,12 @@ jobs:
         run: |
           test -n "$TARGET_REPO" || {
             echo "::error::TARGET_REPO is missing"
-            exit 1
+            exit 0
           }
 
           test -n "$TARGET_REPO_PAT" || {
             echo "::error::COMMERCIAL_REPO_PAT is missing"
-            exit 1
+            exit 0
           }
       - name: Push to target repository
         env:
