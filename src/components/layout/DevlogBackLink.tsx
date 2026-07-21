@@ -11,7 +11,10 @@ function DevlogBackLinkInner({ category }: { category: string }) {
   const q = searchParams.get("q") || "";
   
   const qParam = q ? `&q=${encodeURIComponent(q)}` : "";
-  const href = `/devlog?tab=${category}&pkg=${pkg}${qParam}&page=${page}`;
+  const isJournal = category === "education" || category === "blog";
+  const href = isJournal
+    ? `/devlog?tab=journal&journal=${category}&pkg=${pkg}${qParam}&page=${page}`
+    : `/devlog?tab=${category}&pkg=${pkg}${qParam}&page=${page}`;
   
   return (
     <Link href={href} className="back-link">
@@ -21,8 +24,11 @@ function DevlogBackLinkInner({ category }: { category: string }) {
 }
 
 export function DevlogBackLink({ category }: { category: string }) {
+  const fallbackHref = category === "education" || category === "blog"
+    ? `/devlog?tab=journal&journal=${category}`
+    : `/devlog?tab=${category}`;
   return (
-    <Suspense fallback={<Link href={`/devlog?tab=${category}`} className="back-link">← 목록으로</Link>}>
+    <Suspense fallback={<Link href={fallbackHref} className="back-link">← 목록으로</Link>}>
       <DevlogBackLinkInner category={category} />
     </Suspense>
   );

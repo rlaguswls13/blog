@@ -3,12 +3,19 @@ import contactData from "@/data/contact.json";
 import Image from "next/image";
 import { GithubIcon, PhoneIcon, MailIcon } from "@/components/ui/Icons";
 import contactPicture from "../../../public/images/2022_picture.jpg";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 export default function ContactPage() {
   const { contact } = contactData;
 
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+    <div className="contact-page">
+      <PageHeader
+        eyebrow="GET IN TOUCH"
+        title="함께 이야기해요"
+        description="프로젝트와 기술, 새로운 기회에 관한 이야기를 기다리고 있습니다."
+        marker="05"
+      />
       <div className="project-card" style={{ padding: "50px", textAlign: "center" }}>
         <div
           style={{
@@ -29,8 +36,8 @@ export default function ContactPage() {
           />
         </div>
 
-        <div className="page-title" style={{ borderBottom: "none", paddingBottom: 0 }}>Contact Me</div>
-        <p style={{ fontSize: "1.1rem", color: "var(--text-secondary)", marginBottom: "40px" }}>
+        <div className="section-title">연락처</div>
+        <p className="contact-intro">
           {contact.intro}
         </p>
 
@@ -45,7 +52,6 @@ export default function ContactPage() {
             backgroundColor: "var(--accent-primary)",
             color: "white",
             borderRadius: "30px",
-            fontSize: "1.2rem",
             fontWeight: 700,
             textDecoration: "none",
             marginBottom: "40px",

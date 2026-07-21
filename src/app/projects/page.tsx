@@ -9,6 +9,7 @@ import { CalendarIcon, SearchIcon } from "@/components/ui/Icons";
 import type { Project } from "@/types";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useEffect, useMemo } from "react";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 function ProjectsContent() {
   const searchParams = useSearchParams();
@@ -79,12 +80,12 @@ function ProjectsContent() {
 
   return (
     <>
-      <header>
-        <h1 className="page-title">작업</h1>
-        <p style={{ color: "var(--text-secondary)", marginTop: "-15px", marginBottom: "40px" }}>
-          {activeTab === "enterprise" ? "참여한 주요 엔터프라이즈 작업 목록입니다." : "개인적으로 진행한 개인 작업 목록입니다."}
-        </p>
-      </header>
+      <PageHeader
+        eyebrow="SELECTED WORK"
+        title="작업과 해결 과정"
+        description={activeTab === "enterprise" ? "참여한 주요 엔터프라이즈 작업과 담당 역할을 소개합니다." : "직접 기획하고 구현한 개인 작업을 소개합니다."}
+        marker="02"
+      />
 
       <div className="devlog-container">
         <div className="devlog-layout" style={{ marginTop: "30px" }}>

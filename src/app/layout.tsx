@@ -7,7 +7,7 @@ import "./globals.css";
 const adsenseAccount = process.env.ADSENSE_ACCOUNT;
 
 export const metadata: Metadata = {
-  title: "김현진 블로그",
+  title: "김현진 | TECH LOG",
   description:
     "Java & Spring Boot 기반 풀스택 개발자 김현진의 포트폴리오입니다.",
   ...(adsenseAccount ? { other: { "google-adsense-account": adsenseAccount } } : {}),
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" suppressHydrationWarning className="theme-dark">
+    <html lang="ko" suppressHydrationWarning className="theme-light">
       <body>
         <ThemeProvider>
           <div className="container">

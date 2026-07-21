@@ -2,11 +2,12 @@
 
 import { useMemo, useState } from "react";
 import educationData from "@/data/notion/education.json";
-import { CalendarIcon, RefreshIcon, BlogIcon, CommentIcon, CloseIcon, ClockIcon } from "@/components/ui/Icons";
+import { CalendarIcon, BlogIcon, CommentIcon, CloseIcon } from "@/components/ui/Icons";
 import { TagList } from "@/components/ui/TagBadge";
 import { Pagination } from "@/components/ui/Pagination";
-import { normalizeEducationEntry } from "@/lib/utils";
+import { normalizeEducationEntry, sortByDateDesc } from "@/lib/utils";
 import Link from "next/link";
+import { JournalSectionHeader } from "@/components/ui/JournalSectionHeader";
 
 interface EducationEntry {
   id: string;
@@ -23,28 +24,42 @@ interface EducationEntry {
 interface EducationLogProps {
   itemsPerPage?: number;
   maxPageButtons?: number;
+  searchQuery?: string;
 }
 
 export function EducationLog({
   itemsPerPage = 9,
   maxPageButtons = 5,
+  searchQuery = "",
 }: EducationLogProps) {
   const [selectedEntry, setSelectedEntry] = useState<EducationEntry | null>(null);
-  const [showSyncModal, setShowSyncModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   const entries = useMemo(() => {
     if (!Array.isArray(educationData)) return [];
-    return (educationData as any[])
+    const normalizedEntries = (educationData as unknown[])
       .map((item) => normalizeEducationEntry(item))
       .filter((item): item is EducationEntry => item !== null);
+    return sortByDateDesc(normalizedEntries);
   }, []);
 
-  const totalPages = Math.ceil(entries.length / itemsPerPage);
+  const filteredEntries = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return entries;
+    return entries.filter((entry) =>
+      entry.title.toLowerCase().includes(query)
+      || entry.blogTitle.toLowerCase().includes(query)
+      || entry.round.toLowerCase().includes(query)
+      || entry.impression.toLowerCase().includes(query)
+      || entry.keywords.some((keyword) => keyword.toLowerCase().includes(query)),
+    );
+  }, [entries, searchQuery]);
+
+  const totalPages = Math.ceil(filteredEntries.length / itemsPerPage);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentEntries = entries.slice(indexOfFirstItem, indexOfLastItem);
+  const currentEntries = filteredEntries.slice(indexOfFirstItem, indexOfLastItem);
 
 
   const formatDate = (dateStr: string) => {
@@ -60,15 +75,7 @@ export function EducationLog({
 
   return (
     <>
-      <div className="education-list-header">
-        <div className="section-title" style={{ margin: 0 }}>교육일지 목록</div>
-        <button
-          onClick={() => setShowSyncModal(true)}
-          className="sync-button"
-        >
-          <RefreshIcon /> 동기화 안내
-        </button>
-      </div>
+      <JournalSectionHeader categoryKey="education" title="교육일지" count={filteredEntries.length} />
 
       <div className="devlog-grid">
         {currentEntries.map((entry) => (
@@ -100,7 +107,7 @@ export function EducationLog({
 
             {entry.slug && (
               <Link
-                href={`/devlog/education/${entry.slug}?tab=education_log`}
+                href={`/devlog/education/${entry.slug}?tab=journal&journal=education`}
                 className="education-blog-link"
                 onClick={(e) => e.stopPropagation()}
               >
@@ -110,6 +117,10 @@ export function EducationLog({
           </div>
         ))}
       </div>
+
+      {currentEntries.length === 0 && (
+        <div className="devlog-empty-state">검색 조건에 맞는 교육일지가 없습니다.</div>
+      )}
 
       {/* Pagination */}
       <Pagination
@@ -161,54 +172,12 @@ export function EducationLog({
 
             {selectedEntry.slug && (
               <Link
-                href={`/devlog/education/${selectedEntry.slug}?tab=education_log`}
+                href={`/devlog/education/${selectedEntry.slug}?tab=journal&journal=education`}
                 className="education-blog-link"
               >
                 <BlogIcon /> 상세내용 ↗
               </Link>
             )}
-          </div>
-        </div>
-      )}
-
-      {/* Sync Info Modal */}
-      {showSyncModal && (
-        <div
-          className="education-modal-overlay"
-          onClick={() => setShowSyncModal(false)}
-        >
-          <div
-            className="education-modal education-sync-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-             <button
-              className="education-modal-close"
-              onClick={() => setShowSyncModal(false)}
-            >
-              <CloseIcon />
-            </button>
-
-            <div className="section-title education-sync-modal-title">
-              <RefreshIcon style={{ color: "var(--accent-primary)" }} /> Notion 교육일지 동기화 안내
-            </div>
-
-            <div className="education-sync-modal-body">
-              <p style={{ marginBottom: "12px" }}>
-                현재 포트폴리오 웹사이트는 <strong>GitHub Pages 정적 호스팅</strong>으로 안전하고 빠르게 운영되고 있습니다.
-              </p>
-
-              <div className="education-sync-info-box">
-                <h4><ClockIcon /> 1시간 단위 자동 동기화</h4>
-                <p>
-                  보안 강화를 위해 Notion API 토큰을 소스코드와 브라우저에 직접 노출하지 않고 환경 변수로 관리하고 있습니다.
-                  대신 <strong>GitHub Actions 스케줄러가 자동으로 실행</strong>되어 노션의 최신 내용을 가져와 사이트를 업데이트합니다.
-                </p>
-              </div>
-
-              <p>
-                노션에 작성한 글은 1시간 단위 자동 빌드 스케줄러에 의해 자동으로 사이트에 반영됩니다.
-              </p>
-            </div>
           </div>
         </div>
       )}

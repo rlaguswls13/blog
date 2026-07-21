@@ -1,13 +1,20 @@
 import resumeData from "@/data/resume.json";
 import { TimelineItem } from "@/components/ui/Timeline";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 export default function ResumePage() {
   const { resume } = resumeData;
 
   return (
     <>
+      <PageHeader
+        eyebrow="CAREER JOURNEY"
+        title="경력과 성장의 기록"
+        description="맡아온 역할과 기술적 성장 과정을 시간의 흐름에 따라 정리했습니다."
+        marker="04"
+      />
       <div className="project-card" style={{ marginBottom: "40px", padding: "40px" }}>
-        <h1 className="page-title">경력 요약</h1>
+        <div className="section-title">경력 요약</div>
         <div style={{ marginTop: "30px" }}>
           {resume.work.map((item, idx) => (
             <TimelineItem

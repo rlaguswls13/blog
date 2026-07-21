@@ -7,19 +7,19 @@ export function parseDate(dateStr: string): Date | null {
   const cleanStr = dateStr.trim();
   if (cleanStr === "현재") return new Date();
 
-  const parts = cleanStr.split(".");
-  if (parts.length === 3) {
-    const year = parseInt(parts[0]);
-    const month = parseInt(parts[1]) - 1;
-    const day = parseInt(parts[2]);
-    return new Date(year, month, day);
+  const match = cleanStr.match(/^(\d{4})(?:[.\-/](\d{1,2}))?(?:[.\-/](\d{1,2}))?/);
+  if (!match) return null;
+
+  const year = Number(match[1]);
+  const month = Number(match[2] || 1);
+  const day = Number(match[3] || 1);
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+
+  const parsed = new Date(year, month - 1, day);
+  if (parsed.getFullYear() !== year || parsed.getMonth() !== month - 1 || parsed.getDate() !== day) {
+    return null;
   }
-  if (parts.length === 2) {
-    const year = parseInt(parts[0]);
-    const month = parseInt(parts[1]) - 1;
-    return new Date(year, month);
-  }
-  return null;
+  return parsed;
 }
 
 export function formatPeriods(periods: string[]): string {

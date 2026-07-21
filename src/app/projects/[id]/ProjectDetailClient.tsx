@@ -71,13 +71,14 @@ export default function ProjectDetailClient({
   return (
     <>
       <ProjectBackLink />
-      <div className="project-card" style={{ marginBottom: "40px" }}>
-        <div className="page-title">{meta.title}</div>
+      <header className="detail-page-heading project-card" style={{ marginBottom: "40px" }}>
+        <span className="page-heading-eyebrow">PROJECT DETAIL</span>
+        <h1 className="page-title">{meta.title}</h1>
         <p className="project-period">
           <CalendarIcon /> {formatPeriods(meta.periods)}
         </p>
         <TagList tags={meta.tags} />
-      </div>
+      </header>
 
       <div className="mdx-content">
         <div className="section-title">프로젝트 개요</div>

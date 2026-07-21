@@ -83,6 +83,24 @@ function parseNotionSources() {
   return uniqueSources;
 }
 
+function syncJournalCategoryConfig(sources) {
+  const labelMap = {
+    education: "교육일지",
+    blog: "개인일지",
+  };
+  const categories = [...new Set(sources.map((source) => source.category))]
+    .filter(Boolean)
+    .map((key) => ({
+      key,
+      label: labelMap[key] || `${key} 일지`,
+    }));
+
+  if (categories.length === 0) return;
+
+  const outputPath = path.join(process.cwd(), "src", "data", "journal-categories.json");
+  fs.writeFileSync(outputPath, `${JSON.stringify(categories, null, 2)}\n`, "utf8");
+}
+
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const FORCE_FULL_SYNC = process.env.NOTION_FORCE_FULL_SYNC === "true";
 
@@ -101,6 +119,7 @@ async function main() {
   }
 
   const sources = parseNotionSources();
+  syncJournalCategoryConfig(sources);
   console.log(`Parsed ${sources.length} Notion source(s):`, sources);
 
   const client = new NotionClient(NOTION_TOKEN);

@@ -151,15 +151,16 @@ export default async function DevlogDetailPage({
   return (
     <>
       <DevlogBackLink category={category} />
-      <div className="project-card" style={{ marginBottom: "40px" }}>
+      <header className="detail-page-heading project-card" style={{ marginBottom: "40px" }}>
+        <span className="page-heading-eyebrow">DEVLOG · {category.replaceAll("_", " ")}</span>
         <div className="devlog-meta" style={{ marginBottom: "15px" }}>
-          <span>📅 {data.date}</span>
+          <span><CalendarIcon /> {data.date}</span>
         </div>
-        <div className="page-title" style={{ borderBottom: "none", paddingBottom: 0, marginBottom: "15px" }}>
+        <h1 className="page-title">
           {data.title}
-        </div>
+        </h1>
         {data.tags && <TagList tags={data.tags} />}
-      </div>
+      </header>
 
       <div className="mdx-content">
         <MDXRemote

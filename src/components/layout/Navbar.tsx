@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
-  { href: "/", label: "About" },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/devlog", label: "Devlog" },
   { href: "/blog", label: "Resume" },
@@ -14,17 +15,11 @@ const navItems = [
 export function Navbar() {
   const pathname = usePathname();
 
-  const getActiveLabel = () => {
-    const match = navItems.find((item) => {
-      if (item.href === "/") return pathname === "/";
-      return pathname.startsWith(item.href);
-    });
-    return match?.label || "My Portfolio";
-  };
-
   return (
-    <nav>
-      <div className="nav-brand">{getActiveLabel()}</div>
+    <nav aria-label="주 메뉴">
+      <Link href="/" className="nav-brand" aria-label="TECH LOG KHJ 홈">
+        <span className="nav-brand-tech">TECH</span> LOG <span className="nav-brand-signature">&lt;KHJ/&gt;</span>
+      </Link>
       <div className="nav-links">
         {navItems.map((item) => {
           const isActive =

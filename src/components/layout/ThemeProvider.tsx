@@ -11,19 +11,16 @@ type Theme = (typeof THEMES)[number];
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
     const stored = localStorage.getItem("theme") as Theme | null;
-    const system = window.matchMedia("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark";
-    const resolved = stored && THEMES.includes(stored) ? stored : system;
+    const resolved = stored && THEMES.includes(stored) ? stored : "light";
     // Class-based theme switching: remove all theme classes, add the resolved one
     THEMES.forEach((t) => document.documentElement.classList.remove(`theme-${t}`));
     document.documentElement.classList.add(`theme-${resolved}`);
-    setTheme(resolved as Theme);
     setTimeout(() => {
+      setTheme(resolved as Theme);
       setMounted(true);
     }, 0);
   }, []);
@@ -48,9 +45,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       <button
         className="theme-toggle"
         onClick={toggleTheme}
-        aria-label="Toggle Theme"
+        aria-label={theme === "light" ? "다크 테마로 전환" : "라이트 테마로 전환"}
+        title={theme === "light" ? "다크 테마" : "라이트 테마"}
       >
-        {theme === "light" ? "☀️" : "🌙"}
+        {theme === "light" ? "☾" : "☀"}
       </button>
     </>
   );
