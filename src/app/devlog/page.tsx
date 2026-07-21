@@ -12,7 +12,7 @@ import { Pagination } from "@/components/ui/Pagination";
 import { useSearchParams, useRouter } from "next/navigation";
 import type { DevlogCategory, DevlogEntry } from "@/types";
 import educationData from "@/data/notion/education.json";
-import blogData from "@/data/notion/blog.json";
+
 type TabKey = DevlogCategory | "education_log" | "blog";
 
 function DevlogContent() {
@@ -56,20 +56,7 @@ function DevlogContent() {
       return [];
     }
     
-    if (activeTab === "blog") {
-      entries = (Array.isArray(blogData) ? blogData : []).map((item: any) => ({
-        id: item.slug || item.id,
-        title: item.title,
-        date: item.date || item.lastEditedTime?.split("T")[0] || "",
-        description: item.properties?.["느낀점"]?.rich_text?.[0]?.plain_text || 
-                     item.properties?.["요약"]?.rich_text?.[0]?.plain_text ||
-                     "작성된 내용이 없습니다.",
-        tags: item.tags || (item.properties?.["키워드"]?.multi_select?.map((ms: any) => ms.name) || []),
-        package: item.category || activeTab
-      }));
-    } else {
-      entries = devlogData[activeTab as DevlogCategory] as DevlogEntry[] || [];
-    }
+    entries = devlogData[activeTab as DevlogCategory] as DevlogEntry[] || [];
     return sortByDateDesc(entries);
   }, [activeTab]);
   

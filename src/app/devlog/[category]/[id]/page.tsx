@@ -26,6 +26,13 @@ import { K8sSecurityDiagram } from "@/components/diagrams/devlog/container/K8sSe
 import { CodePopup } from "@/components/layout/CodePopup";
 import { Collapsible } from "@/components/ui/Collapsible";
 import { MdxImageFigure } from "@/components/ui/MdxImageFigure";
+import { NotionImage } from "@/components/ui/notion/NotionImage";
+import { NotionTable } from "@/components/ui/notion/NotionTable";
+import { NotionToggle } from "@/components/ui/notion/NotionToggle";
+import { NotionCallout } from "@/components/ui/notion/NotionCallout";
+import { NotionDivider } from "@/components/ui/notion/NotionDivider";
+import { NotionIndent } from "@/components/ui/notion/NotionIndent";
+import { NotionCode } from "@/components/ui/notion/NotionCode";
 import devlogData from "@/data/devlog.json";
 import { sortByDateDesc } from "@/lib/utils";
 import type { DevlogEntry, DevlogCategory } from "@/types";
@@ -51,6 +58,19 @@ const components = {
   CodePopup,
   Collapsible,
   MdxImageFigure,
+  NotionImage,
+  NotionTable,
+  NotionToggle,
+  NotionCallout,
+  NotionDivider,
+  NotionIndent,
+  figure: (props: any) => {
+    if (props["data-rehype-pretty-code-figure"] !== undefined) {
+      const language = props.children?.props?.["data-language"] || "text";
+      return <NotionCode language={language}>{props.children}</NotionCode>;
+    }
+    return <figure {...props} />;
+  },
 };
 
 function getAllMdxFiles(dir: string): string[] {
@@ -87,7 +107,7 @@ function findMdxFile(dir: string, id: string): string | null {
 
 export async function generateStaticParams() {
   const contentDir = path.join(process.cwd(), "src/content/devlog");
-  const categories = ["tech_study", "problem_solving", "competition_event"];
+  const categories = ["tech_study", "problem_solving", "competition_event", "blog", "education"];
   const params: { category: string; id: string }[] = [];
 
   for (const category of categories) {

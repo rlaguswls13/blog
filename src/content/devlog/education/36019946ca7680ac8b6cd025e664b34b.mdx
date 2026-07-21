@@ -1,0 +1,252 @@
+---
+title: "Java 제어문과 코드 구조의 진화: 기초부터 확장성까지"
+date: "2026-06-01"
+tags: ["조건문", "반복문", "분기", "확장성"]
+---
+
+Java 프로그래밍의 핵심은 **흐름을 제어하는 제어문과 이를 얼마나 효율적으로 관리**하느냐에 달려 있습니다. 
+
+이번 포스팅에서는 조건문과 반복문의 기초를 실생활 비유로 풀이하고, Java 8에서 17로 이어지는 Switch 문의 진화와 코드 확장성을 고려한 설계 방식을 분석
+
+<NotionDivider />
+
+
+<NotionToggle title="1. 조건문: 상황에 따른 의사결정의 기술" level="3">
+
+조건문은 프로그램이 특정 상황에 맞춰 다른 동작을 수행하도록 만드는 분기점입니다.
+
+### if 문 (만약 ~라면)
+
+- **비유:** 식당에서 메뉴를 고를 때 '내 지갑에 1만원 이상이 있다면 돈가스를 먹고, 그렇지 않으면 김밥을 먹는다'는 판단 과정과 같습니다.
+- **특징:** 조건의 결과가 참(true) 또는 거짓(false)인 경우에 사용하며, 복잡한 범위 조건이나 여러 논리 연산이 필요할 때 유리합니다.
+
+### switch 문 (사전의 index _ 책갈피 역할)
+
+- **비유:** 백화점 엘리베이터 **층별 안내도**와 같습니다. '3층은 의류, 4층은 가전'처럼 정해진 값에 따라 바로 목적지를 찾아갑니다.
+- **특징:** 특정 변수의 값에 따라 **실행 위치를 결정하며, 가독성**이 높습니다.
+
+
+</NotionToggle>
+
+<NotionDivider />
+
+
+<NotionToggle title="2. 반복문: 효율적인 작업의 반복" level="3">
+
+반복문은 동일하거나 **유사한 작업을 여러 번 수행해야 할 때 코드를 비약적으로 줄여줍니다.**
+
+### for 문 (정해진 횟수만큼)
+
+- **비유:** 운동장을 10바퀴 돌기로 계획하고 한 바퀴를 돌 때마다 숫자를 세는 것과 같습니다.
+- **특징:** 반복 횟수가 명확할 때 사용하며 초기화, 조건식, 증감식을 한 줄에 작성하여 관리가 용이합니다.
+
+### while 문 (조건이 만족 될 때까지)
+
+- **비유:** 배가 부를 때까지 계속해서 음식을 먹는 것과 같습니다. 언제 끝날지는 모르지만 '배가 부르다'는 조건이 충족되면 멈춥니다.
+- **특징:** 반복 횟수가 불명확하고 특정 조건의 만족 여부가 중요할 때 사용합니다.
+
+### do-while 문 (일단 실행하고 조건은 나중에 확인)
+
+- **비유:** 일단 물건을 한 번 사용해보고, 마음에 들면 계속 사용하는 것과 같습니다.
+- **특징:** 조건과 상관없이 최소한 한 번은 반드시 실행되어야 하는 로직에 사용합니다.
+
+
+<NotionToggle title="2-1)  실행 흐름의 정교한 제어 (break, continue, return)" level="3">
+
+분기문은 반복문이나 메서드의 실행 흐름을 강제로 바꾸는 역할을 합니다.
+
+- 비유: 마라톤을 하다가 부상을 당해 그 즉시 경기를 중단하고 코스를 빠져나오는 것과 같습니다.
+- 기능: switch 문이나 반복문(for, while) 내부에서 사용 시, 가장 가까운 블록을 즉시 종료하고 다음 코드로 이동합니다.
+
+- 비유: 대청소를 하던 중 설거지 차례가 왔을 때, 설거지만 나중에 하기로 하고 다음 청소 구역인 거실로 넘어가는 것과 같습니다.
+- 기능: 반복문의 현재 루프 실행을 중단하고, 증감식이나 조건식으로 즉시 이동하여 다음 반복을 수행합니다.
+
+- 비유: 배달원이 음식을 전달하고 배달 완료 보고를 한 뒤 해당 매장 업무에서 벗어나는 것과 같습니다.
+- 기능: 현재 실행 중인 메서드를 즉시 종료하고 호출한 곳으로 돌아갑니다. 반환 타입이 있는 경우 결과값을 함께 전달합니다.
+
+
+</NotionToggle>
+
+
+<NotionToggle title="2-1) Java 1.8 vs 17: Switch Expression의 진화" level="3">
+
+Java 버전이 올라감에 따라 제어문은 더욱 간결하고 안전한 형태로 발전했습니다. 특히 Switch 문의 변화는 코드의 가독성을 획기적으로 개선했습니다.
+
+- 각 case 마다 `break`를 명시해야 하며, 누락 시 다음 case가 실행되는 'fall-through' 위험이 있습니다.
+- 결과를 반환하기 위해 외부 변수를 선언하고 할당해야 합니다.
+
+- 화살표(`>`) 연산자를 사용하여 코드가 간결해졌으며 `break`를 생략할 수 있습니다.
+- Switch 문 자체가 값을 반환하는 식이 되어 변수에 직접 대입이 가능합니다.
+
+**비교 예시 코드:**
+
+
+```java
+// Java 8 방식
+String grade;
+switch (score / 10) {
+    case 10:
+    case 9:
+        grade = "A";
+        break;
+    default:
+        grade = "F";
+}
+
+// Java 17 방식 (Switch Expression)
+String grade = switch (score / 10) {
+    case 10, 9 -> "A";
+    default -> "F";
+};
+```
+
+
+</NotionToggle>
+
+
+</NotionToggle>
+
+<NotionDivider />
+
+
+<NotionToggle title="3. 객체 지향적 접근과 Scope를 통한 코드 확장" level="3">
+
+실무 환경에서는 단순히 제어문을 나열하는 것을 넘어, 로직을 메서드로 분리하고 변수의 유효 범위(Scope)를 제한하여 코드의 유지보수성을 높여야 합니다.
+
+### 메서드 분리를 통한 모듈화
+
+- 복잡한 조건 로직을 별도의 메서드(ex: `getGrade`, `getFeeByGroup`)로 분리하면 메인 로직의 흐름이 한눈에 들어옵니다.
+- 각 기능이 독립적이므로 향후 정책이 변경되어도 해당 메서드만 수정하면 됩니다.
+
+### Scope와 상수의 활용
+
+- `private static final`과 같은 상수를 활용하여 매직 넘버(의미를 알 수 없는 숫자)를 제거하고, 데이터의 오염을 방지합니다.
+
+### 실전 예시: 놀이공원 요금 계산 및 성적 처리 시스템
+
+아래 코드는 Switch Expression과 메서드 분리 기술이 적용된 통합 예제입니다.
+
+
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+public class JavaControlFlowMaster {
+
+    private static final int FEE_ADULT = 10000;
+    private static final int FEE_TEEN = 7000;
+    private static final int FEE_CHILD = 5000;
+    private static final double WEEKEND_DISCOUNT_RATE = 0.8;
+    private static final int ALL_SAME_BONUS = 10000;
+    private static final int TWO_SAME_BONUS = 1000;
+
+    public static void main(String[] args) {
+        try (Scanner sc = new Scanner(System.in)) {
+            // 실행을 원하는 기능을 주석 해제하여 테스트
+            // gradingMethod(sc);
+            // calculateDicePoints(sc);
+            // calculateFee(sc);
+        }
+    }
+
+    // 성적 산출 (Java 17 Switch Expression 활용)
+    private static void gradingMethod(Scanner sc) {
+        System.out.print("점수를 입력하세요: ");
+        int score = sc.nextInt();
+        System.out.printf("당신의 성적은 %s 입니다.\n", getGrade(score));
+    }
+
+    private static String getGrade(int score) {
+        // 분기 로직을 별도 메서드로 분리하여 가독성 확보
+        return switch (score / 10) {
+            case 10, 9 -> "A";
+            case 8 -> "B";
+            case 7 -> "C";
+            case 6 -> "D";
+            default -> "F";
+        };
+    }
+
+    // 주사위 포인트 계산 (조건문 및 배열 활용)
+    private static void calculateDicePoints(Scanner sc) {
+        System.out.print("주사위 눈 3개를 입력하세요 : ");
+        int[] dice = {sc.nextInt(), sc.nextInt(), sc.nextInt()};
+        Arrays.sort(dice); // 정렬을 통해 비교 로직 단순화
+        
+        int totalPoints = getScore(dice);
+        System.out.println("최종 포인트: " + totalPoints);
+    }
+
+    private static int getScore(int[] dice) {
+        // 다중 조건 처리를 위한 if-else 분기
+        if (dice[0] == dice[2]) {
+            return ALL_SAME_BONUS + dice[0] * 1000;
+        }       
+        if (dice[0] == dice[1] || dice[1] == dice[2]) {
+            return TWO_SAME_BONUS + dice[1] * 100;
+        }
+        return dice[2] * 100;
+    }
+
+    // 놀이공원 요금 계산 (확장성 있는 구조)
+    private static void calculateFee(Scanner sc) {
+        System.out.print("나이를 입력하세요 : ");
+        int age = sc.nextInt();
+        
+        System.out.print("요일을 입력하세요(월~일) : ");
+        String day = sc.next();
+        
+        // 기능별로 쪼개진 메서드 호출로 메인 흐름을 명확하게 유지
+        String group = getGroup(age);
+        int baseFee = getFeeByGroup(group);
+        boolean isWeekend = isWeekend(day);
+        int finalFee = applyDiscount(baseFee, isWeekend);
+
+        System.out.printf("%s 요금입니다. %s\n", group, isWeekend ? "(주말 20% 할인 적용)" : "");
+        System.out.printf("최종 요금은 %d원 입니다.\n", finalFee);
+    }
+
+    private static String getGroup(int age) {
+        if (age >= 19) return "성인";
+        if (age >= 13) return "청소년";
+        return "어린이";
+    }
+
+    private static int getFeeByGroup(String group) {
+        return switch (group) {
+            case "성인" -> FEE_ADULT;
+            case "청소년" -> FEE_TEEN;
+            default -> FEE_CHILD;
+        };
+    }
+
+    private static boolean isWeekend(String day) {
+        List<String> weekends = List.of("토", "일", "토요일", "일요일");
+        return weekends.contains(day);
+    }
+
+    private static int applyDiscount(int fee, boolean isWeekend) {
+        if (isWeekend) return (int) (fee * WEEKEND_DISCOUNT_RATE);
+        return fee;
+    }
+}
+```
+
+
+</NotionToggle>
+
+<NotionDivider />
+
+
+<NotionToggle title="결론: 왜 이런 구조가 중요한가요?" level="3">
+
+- **가독성:** Switch Expression을 사용하면 코드의 목적이 명확히 드러납니다.
+- **유지보수:** 로직이 메서드 단위로 분리되어 있어 수정 시 다른 코드에 미치는 영향이 최소화됩니다.
+- **안전성:** 변수의 Scope를 좁게 유지하고 상수를 사용함으로써 예기치 못한 값의 변경을 방지합니다.
+
+Java의 발전에 따라 제공되는 새로운 문법들을 적극적으로 활용하면, 더욱 견고하고 깔끔한 코드를 작성할 수 있습니다.
+
+
+</NotionToggle>
+

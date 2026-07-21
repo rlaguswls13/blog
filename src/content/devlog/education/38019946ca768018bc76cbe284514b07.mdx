@@ -1,0 +1,276 @@
+---
+title: "대고객 메시징 서비스 마케팅 이력관리"
+date: "2026-06-19"
+tags: ["SQL 실용문제"]
+---
+
+**[문제]**
+최근 3개월(2026-03-01 ~ 2026-05-31) 동안 **총 3회 이상의 캠페인 이메일을 받았으나, 단 한 번도 이메일을 열어보지 않은(status가 'OPENED'인 이력이 없는) 휴면 고객**군을 추출하려 합니다.
+
+이 조건을 만족하는 고객별로 **가장 최근에 발송 실패(BOUNCED 또는 FAILED)가 발생한 캠페인 ID와 해당 실패 일시**를 함께 조회하는 고난도 튜닝/집계 쿼리 작성 및 테이블 수정 필요 시 진행.
+
+
+<NotionToggle title="테이블 정보" level="3">
+
+
+<NotionTable>
+  <tbody>
+    <tr><td>`customer_id`  </td><td>INT, PK</td><td>고객 고유 번호</td></tr>
+    <tr><td>`email`  </td><td>VARCHAR</td><td>이메일 주소</td></tr>
+    <tr><td>`status`  </td><td>VARCHAR</td><td>고객 상태 (`'ACTIVE'`, `'DORMANT'`, `'WITHDRAWN'`)</td></tr>
+  </tbody>
+</NotionTable>
+
+
+<NotionTable>
+  <tbody>
+    <tr><td>`campaign_id`  </td><td>INT, PK</td><td>캠페인 고유 번호</td></tr>
+    <tr><td>`campaign_name`  </td><td>VARCHAR</td><td>캠페인명</td></tr>
+    <tr><td>`sent_at`  </td><td>DATETIME</td><td>캠페인 발송 시작 일시</td></tr>
+  </tbody>
+</NotionTable>
+
+
+<NotionTable>
+  <tbody>
+    <tr><td>`log_id`  </td><td>BIGINT, PK</td><td>로그 고유 번호</td></tr>
+    <tr><td>`campaign_id`  </td><td>INT, FK</td><td>캠페인 고유 번호</td></tr>
+    <tr><td>`customer_id`  </td><td>INT</td><td>고객 고유 번호</td></tr>
+    <tr><td>`status`  </td><td>VARCHAR</td><td>발송 상태 (`'SENT'`, `'DELIVERED'`, `'OPENED'`, `'BOUNCED'`, `'FAILED'`)</td></tr>
+    <tr><td>`updated_at`</td><td>DATETIME</td><td>상태 변경 일시</td></tr>
+  </tbody>
+</NotionTable>
+
+
+</NotionToggle>
+
+
+<NotionToggle title="SQL 쿼리 작성 :  1차 방안" level="3">
+
+### 1. 탐색 데이터 범위 축소
+
+대용량 환경에서는 무작정 `JOIN` 후 `GROUP BY`를 하면 테이블 락(Lock)이 발생할 수 있습니다.
+대상자를 먼저 좁혀 놓고 로그를 타격하는 방식으로 전개해야 합니다.
+
+
+```sql
+WITH target_campaigns AS (
+    -- 1. 최근 3개월간 진행된 캠페인 ID만 먼저 필터링 (인덱스 활용)
+    SELECT campaign_id
+    FROM email_campaigns
+    WHERE sent_at BETWEEN '2026-03-01 00:00:00' AND '2026-05-31 23:59:59'
+),
+customer_email_summary AS (
+    -- 2. 대상 캠페인 로그 중 활성 고객의 발송/오픈 횟수 집계
+    -- 대용량 로그 테이블 처리를 위해 테이블 스캔 범위를 target_campaigns로 제한
+    SELECT
+        l.customer_id,
+        COUNT(l.log_id) as total_received,
+        COUNT(CASE WHEN l.status = 'OPENED' THEN 1 END) as total_opened
+    FROM email_logs l
+    JOIN customers c ON l.customer_id = c.customer_id
+    WHERE l.campaign_id IN (SELECT campaign_id FROM target_campaigns)
+      AND c.status = 'ACTIVE'
+    GROUP BY l.customer_id
+),
+risk_customers AS (
+    -- 3. 조건 만족자 (3회 이상 수신, 오픈 0회) 추출
+    SELECT customer_id
+    FROM customer_email_summary
+    WHERE total_received >= 3
+      AND total_opened = 0
+),
+failed_logs_ranked AS (
+    -- 4. 위험 고객들의 로그 중 '실패 이력'만 모아서 가장 최근 순으로 순위 부여
+    -- 대용량 테이블에서 ROW_NUMBER를 효율적으로 쓰기 위해 인라인 필터 적용
+    SELECT
+        l.customer_id,
+        l.campaign_id as last_failed_campaign_id,
+        l.updated_at as last_failed_at,
+        ROW_NUMBER() OVER (
+            PARTITION BY l.customer_id
+            ORDER BY l.updated_at DESC
+        ) as rn
+    FROM email_logs l
+    JOIN risk_customers rc ON l.customer_id = rc.customer_id
+    WHERE l.status IN ('BOUNCED', 'FAILED')
+)
+-- 5. 최종 결과: 위험 고객 리스트와 가장 최근 실패 로그 결합 (실패 이력이 없으면 NULL 표시를 위해 LEFT JOIN)
+SELECT
+    rc.customer_id,
+    c.email,
+    f.last_failed_campaign_id,
+    f.last_failed_at
+FROM risk_customers rc
+JOIN customers c ON rc.customer_id = c.customer_id
+LEFT JOIN failed_logs_ranked f ON rc.customer_id = f.customer_id AND f.rn = 1
+ORDER BY f.last_failed_at DESC NULLS LAST, rc.customer_id ASC;
+```
+
+### 포인트
+
+- `**IN (SELECT campaign_id FROM ...)**`**를 통한 인덱스 프루닝**
+`target_campaigns`를 통해 필요한 구간의 데이터만 집어서 읽게 되므로 수천만 건의 데이터를 풀 스캔(Full Scan)하는 방지 예상
+- `**COUNT(CASE WHEN ...)**`**을 활용한 피벗 집계**
+오픈한 로그가 **단 한 건도 없는** 사람을 찾기 위해 발송 로그와 오픈 로그를 각각 따로 `JOIN`하는 것이 아니라, 하나의 로그 테이블을 한 번만 읽으면서 발송 횟수와 오픈 횟수를 동시에 집계하여 I/O 비용을 감소
+- `**ROW_NUMBER()**` **기반 최신 실패 이력만 추출**
+실패한 이력들 중 '가장 최근 1건'을 가져오기 위해 `GROUP BY customer_id` 후 `MAX(updated_at)`를 쓰고 또 한 번 로그 테이블을 조인하는 서브쿼리 지옥 대신, 윈도우 함수를 통해 단 한 번에 `campaign_id`와 `updated_at`  
+- `**LEFT JOIN ... AND f.rn = 1**` **구조**
+위험 고객 중에는 이메일이 단순히 '전송 완료(DELIVERED)'만 되고 실패는 안 한 상태에서 안 열어본 고객도 존재합니다. 이들이 결과에서 누락되지 않도록 `LEFT JOIN` 처리를 하되, 윈도우 순위가 1등인 데이터만 연결되도록 조건을 결합
+
+
+</NotionToggle>
+
+
+<NotionToggle title="파티셔닝/암묵적 FK :   1차 개선" level="3">
+
+물리적 FK 조인으로 인한 인덱스 오버헤드를 제거하고, `WORKDAY` 기준으로 테이블을 파티셔닝합니다.
+
+
+```sql
+-- 개선된 대용량 로그 테이블 (물리적 FK 제거, 파티셔닝 적용)
+CREATE TABLE email_logs (
+    log_id BIGINT NOT NULL,
+    campaign_id INT NOT NULL,
+    customer_id INT NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    workday DATE NOT NULL, -- 파티션 키이자 조회 범위 축소의 핵심 컬럼
+    updated_at DATETIME NOT NULL,
+    PRIMARY KEY (log_id, workday) -- 파티션 키는 PK에 포함되어야 함
+) PARTITION BY RANGE (workday) (
+    PARTITION p2026_03 VALUES LESS THAN ('2026-04-01'),
+    PARTITION p2026_04 VALUES LESS THAN ('2026-05-01'),
+    PARTITION p2026_05 VALUES LESS THAN ('2026-06-01'),
+    PARTITION p2026_06 VALUES LESS THAN ('2026-07-01')
+);
+
+-- 물리 FK를 제거하는 대신 성능을 위해 복합 로컬 인덱스만 생성
+CREATE INDEX idx_logs_query ON email_logs (workday, status, customer_id);
+```
+
+데이터 무결성 검증은 DB 하드웨어에 맡기지 않고, Java 애플리케이션의 비즈니스 로직(Service 레이어) 또는 무결성 체크 배치(Spring Batch 등) 단계에서 검증 후 진입할 수 있게 유도하여 설계합니다. 이로 인해 인덱스 쓰기 비용과 데드락 위험이 현저히 줄어듭니다.
+
+기존의 복잡한 전체 조인을 걷어내고, 파티션 프루닝(Partition Pruning)이 정확히 작동하도록 `workday` 조건을 최상단으로 끌어올렸습니다. 또한, 백엔드에서 특정 대상 범위를 미리 정의해 넘겨주거나 대량 집계를 배치 분할 처리할 수 있도록 구조를 단순화했습니다.
+
+
+```sql
+WITH partition_filtered_logs AS (
+    -- [개선 1] 파티션 키(workday)를 직접 타격하여 천만 건 중 3개월치 물리 파티션만 숏컷 접근
+    -- [개선 2] 암묵적 FK 상태이므로 무거운 JOIN 없이 로그 테이블 자체에서 1차 필터링
+    SELECT
+        customer_id,
+        campaign_id,
+        status,
+        updated_at
+    FROM email_logs
+    WHERE workday BETWEEN '2026-03-01' AND '2026-05-31'
+),
+aggregated_summary AS (
+    -- [개선 3] 좁혀진 범위 내에서 메모리 내 집계 수행
+    SELECT
+        customer_id,
+        COUNT(*) as total_received,
+        COUNT(CASE WHEN status = 'OPENED' THEN 1 END) as total_opened
+    FROM partition_filtered_logs
+    GROUP BY customer_id
+),
+risk_customers AS (
+    -- 위험 고객 추출 (3회 이상 수신, 오픈 0회)
+    SELECT customer_id
+    FROM aggregated_summary
+    WHERE total_received >= 3
+      AND total_opened = 0
+),
+recent_failed_log AS (
+    -- [개선 4] 전체 로그가 아닌, 추출된 위험 고객의 '3개월 파티션 내 실패 로그'만 매칭하여 랭킹 부여
+    SELECT
+        fl.customer_id,
+        fl.campaign_id as last_failed_campaign_id,
+        fl.updated_at as last_failed_at,
+        ROW_NUMBER() OVER (
+            PARTITION BY fl.customer_id
+            ORDER BY fl.updated_at DESC
+        ) as rn
+    FROM partition_filtered_logs fl
+    JOIN risk_customers rc ON fl.customer_id = rc.customer_id
+    WHERE fl.status IN ('BOUNCED', 'FAILED')
+)
+-- 최종 추출 (최종 사용자 마스터 매핑은 드라이빙 완료 후 가장 마지막에 1:1 row 매칭)
+SELECT
+    rc.customer_id,
+    f.last_failed_campaign_id,
+    f.last_failed_at
+FROM risk_customers rc
+LEFT JOIN recent_failed_log f ON rc.customer_id = f.customer_id AND f.rn = 1;
+```
+
+
+</NotionToggle>
+
+
+<NotionToggle title="커버링 인덱스 :  2차 개선" level="3">
+
+
+```sql
+CREATE INDEX idx_emaillogs_covering 
+ON email_logs (workday, status, customer_id, updated_at, campaign_id);
+```
+
+아래 쿼리는 `email_logs` 테이블의 실제 레이아웃을 단 한 번도 읽지 않고, 위에서 생성한 `idx_logs_covering` 인덱스 내에서 모든 필터링과 집계,  윈도우 함수 연산을 처리합니다.
+
+
+```sql
+WITH partition_filtered_logs AS (
+    -- 1. 파티션 키(workday)를 지정하여 3개월치 물리 파티션만 숏컷 접근
+    -- 2. SELECT 절의 모든 컬럼이 인덱스에 존재하므로 커버링 인덱스 스캔(Index Only Scan) 발동
+    SELECT
+        customer_id,
+        campaign_id,
+        status,
+        updated_at
+    FROM email_logs
+    WHERE workday BETWEEN '2026-03-01' AND '2026-05-31'
+),
+aggregated_summary AS (
+    -- 3. 인덱스 내부 데이터를 기반으로 메모리 내 고속 집계 수행 (오픈 제로 유저 선별)
+    SELECT
+        customer_id,
+        COUNT(*) as total_received,
+        COUNT(CASE WHEN status = 'OPENED' THEN 1 END) as total_opened
+    FROM partition_filtered_logs
+    GROUP BY customer_id
+),
+risk_customers AS (
+    -- 위험 고객 추출 (3회 이상 수신, 오픈 0회)
+    SELECT customer_id
+    FROM aggregated_summary
+    WHERE total_received >= 3
+      AND total_opened = 0
+),
+recent_failed_log AS (
+    -- 4. 위험 고객들의 '3개월 내 실패 로그' 추출 및 최신순 정렬
+    -- 이 단계 역시 커버링 인덱스 구성 컬럼 내에서 ROW_NUMBER() 연산이 완료됨
+    SELECT
+        fl.customer_id,
+        fl.campaign_id as last_failed_campaign_id,
+        fl.updated_at as last_failed_at,
+        ROW_NUMBER() OVER (
+            PARTITION BY fl.customer_id
+            ORDER BY fl.updated_at DESC
+        ) as rn
+    FROM partition_filtered_logs fl
+    JOIN risk_customers rc ON fl.customer_id = rc.customer_id
+    WHERE fl.status IN ('BOUNCED', 'FAILED')
+)
+-- 5. 최종 결과 도출 (추출된 대상자만 최소한으로 LEFT JOIN 매칭)
+SELECT
+    rc.customer_id,
+    f.last_failed_campaign_id,
+    f.last_failed_at
+FROM risk_customers rc
+LEFT JOIN recent_failed_log f ON rc.customer_id = f.customer_id AND f.rn = 1;
+```
+
+
+</NotionToggle>
+

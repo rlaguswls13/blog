@@ -1,7 +1,6 @@
 /* globals.css — Design Token Architecture */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&display=swap');
 @import "tailwindcss";
-@import "../styles/notion-theme.css";
 
 
 /* ================================================================
@@ -869,21 +868,21 @@ a.category-tab .category-tab-ext {
 
 /* MDX Content */
 .mdx-content h2 {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.15rem;
   color: var(--text-primary);
   border-left: 4px solid var(--accent-primary);
-  padding-left: 15px;
+  padding-left: 0.8rem;
   font-weight: 600;
   border-bottom: none;
 }
 
 .mdx-content h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 1.2rem;
+  margin-top: 1.2rem;
+  margin-bottom: 0.8rem;
   color: var(--accent-primary);
-  font-size: 1.1rem;
+  font-size: 1.0rem;
 }
 
 .mdx-content h4 {

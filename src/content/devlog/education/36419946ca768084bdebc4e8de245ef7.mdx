@@ -1,0 +1,262 @@
+---
+title: "java 1차원 배열을 활용한 문제풀이"
+date: "2026-06-01"
+tags: ["배열", "1차원 배열", "문제풀이"]
+---
+
+
+<NotionToggle title="X 보다 작은 수" level="2">
+
+정수 N개로 이루어진 수열 A와 정수 X가 주어집니다. 이때, 수열 A에서 X보다 작은 수를 모두 **입력된 순서대로 공백 한 칸으로 구분하여 출력**하는 프로그램을 작성하세요.
+
+
+```java
+	private static void method1(Scanner sc) {
+		// N개로 이루어진 수열 정의 A
+		System.out.print("나열할 수열의 갯수를 정해주세요 : ");
+		int[] numberArray = method1_1(sc.nextInt());
+		System.out.print("해당 수열에서 추출한 수의 최댓값을 입력해주세요 : ");
+		int limtNumber = sc.nextInt();
+		method1_2(numberArray, limtNumber);
+	}
+	
+	private static int[] method1_1(int limitNumber) {
+		int[] numberArray = new int[limitNumber];
+		for(int i=0; i < limitNumber; i++) {
+			// 원하는 수열 공식을 넣어서 자동으로 배열을 만드는 걸 추천, 수열은 기본적으로 규칙적으로 수를 나열한 것입니다.
+			numberArray[i] = 2*i+1;
+		}	
+		return numberArray;
+	}
+	
+	private static void method1_2(int[] numberArray, int fixedNumber) {
+		String selectedNumber = null;
+		for(int i : numberArray) {
+			if(i <= fixedNumber) {
+				if(selectedNumber != null)  selectedNumber += " "+i;
+				else selectedNumber = ""+i;
+			}
+		}
+		System.out.println(selectedNumber);
+	}
+```
+
+
+</NotionToggle>
+
+<NotionDivider />
+
+
+<NotionToggle title="최소, 최대" level="2">
+
+N개의 정수가 주어질 때, 이들 중 **최솟값과 최댓값**을 찾는 프로그램을 작성하세요
+
+
+```java
+	private static void method2(Scanner sc) {
+		// N개로 이루어진 랜덤 배열
+		System.out.print("배열의 크기를 정해주세요 : ");
+		int[] numberArray = generatePositiveRandomArray(sc.nextInt());
+		printMaxAndMinNumber(numberArray);
+	}
+	
+	
+    public static int[] generatePositiveRandomArray(int n) {
+        int[] randomArray = new int[n];
+        for (int i = 0; i < n; i++) {
+            randomArray[i] = ThreadLocalRandom.current().nextInt(1, 100);
+        }
+        System.out.println(Arrays.toString(randomArray));
+        return randomArray;
+    }
+    
+    public static void printMaxAndMinNumber(int[] numberArray) {
+    	int minNumber = Integer.MAX_VALUE;
+    	int maxNumber = 0;
+    	for(int i : numberArray) {
+    		if(maxNumber < i) {
+    			maxNumber = i;
+    		}
+    		if(minNumber > i) {
+    			minNumber = i;
+    		}
+    	}
+    	System.out.printf("최솟값 : %d,최댓값 : %d \n", minNumber, maxNumber);
+    }
+```
+
+
+</NotionToggle>
+
+<NotionDivider />
+
+
+<NotionToggle title=" 공 넣기" level="2">
+
+N개의 바구니(1~N번)가 있고, M개의 공 넣기 작업이 주어집니다. 각 작업은 i번 바구니부터 j번 바구니까지 숫자 k가 적힌 공을 넣는 것을 의미합니다. 그 후 **각 바구니에 어떤 공이 들어 있는지 출력**하세요. 공이 없는 경우 0으로 출력합니다.
+
+
+```java
+private static void method3(Scanner sc) {
+		System.out.print("바구니 갯수를 정해주세요 : ");
+		int bucketCounts = sc.nextInt();
+		int[] bucket = new int[bucketCounts];
+		System.out.print("작업의 횟수를 정해주세요 : ");
+		int workCounts = sc.nextInt();
+		
+		for(int i=0; i < workCounts; i++) {
+			System.out.println(i+1+"번째 작업");
+			System.out.print("시작 바구니 번호 적어주세요 : ");
+			int start = sc.nextInt();
+			System.out.print("마지막 바구니 번호 적어주세요 : ");
+			int end = sc.nextInt();
+			System.out.print("공 번호를 적어주세요 : ");
+			int ballNumber = sc.nextInt();
+			for(int j = start-1; j < end; j++) {
+				bucket[j] = ballNumber;
+			}
+		}
+		System.out.println(Arrays.toString(bucket));
+	}
+```
+
+
+</NotionToggle>
+
+<NotionDivider />
+
+
+<NotionToggle title="과제 안 내신 분..?" level="2">
+
+학생 30명이 있고, 28명이 과제를 제출했습니다. 제출하지 않은 2명의 **출석번호를 오름차순으로 출력**하는 프로그램을 작성하세요.
+
+
+```java
+  // 학생수, 제출한 학생수를 입력받고 랜덤하게 번호제출을 받게 되었을때 상황 가정
+	private static void method4(Scanner sc) {
+		System.out.print("총 학생 수 : ");
+		int totalStudents = sc.nextInt();
+		System.out.print("관제 제출한 학생 수 : ");
+		int submittedStudents = sc.nextInt();
+		System.out.println("=== 과제 관리 시스템 가동 ===");
+        // 1. 전체 학생 번호 배열 생성 [1, 2, 3, ..., N]
+        int[] allStudents = generateAllStudents(totalStudents);
+        System.out.println("전체 학생 번호: " + Arrays.toString(allStudents));
+        // 2. 제출한 학생 번호 배열 무작위 생성 (중복 없음, 크기 M) >> 나중에 실제 데이터 값으로 치환해도 무관
+        int[] submittedList = generateSubmittedStudents(totalStudents, submittedStudents);
+        System.out.println("과제 제출자 번호(정렬 전): " + Arrays.toString(submittedList));
+        // 3. 두 배열을 비교하여 미제출자 추출 (오름차순 정렬 포함)
+        int[] missingStudents = getMissingStudents(allStudents, submittedList);
+        // 4. 최종 결과 출력
+        printResult(missingStudents);
+	}
+	
+    // 총 학생 수에 따른 모든 출석번호 배열 생성 (1부터 N까지)
+    private static int[] generateAllStudents(int totalStudents) {
+        int[] allStudents = new int[totalStudents];
+        for (int i = 0; i < totalStudents; i++) {
+            allStudents[i] = i + 1;
+        }
+        return allStudents;
+    }
+
+    // 제출한 학생 수에 따른 랜덤 출석번호 배열 생성 (중복 제거)
+    private static int[] generateSubmittedStudents(int totalStudents, int submittedCount) {
+        if (submittedCount > totalStudents) {
+            throw new IllegalArgumentException("제출자 수는 총 학생 수보다 많을 수 없습니다.");
+        }
+        // 중복 없이 랜덤한 번호를 뽑기 위해 Set 활용
+        Set<Integer> submittedSet = new HashSet<>();
+        while (submittedSet.size() < submittedCount) {
+            // 1부터 totalStudents까지의 랜덤 번호 추출
+            int randomNum = ThreadLocalRandom.current().nextInt(1, totalStudents + 1);
+            submittedSet.add(randomNum);
+        }
+        // 일부러 섞인 상태를 유지하기 위해 정렬 안 함
+        return submittedSet.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    // 두 배열을 비교하여 제출하지 않은(없는) 번호 추출 및 오름차순 정렬
+    private static int[] getMissingStudents(int[] allStudents, int[] submittedList) {
+        Set<Integer> submittedSet = new HashSet<>();
+        for (int student : submittedList) {
+            submittedSet.add(student);
+        }
+
+        // 전체 학생을 돌며 제출자 목록에 없는 학생만 카운트 및 임시 저장
+        int[] tempMissing = new int[allStudents.length - submittedList.length];
+        int index = 0;
+
+        for (int student : allStudents) {
+            if (!submittedSet.contains(student)) {
+                tempMissing[index++] = student;
+            }
+        }
+        Arrays.sort(tempMissing);
+        return tempMissing;
+    }
+
+    // 미제출자 번호 최종 출력
+    private static void printResult(int[] missingStudents) {
+        System.out.println("=== 과제 미제출자 명단 (오름차순) ===");
+        if (missingStudents.length == 0) {
+            System.out.println("모든 학생이 과제를 제출했습니다.");
+            return;
+        }
+        for (int student : missingStudents) {
+            System.out.println("출석번호: " + student + "번");
+        }
+    }
+```
+
+
+</NotionToggle>
+
+<NotionDivider />
+
+
+<NotionToggle title="바구니 뒤집기" level="2">
+
+1번부터 N번까지 번호가 순서대로 적힌 바구니가 있습니다. M개의 뒤집기 작업이 주어지며, 각각은 i번부터 j번 바구니의 **순서를 역순으로 바꾸는 작업**입니다. 모든 작업 후 **최종 바구니의 번호 배열을 출력**하세요.
+
+
+```java
+	private static void method5(Scanner sc) {
+		System.out.print("바구니 갯수를 정해주세요 : ");
+		int bucketCounts = sc.nextInt();
+		int[] bucket = new int[bucketCounts];
+		System.out.print("작업의 횟수를 정해주세요 : ");
+		int workCounts = sc.nextInt();
+		
+		for(int i=0; i < bucketCounts; i++) {
+			bucket[i] = i+1;
+		}
+		
+		for(int i=0; i < workCounts; i++) {
+			System.out.println(i+1+"번째 작업");
+			System.out.print("시작 바구니 번호 적어주세요 : ");
+			int start = sc.nextInt();
+			System.out.print("마지막 바구니 번호 적어주세요 : ");
+			int end = sc.nextInt();
+			
+			// 사용자가 입력한 번호(1기반)를 배열 인덱스(0기반)로 변환
+	        int left = start - 1;
+	        int right = end - 1;
+	        while (left < right) {
+	            // 임시 변수에 왼쪽 값 백업 (데이터 유실 방지)
+	            int temp = bucket[left];
+	            bucket[left] = bucket[right];
+	            bucket[right] = temp;
+	            left++;
+	            right--;
+	        }
+		}
+		System.out.println(Arrays.toString(bucket));
+	}
+```
+
+
+</NotionToggle>
+
+<NotionDivider />
+

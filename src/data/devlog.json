@@ -445,5 +445,17 @@
       "description": "오직 구두 프롬프팅으로만 배포까지 완성하는 AI 챌린지, 39개 팀 중 18위 기록(69.2점) 및 AI 워크플로우에 대한 고찰",
       "package": "event"
     }
+  ],
+  "blog": [
+    {
+      "id": "3a319946ca768078b891d2ebf14c4741",
+      "title": "aaa",
+      "date": "2026-07-20",
+      "tags": [
+        "면접"
+      ],
+      "description": "작성된 내용이 없습니다.",
+      "package": "blog"
+    }
   ]
 }

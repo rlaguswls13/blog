@@ -1,0 +1,1249 @@
+---
+title: "java 소스로 기능구현"
+date: "2026-06-01"
+tags: ["소스 유연성", "오버로딩", "오버라이트"]
+---
+
+
+<NotionToggle title="[문제 1] 도형 프로그램 구현" level="2">
+
+
+<NotionIndent>
+
+
+<NotionToggle title="Shape">
+
+- **필드**
+  - `type` : `int` → 도형 타입 번호 (예: 3 = 삼각형, 4 = 사각형)
+  - `height` : `double` → 높이
+  - `width` : `double` → 너비
+  - `color` : `String` → 색상 (기본값 `"white"`)
+
+- **생성자**
+  - `Shape()` → 기본 생성자
+  - `Shape(int type, double height, double width)` → 필드 초기화 생성자
+
+- **메서드**
+
+  - getter/setter 메서드 직접 구현
+  - `information()` : `String` → `"높이 너비 색상"` 형식의 문자열 반환
+
+
+</NotionToggle>
+
+
+<NotionToggle title="SquareController">
+
+- **필드**
+  - `s` : `Shape` 객체 (기본 생성자로 생성)
+
+- **메서드**
+
+  - `calcPerimeter(double height, double width)` : `double`
+    → `s`를 매개변수 있는 생성자로 초기화한 후, **둘레**(`width*2 + height*2`) 반환
+
+  - `calcArea(double height, double width)` : `double`
+    → `s`를 매개변수 있는 생성자로 초기화한 후, **넓이**(`width * height`) 반환
+
+  - `paintColor(String color)` : `void`
+    → `s`의 색상을 setter로 변경
+
+  - `print()` : `String`
+
+    → `"사각형 " + s.information()` 반환
+
+
+</NotionToggle>
+
+
+<NotionToggle title="TriangleController">
+
+- **필드**
+  - `s` : `Shape` 객체 (기본 생성자로 생성)
+
+- **메서드**
+
+  - `calcArea(double height, double width)` : `double`
+    → `s`를 매개변수 있는 생성자로 초기화한 후, **넓이**(`width * height / 2`) 반환
+
+  - `paintColor(String color)` : `void`
+    → `s`의 색상을 setter로 변경
+
+  - `print()` : `String`
+
+    → `"삼각형 " + s.information()` 반환
+
+
+</NotionToggle>
+
+
+<NotionToggle title="ShapeMenu">
+
+- **필드**
+  - `sc` : `Scanner` 객체
+  - `scr` : `SquareController` 객체
+  - `tc` : `TriangleController` 객체
+
+- **메서드**
+
+  - `inputMenu()` : `void`
+    → 메인 메뉴 출력 (삼각형, 사각형, 종료 선택)
+
+  - `triangleMenu()` : `void`
+    → 삼각형 메뉴 출력 (면적 계산, 색칠, 정보 보기, 메인으로)
+
+  - `squareMenu()` : `void`
+    → 사각형 메뉴 출력 (둘레 계산, 면적 계산, 색칠, 정보 보기, 메인으로)
+
+  - `inputSize(int type, int menuNum)` : `void`
+    → 높이·너비 또는 색상을 입력받아 Controller에 요청
+
+  - `printInformation(int type)` : `void`
+
+    → 해당 도형의 정보를 출력
+
+
+</NotionToggle>
+
+
+<NotionToggle title="Run">
+
+- **main(String[] args)** : 프로그램 시작
+- `ShapeMenu` 객체 생성 후 `inputMenu()` 호출
+
+
+</NotionToggle>
+
+
+</NotionIndent>
+
+<NotionDivider />
+
+
+<NotionIndent>
+
+- 클래스명·메서드명은 변경하지 않는다.
+- 모든 필드의 getter/setter 메서드는 작성한다.
+- `Shape`의 `information()`은 `"높이 너비 색상"` 순으로 반환
+- 메뉴에서 잘못된 번호 입력 시 "잘못된 번호입니다. 다시 입력하세요." 출력
+- 종료 메뉴(번호 9) 선택 시 프로그램 종료
+
+
+</NotionIndent>
+
+<NotionDivider />
+
+
+<NotionIndent>
+
+
+```text
+===== 도형 프로그램 =====
+3. 삼각형
+4. 사각형
+9. 프로그램 종료
+메뉴 번호 : 1
+잘못된 번호입니다. 다시 입력하세요.
+
+===== 도형 프로그램 =====
+3. 삼각형
+4. 사각형
+9. 프로그램 종료
+메뉴 번호 : 3
+
+===== 삼각형 =====
+1. 삼각형 면적
+2. 삼각형 색칠
+3. 삼각형 정보
+9. 메인으로
+메뉴 번호 : 1
+높이 : 10
+너비 : 3
+삼각형 면적 : 15.0
+
+===== 삼각형 =====
+1. 삼각형 면적
+2. 삼각형 색칠
+3. 삼각형 정보
+9. 메인으로
+메뉴 번호 : 3
+삼각형 10.0 3.0 white
+
+===== 삼각형 =====
+1. 삼각형 면적
+2. 삼각형 색칠
+3. 삼각형 정보
+9. 메인으로
+메뉴 번호 : 2
+색깔을 입력하세요 : red
+```
+
+
+</NotionIndent>
+
+<NotionDivider />
+
+
+<NotionIndent>
+
+
+<NotionToggle title="별도의 lib 없이 손 코딩으로 작성">
+
+
+```java
+1) Shape 클래스
+public class Shape {
+    private int type;
+    private double height;
+    private double width;
+    private String color = "white"; // 기본값 지정
+
+    // 기본 생성자
+    public Shape() {}
+
+    // 필드 초기화 생성자
+    public Shape(int type, double height, double width) {
+        this.type = type;
+        this.height = height;
+        this.width = width;
+    }
+
+    // getter / setter 직접 구현
+    public int getType() { return type; }
+    public void setType(int type) { this.type = type; }
+
+    public double getHeight() { return height; }
+    public void setHeight(double height) { this.height = height; }
+
+    public double getWidth() { return width; }
+    public void setWidth(double width) { this.width = width; }
+
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
+
+    // 정보 반환 메서드
+    public String information() {
+        return String.format("%.1f %.1f %s", height, width, color);
+    }
+}
+
+2) SquareController 클래스
+public class SquareController {
+    private Shape s = new Shape(); // 기본 생성자로 생성
+
+    public double calcPerimeter(double height, double width) {
+        // 사각형은 type 번호를 4로 지정하여 초기화
+        s = new Shape(4, height, width);
+        return width * 2 + height * 2;
+    }
+
+    public double calcArea(double height, double width) {
+        s = new Shape(4, height, width);
+        return width * height;
+    }
+
+    public void paintColor(String color) {
+        s.setColor(color);
+    }
+
+    public String print() {
+        return "사각형 " + s.information();
+    }
+}
+
+3) TriangleController 클래스
+public class TriangleController {
+    private Shape s = new Shape(); // 기본 생성자로 생성
+
+    public double calcArea(double height, double width) {
+        // 삼각형은 type 번호를 3으로 지정하여 초기화
+        s = new Shape(3, height, width);
+        return width * height / 2;
+    }
+
+    public void paintColor(String color) {
+        s.setColor(color);
+    }
+
+    public String print() {
+        return "삼각형 " + s.information();
+    }
+}
+
+4) ShapeMenu 클래스
+import java.util.Scanner;
+
+public class ShapeMenu {
+    private Scanner sc = new Scanner(System.in);
+    private SquareController scr = new SquareController();
+    private TriangleController tc = new TriangleController();
+
+    public void inputMenu() {
+        while (true) {
+            System.out.println("===== 메인 메뉴 =====");
+            System.out.println("1. 삼각형");
+            System.out.println("2. 사각형");
+            System.out.println("9. 프로그램 종료");
+            System.out.print("메뉴 번호 입력 : ");
+            int menu = sc.nextInt();
+
+            switch (menu) {
+                case 1:
+                    triangleMenu();
+                    break;
+                case 2:
+                    squareMenu();
+                    break;
+                case 9:
+                    System.out.println("프로그램을 종료합니다.");
+                    return;
+                default:
+                    System.out.println("잘못된 번호입니다. 다시 입력하세요.");
+            }
+        }
+    }
+
+    public void triangleMenu() {
+        while (true) {
+            System.out.println("===== 삼각형 메뉴 =====");
+            System.out.println("1. 삼각형 면적 계산");
+            System.out.println("2. 삼각형 색칠");
+            System.out.println("3. 삼각형 정보 보기");
+            System.out.println("9. 메인으로");
+            System.out.print("메뉴 번호 입력 : ");
+            int menu = sc.nextInt();
+
+            if (menu == 9) return;
+            
+            if (menu == 1 || menu == 2) {
+                inputSize(3, menu);
+            } else if (menu == 3) {
+                printInformation(3);
+            } else {
+                System.out.println("잘못된 번호입니다. 다시 입력하세요.");
+            }
+        }
+    }
+
+    public void squareMenu() {
+        while (true) {
+            System.out.println("===== 사각형 메뉴 =====");
+            System.out.println("1. 사각형 둘레 계산");
+            System.out.println("2. 사각형 면적 계산");
+            System.out.println("3. 사각형 색칠");
+            System.out.println("4. 사각형 정보 보기");
+            System.out.println("9. 메인으로");
+            System.out.print("메뉴 번호 입력 : ");
+            int menu = sc.nextInt();
+
+            if (menu == 9) return;
+
+            if (menu >= 1 && menu <= 3) {
+                inputSize(4, menu);
+            } else if (menu == 4) {
+                printInformation(4);
+            } else {
+                System.out.println("잘못된 번호입니다. 다시 입력하세요.");
+            }
+        }
+    }
+
+    public void inputSize(int type, int menuNum) {
+        // 1. 삼각형인 경우
+        if (type == 3) {
+            if (menuNum == 1) { // 면적 계산
+                System.out.print("높이 : ");
+                double height = sc.nextDouble();
+                System.out.print("너비 : ");
+                double width = sc.nextDouble();
+                double area = tc.calcArea(height, width);
+                System.out.println("삼각형 면적 : " + area);
+            } else if (menuNum == 2) { // 색칠
+                System.out.print("색상 입력 : ");
+                String color = sc.next();
+                tc.paintColor(color);
+                System.out.println("색상이 변경되었습니다.");
+            }
+        } 
+        // 2. 사각형인 경우
+        else if (type == 4) {
+            if (menuNum == 1) { // 둘레 계산
+                System.out.print("높이 : ");
+                double height = sc.nextDouble();
+                System.out.print("너비 : ");
+                double width = sc.nextDouble();
+                double perimeter = scr.calcPerimeter(height, width);
+                System.out.println("사각형 둘레 : " + perimeter);
+            } else if (menuNum == 2) { // 면적 계산
+                System.out.print("높이 : ");
+                double height = sc.nextDouble();
+                System.out.print("너비 : ");
+                double width = sc.nextDouble();
+                double area = scr.calcArea(height, width);
+                System.out.println("사각형 면적 : " + area);
+            } else if (menuNum == 3) { // 색칠
+                System.out.print("색상 입력 : ");
+                String color = sc.next();
+                scr.paintColor(color);
+                System.out.println("색상이 변경되었습니다.");
+            }
+        }
+    }
+
+    public void printInformation(int type) {
+        if (type == 3) {
+            System.out.println(tc.print());
+        } else if (type == 4) {
+            System.out.println(scr.print());
+        }
+    }
+}
+
+5) Run 클래스
+public class Run {
+    public static void main(String[] args) {
+        ShapeMenu menu = new ShapeMenu();
+        menu.inputMenu();
+    }
+}
+```
+
+
+</NotionToggle>
+
+
+</NotionIndent>
+
+
+<NotionToggle title="코드패턴, 롬복 활용 (+ 상속, 인터페이스 개념 추가)">
+
+
+<NotionToggle title="1. 인터페이스 및 도메인 클래스 (상속 & Lombok)">
+
+
+```java
+public interface Drawable {
+    double calcArea();       // 면적 계산
+    double calcPerimeter();  // 둘레 계산
+}
+```
+
+
+```java
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@SuperBuilder // 상속 관계에서 부모-자식 간 빌더 패턴 공유
+public abstract class Shape implements Drawable {
+    private double height;
+    private double width;
+    
+    @SuperBuilder.Default
+    private String color = "white";
+
+    public String information() {
+        return String.format("%.1f %.1f %s", height, width, color);
+    }
+}
+```
+
+
+```java
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Getter
+@NoArgsConstructor
+@SuperBuilder
+public class Triangle extends Shape {
+    @Override
+    public double calcArea() {
+        return (getWidth() * getHeight()) / 2;
+    }
+
+    @Override
+    public double calcPerimeter() {
+        return 0; // 삼각형 둘레는 별도 요구사항 없음
+    }
+
+    @Override
+    public String toString() {
+        return "삼각형 " + information();
+    }
+}
+```
+
+
+```java
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Getter
+@NoArgsConstructor
+@SuperBuilder
+public class Square extends Shape {
+    @Override
+    public double calcArea() {
+        return getWidth() * getHeight();
+    }
+
+    @Override
+    public double calcPerimeter() {
+        return (getWidth() * 2) + (getHeight() * 2);
+    }
+
+    @Override
+    public String toString() {
+        return "사각형 " + information();
+    }
+}
+```
+
+
+</NotionToggle>
+
+
+<NotionToggle title="2. 컨트롤러 클래스 (다형성 활용)">
+
+
+```java
+import lombok.Getter;
+public class ShapeController {
+    @Getter
+    private Shape s; // 다형성을 활용하여 Triangle과 Square를 모두 수용
+
+    public double createTriangle(double height, double width) {
+        s = Triangle.builder()
+                .height(height)
+                .width(width)
+                .build();
+        return s.calcArea();
+    }
+
+    public double createSquare(double height, double width, boolean isArea) {
+        s = Square.builder()
+                .height(height)
+                .width(width)
+                .build();
+        return isArea ? s.calcArea() : s.calcPerimeter();
+    }
+
+    public void paintColor(String color) {
+        if (s != null) {
+            s.setColor(color);
+        }
+    }
+
+    public String print() {
+        return s != null ? s.toString() : "도형이 생성되지 않았습니다.";
+    }
+}
+
+
+```
+
+
+</NotionToggle>
+
+
+<NotionToggle title="3. 메뉴 데이터 매핑 클래스 (Enum)">
+
+
+```java
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import java.util.Arrays;
+
+public class Menu {
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum MainMenu {
+        TRIANGLE(1, "삼각형"),
+        SQUARE(2, "사각형"),
+        EXIT(9, "프로그램 종료"),
+        NONE(0, "잘못된 메뉴");
+
+        private final int code;
+        private final String description;
+
+        public static MainMenu fromCode(int code) {
+            return Arrays.stream(values())
+                    .filter(m -> m.code == code)
+                    .findFirst()
+                    .orElse(NONE);
+        }
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum TriangleMenu {
+        CALC_AREA(1, "삼각형 면적 계산"),
+        PAINT(2, "삼각형 색칠"),
+        PRINT(3, "삼각형 정보 보기"),
+        BACK(9, "메인으로"),
+        NONE(0, "잘못된 메뉴");
+
+        private final int code;
+        private final String description;
+
+        public static TriangleMenu fromCode(int code) {
+            return Arrays.stream(values())
+                    .filter(m -> m.code == code)
+                    .findFirst()
+                    .orElse(NONE);
+        }
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum SquareMenu {
+        CALC_PERI(1, "사각형 둘레 계산"),
+        CALC_AREA(2, "사각형 면적 계산"),
+        PAINT(3, "사각형 색칠"),
+        PRINT(4, "사각형 정보 보기"),
+        BACK(9, "메인으로"),
+        NONE(0, "잘못된 메뉴");
+
+        private final int code;
+        private final String description;
+
+        public static SquareMenu fromCode(int code) {
+            return Arrays.stream(values())
+                    .filter(m -> m.code == code)
+                    .findFirst()
+                    .orElse(NONE);
+        }
+    }
+}
+```
+
+
+</NotionToggle>
+
+
+<NotionToggle title="4. 메뉴 서비스 별도 구성 (상수, lamda식 Switch)">
+
+
+```java
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class ShapeMenu {
+    private final Scanner sc = new Scanner(System.in);
+    private final ShapeController ctrl = new ShapeController();
+
+    // UI 메시지 상수화로 하드코딩 완전 제거
+    private static final String MSG_INPUT_SIZE = "높이 너비 입력 (공백 구분) : ";
+    private static final String MSG_INPUT_COLOR = "색상 입력 : ";
+    private static final String MSG_INVALID_MENU = "잘못된 번호입니다. 다시 입력하세요.";
+
+    // 자동화된 공통 메뉴 출력 템플릿
+    private <T extends Enum<T>> void renderMenu(String title, T[] menuValues) {
+        System.out.println("\n===== " + title + " =====");
+        Arrays.stream(menuValues)
+                .filter(m -> !m.name().equals("NONE"))
+                .forEach(m -> {
+                    try {
+                        int code = (int) m.getClass().getMethod("getCode").invoke(m);
+                        String desc = (String) m.getClass().getMethod("getDescription").invoke(m);
+                        System.out.printf("%d. %s\n", code, desc);
+                    } catch (Exception ignored) {}
+                });
+        System.out.print("메뉴 번호 입력 : ");
+    }
+
+    // 반복되는 입력 행위 공통 메서드로 추출
+    private double[] inputDimensions() {
+        System.out.print(MSG_INPUT_SIZE);
+        double height = sc.nextDouble();
+        double width = sc.nextDouble();
+        return new double[]{height, width};
+    }
+
+    private String inputColor() {
+        System.out.print(MSG_INPUT_COLOR);
+        return sc.next();
+    }
+
+    public void inputMenu() {
+        while (true) {
+            renderMenu("메인 메뉴", Menu.MainMenu.values());
+            Menu.MainMenu menu = Menu.MainMenu.fromCode(sc.nextInt());
+
+            switch (menu) {
+                case TRIANGLE -> triangleMenu();
+                case SQUARE   -> squareMenu();
+                case EXIT     -> { System.out.println("프로그램을 종료합니다."); return; }
+                default       -> System.out.println(MSG_INVALID_MENU);
+            }
+        }
+    }
+
+    private void triangleMenu() {
+        while (true) {
+            renderMenu("삼각형 메뉴", Menu.TriangleMenu.values());
+            Menu.TriangleMenu menu = Menu.TriangleMenu.fromCode(sc.nextInt());
+
+            switch (menu) {
+                case BACK -> { return; }
+                case CALC_AREA -> {
+                    double[] size = inputDimensions();
+                    double area = ctrl.createTriangle(size[0], size[1]);
+                    System.out.println("면적 : " + area);
+                }
+                case PAINT -> ctrl.paintColor(inputColor());
+                case PRINT -> System.out.println(ctrl.print());
+                default -> System.out.println(MSG_INVALID_MENU);
+            }
+        }
+    }
+
+    private void squareMenu() {
+        while (true) {
+            renderMenu("사각형 메뉴", Menu.SquareMenu.values());
+            Menu.SquareMenu menu = Menu.SquareMenu.fromCode(sc.nextInt());
+
+            switch (menu) {
+                case BACK -> { return; }
+                case CALC_PERI, CALC_AREA -> {
+                    double[] size = inputDimensions();
+                    boolean isArea = (menu == Menu.SquareMenu.CALC_AREA);
+                    double res = ctrl.createSquare(size[0], size[1], isArea);
+                    System.out.println("결과 : " + res);
+                }
+                case PAINT -> ctrl.paintColor(inputColor());
+                case PRINT -> System.out.println(ctrl.print());
+                default -> System.out.println(MSG_INVALID_MENU);
+            }
+        }
+    }
+}
+```
+
+
+</NotionToggle>
+
+
+</NotionToggle>
+
+
+</NotionToggle>
+
+
+<NotionToggle title="[문제 2] 스낵 관리 프로그램" level="2">
+
+
+<NotionIndent>
+
+
+<NotionToggle title="Snack">
+
+- **필드**
+  - `kind:String` — 종류
+  - `name:String` — 이름
+  - `flavor:String` — 맛
+  - `numOf:int` — 개수
+  - `price:int` — 가격
+
+- **생성자**
+  - `Snack()` — 기본 생성자
+  - `Snack(String kind, String name, String flavor, int numOf, int price)` — 모든 필드를 매개변수로 초기화
+
+- **메서드**
+
+  - 각 필드별 **getter / setter** 직접 구현
+  - `information():String` — 담긴 데이터를 한 줄 문자열로 반환
+
+    - 예) `빵(케이크 - 블루베리) 1개 15000원`
+
+
+</NotionToggle>
+
+
+<NotionToggle title="SnackController">
+
+- **필드**
+  - `s:Snack = new Snack()` — 내부 보관용 스낵 객체
+
+- **생성자**
+  - `SnackController()` — 기본 생성자
+
+- **메서드**
+
+  - `saveData(String kind, String name, String flavor, int numOf, int price):String`
+    - 전달받은 값들을 **setter**로 `s`에 저장
+    - 저장 완료 메시지 문자열을 반환 (예: `"저장 완료되었습니다."`)
+
+  - `confirmData():String`
+
+    - 현재 `s`에 저장된 정보를 `s.information()`으로 반환
+
+
+</NotionToggle>
+
+
+<NotionToggle title="SnackMenu">
+
+- **필드**
+  - `sc:Scanner = new Scanner(System.in)`
+  - `scr:SnackController = new SnackController()`
+
+- **메서드**
+
+  - `menu():void`
+
+    - 사용자로부터 **종류/이름/맛/개수/가격**을 순서대로 입력받아 `saveData(...)` 호출
+    - `"저장 완료되었습니다."` 메시지를 출력
+    - 이어서 `"저장한 정보를 확인하시겠습니까?(y/n) : "` 질의
+
+      - `y`(또는 `Y`)면 `confirmData()` 결과 문자열을 출력
+      - `n`(또는 `N`)이면 아무 정보도 출력하지 않고 종료(또는 상위로 복귀)
+
+
+</NotionToggle>
+
+
+<NotionToggle title="Run">
+
+- **메서드**
+
+  - `main(String[] args):void`
+
+    - `SnackMenu` 객체 생성 후 `menu()` 실행
+
+
+</NotionToggle>
+
+
+</NotionIndent>
+
+<NotionDivider />
+
+
+<NotionIndent>
+
+### 예시 A — 확인하는 경우
+
+
+```text
+스낵류를 입력하세요.
+종류 : 빵
+이름 : 케이크
+맛 : 블루베리
+개수 : 1
+가격 : 15000
+저장 완료되었습니다.
+저장한 정보를 확인하시겠습니까?(y/n) : y
+빵(케이크 - 블루베리) 1개 15000원
+```
+
+### 예시 B — 확인하지 않는 경우
+
+
+```text
+스낵류를 입력하세요.
+종류 : 빵
+이름 : 케이크
+맛 : 블루베리
+개수 : 1
+가격 : 15000
+저장 완료되었습니다.
+저장한 정보를 확인하시겠습니까?(y/n) : n
+```
+
+
+</NotionIndent>
+
+<NotionDivider />
+
+
+<NotionIndent>
+
+
+```java
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public enum SnackField {
+    KIND("종류 : ", String.class),
+    NAME("이름 : ", String.class),
+    FLAVOR("맛 : ", String.class),
+    NUM_OF("개수 : ", Integer.class),
+    PRICE("가격 : ", Integer.class);
+
+    private final String prompt;
+    private final Class<?> type; // 데이터 타입을 Enum 자체에 매핑
+}
+```
+
+
+```java
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Snack {
+    private String kind;
+    private String name;
+    private String flavor;
+    private int numOf;
+    private int price;
+
+    public String information() {
+        return String.format("%s(%s - %s) %d개 %d원", kind, name, flavor, numOf, price);
+    }
+}
+```
+
+
+```java
+import java.util.Map;
+
+public class SnackController {
+    
+    private Snack s;
+
+    public String saveData(Map<SnackField, Object> dataMap) {
+        // 하드코딩 문자열 없이 Enum 키값을 기반으로 안전하게 데이터 추출 및 빌드
+        this.s = Snack.builder()
+                .kind((String) dataMap.get(SnackField.KIND))
+                .name((String) dataMap.get(SnackField.NAME))
+                .flavor((String) dataMap.get(SnackField.FLAVOR))
+                .numOf((Integer) dataMap.get(SnackField.NUM_OF))
+                .price((Integer) dataMap.get(SnackField.PRICE))
+                .build();
+                
+        return "저장 완료되었습니다.";
+    }
+
+    public String confirmData() {
+        return s != null ? s.information() : "저장된 스낵 정보가 없습니다.";
+    }
+}
+```
+
+
+```java
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class SnackMenu {
+    private final Scanner sc = new Scanner(System.in);
+    private final SnackController scr = new SnackController();
+
+    // UI 안내 메시지 상수화
+    private static final String PROMPT_CONFIRM = "저장한 정보를 확인하시겠습니까?(y/n) : ";
+    private static final String MSG_INVALID_INPUT = "잘못된 입력입니다. 메뉴를 종료합니다.";
+
+    public void menu() {
+        // 1. 별도 추출한 메서드를 통해 입력 데이터 Map을 깔끔하게 받아옴
+        Map<SnackField, Object> inputData = readInputData();
+
+        // 2. 컨트롤러 저장 로직 호출 및 결과 출력
+        String saveResult = scr.saveData(inputData);
+        System.out.println(saveResult);
+
+        // 3. 후속 확인 질의
+        System.out.print(PROMPT_CONFIRM);
+        String answer = sc.next();
+
+        switch (answer.toUpperCase()) {
+            case "Y" -> System.out.println(scr.confirmData());
+            case "N" -> { /* 복귀 */ }
+            default  -> System.out.println(MSG_INVALID_INPUT);
+        }
+    }
+
+    // 로직의 가독성을 위해 분리한 동적 입력 처리 메서드
+    private Map<SnackField, Object> readInputData() {
+        Map<SnackField, Object> inputData = new EnumMap<>(SnackField.class);
+
+        for (SnackField field : SnackField.values()) {
+            System.out.print(field.getPrompt());
+            
+            if (field.getType() == Integer.class) {
+                inputData.put(field, sc.nextInt());
+            } else {
+                inputData.put(field, sc.next());
+            }
+        }
+        return inputData;
+    }
+}
+```
+
+
+</NotionIndent>
+
+
+<NotionToggle title="기능추가 > 시스템 종료전 까지 스낵정보 CRUD 기능 추가">
+
+
+```java
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+@Getter
+@RequiredArgsConstructor
+public enum MenuAction {
+    CREATE("1", "스낵 추가 (C)"),
+    READ("2", "스낵 조회 (R)"),
+    UPDATE("3", "스낵 수정 (U)"),
+    DELETE("4", "스낵 삭제 (D)"),
+    PRINT_ALL("5", "전체 보기"),
+    EXIT("EXIT", "시스템 종료"),
+    QUIT("QUIT", "시스템 종료"),
+    NONE("NONE", "잘못된 메뉴");
+
+    private final String command;
+    private final String description;
+
+    // 공통 메뉴판 안내 문구 상수를 이곳으로 이동
+    public static final String TITLE_MAIN = "스낵 통합 관리 시스템";
+    public static final String PROMPT_MENU_SELECTION = "메뉴를 선택하시거나 종료하려면 [EXIT / QUIT]를 입력하세요 : ";
+
+    // 입력받은 문자열을 기반으로 MenuAction 객체 반환
+    public static MenuAction fromCommand(String input) {
+        return Arrays.stream(values())
+                .filter(m -> m.command.equalsIgnoreCase(input.trim()))
+                .findFirst()
+                .orElse(NONE);
+    }
+
+    // 메뉴판 가이드라인 텍스트를 동적으로 조립하여 반환하는 메서드
+    public static String getMenuBoard() {
+        return Arrays.stream(values())
+                .filter(action -> !action.command.matches("EXIT|QUIT|NONE"))
+                .map(action -> action.command + ". " + action.description)
+                .collect(Collectors.joining(" | "));
+    }
+}
+```
+
+
+```java
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public enum SnackField {
+    KIND("종류 : ", String.class),
+    NAME("이름 : ", String.class),
+    FLAVOR("맛 : ", String.class),
+    NUM_OF("개수 : ", Integer.class),
+    PRICE("가격 : ", Integer.class);
+
+    private final String prompt;
+    private final Class<?> type;
+}
+```
+
+
+```java
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Snack {
+    private Long id; 
+    private String kind;
+    private String name;
+    private String flavor;
+    private int numOf;
+    private int price;
+
+    public Snack update(String kind, String name, String flavor, int numOf, int price) {
+        return Snack.builder()
+                .id(this.id) 
+                .kind(kind)
+                .name(name)
+                .flavor(flavor)
+                .numOf(numOf)
+                .price(price)
+                .build();
+    }
+
+    public String information() {
+        return String.format("[ID: %d] %s(%s - %s) %d개 %d원", id, kind, name, flavor, numOf, price);
+    }
+}
+```
+
+
+```java
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+public class SnackMenuService {
+    private final Map<Long, Snack> repository = new HashMap<>();
+    private long sequence = 0L; 
+
+    private static final String MSG_SAVE_SUCCESS = "성공적으로 저장되었습니다. 부여된 고유ID는 %d입니다.";
+    private static final String MSG_UPDATE_SUCCESS = "성공적으로 수정되었습니다.";
+    private static final String MSG_DELETE_SUCCESS = "성공적으로 삭제되었습니다.";
+    private static final String MSG_NOT_FOUND = "해당 ID의 스낵 정보를 찾을 수 없습니다.";
+    private static final String MSG_EMPTY_REPOSITORY = "현재 저장된 스낵이 없습니다.";
+
+    public String saveData(Map<SnackField, Object> dataMap) {
+        long id = ++sequence;
+        Snack snack = Snack.builder()
+                .id(id)
+                .kind((String) dataMap.get(SnackField.KIND))
+                .name((String) dataMap.get(SnackField.NAME))
+                .flavor((String) dataMap.get(SnackField.FLAVOR))
+                .numOf((Integer) dataMap.get(SnackField.NUM_OF))
+                .price((Integer) dataMap.get(SnackField.PRICE))
+                .build();
+
+        repository.put(id, snack);
+        return String.format(MSG_SAVE_SUCCESS, id);
+    }
+
+    public String confirmData(long id) {
+        return Optional.ofNullable(repository.get(id))
+                .map(Snack::information)
+                .orElse(MSG_NOT_FOUND);
+    }
+
+    public void printAllSnacks() {
+        if (repository.isEmpty()) {
+            System.out.println(MSG_EMPTY_REPOSITORY);
+            return;
+        }
+        repository.values().forEach(snack -> System.out.println(snack.information()));
+    }
+
+    public String updateData(long id, Map<SnackField, Object> dataMap) {
+        Snack target = repository.get(id);
+        if (target == null) return MSG_NOT_FOUND;
+
+        Snack updatedSnack = target.update(
+                (String) dataMap.get(SnackField.KIND),
+                (String) dataMap.get(SnackField.NAME),
+                (String) dataMap.get(SnackField.FLAVOR),
+                (Integer) dataMap.get(SnackField.NUM_OF),
+                (Integer) dataMap.get(SnackField.PRICE)
+        );
+
+        repository.put(id, updatedSnack);
+        return MSG_UPDATE_SUCCESS;
+    }
+
+    public String deleteData(long id) {
+        if (!repository.containsKey(id)) return MSG_NOT_FOUND;
+        repository.remove(id);
+        return MSG_DELETE_SUCCESS;
+    }
+}
+```
+
+
+```java
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class SnackMenuController {
+    private final Scanner sc = new Scanner(System.in);
+    private final SnackMenuService ctrl = new SnackMenuService ();
+
+    // 메뉴 제어부 내부 전용 안내 상수
+    private static final String MSG_INVALID_MENU = "잘못된 번호입니다. 다시 입력하세요.";
+    private static final String MSG_SYSTEM_OFF = "시스템을 완전히 종료합니다.";
+    private static final String PROMPT_READ_ID = "조회할 스낵의 고유 ID를 입력하세요 : ";
+    private static final String PROMPT_UPDATE_ID = "수정할 스낵의 고유 ID를 입력하세요 : ";
+    private static final String PROMPT_DELETE_ID = "삭제할 스낵의 고유 ID를 입력하세요 : ";
+    private static final String MSG_UPDATE_NOTICE = "[ 새로운 정보를 입력해 주세요 ]";
+
+    public void startSystem() {
+        boolean isRunning = true;
+
+        while (isRunning) {
+            // MenuAction 내부 상수를 활용하여 메뉴판 출력
+            System.out.println("\n===== " + MenuAction.TITLE_MAIN + " =====");
+            System.out.println(MenuAction.getMenuBoard());
+            System.out.print(MenuAction.PROMPT_MENU_SELECTION);
+            
+            MenuAction action = MenuAction.fromCommand(sc.next());
+
+            switch (action) {
+                case EXIT, QUIT -> {
+                    isRunning = false;
+                    System.out.println(MSG_SYSTEM_OFF);
+                }
+                case CREATE    -> executeCreate();
+                case READ      -> executeRead();
+                case UPDATE    -> executeUpdate();
+                case DELETE    -> executeDelete();
+                case PRINT_ALL -> ctrl.printAllSnacks();
+                default        -> System.out.println(MSG_INVALID_MENU);
+            }
+        }
+    }
+
+    private void executeCreate() {
+        Map<SnackField, Object> inputData = readInputData();
+        System.out.println(ctrl.saveData(inputData));
+    }
+
+    private void executeRead() {
+        System.out.print(PROMPT_READ_ID);
+        System.out.println(ctrl.confirmData(sc.nextLong()));
+    }
+
+    private void executeUpdate() {
+        System.out.print(PROMPT_UPDATE_ID);
+        long id = sc.nextLong();
+        
+        System.out.println(MSG_UPDATE_NOTICE);
+        Map<SnackField, Object> updateData = readInputData();
+        System.out.println(ctrl.updateData(id, updateData));
+    }
+
+    private void executeDelete() {
+        System.out.print(PROMPT_DELETE_ID);
+        System.out.println(ctrl.deleteData(sc.nextLong()));
+    }
+
+    private Map<SnackField, Object> readInputData() {
+        Map<SnackField, Object> inputData = new EnumMap<>(SnackField.class);
+        for (SnackField field : SnackField.values()) {
+            System.out.print(field.getPrompt());
+            inputData.put(field, field.getType() == Integer.class ? sc.nextInt() : sc.next());
+        }
+        return inputData;
+    }
+}
+```
+
+
+</NotionToggle>
+
+
+</NotionToggle>
+

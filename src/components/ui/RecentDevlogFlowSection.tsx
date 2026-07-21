@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import devlogData from "@/data/devlog.json";
 import educationData from "@/data/notion/education.json";
-import blogData from "@/data/notion/blog.json";
 import type { DevlogEntry, DevlogCategory } from "@/types";
 import { TagList } from "@/components/ui/TagBadge";
 import { BlogIcon, CalendarIcon, CloseIcon, CommentIcon } from "@/components/ui/Icons";
@@ -99,20 +98,7 @@ function normalizeDevlogSections(): FlowSection[] {
     })
     .sort((a, b) => parseFlexibleDate(b.date) - parseFlexibleDate(a.date));
 
-  const mapNotionData = (rawData: any, category: string) => {
-    return (Array.isArray(rawData) ? rawData : []).map((item: any) => {
-      const desc = item.properties?.["느낀점"]?.rich_text?.[0]?.plain_text || 
-                   item.properties?.["요약"]?.rich_text?.[0]?.plain_text ||
-                   "작성된 내용이 없습니다.";
-      return {
-        id: item.slug || item.id,
-        title: item.title,
-        date: item.date || item.lastEditedTime?.split("T")[0] || "",
-        description: truncateText(desc, 50),
-        href: `/devlog/${category}/${item.slug || item.id}`,
-      };
-    }).sort((a, b) => parseFlexibleDate(b.date) - parseFlexibleDate(a.date));
-  };
+
 
   const sections = DEVLOG_TAB_ORDER.map(({ key, label }) => {
     if (key === "education_log") {
@@ -121,9 +107,6 @@ function normalizeDevlogSections(): FlowSection[] {
         label,
         items: education,
       };
-    }
-    if (key === "blog") {
-      return { key, label, items: mapNotionData(blogData, "blog") };
     }
 
     const list = (devlogMap[key as DevlogCategory] || [])
@@ -380,15 +363,13 @@ export function RecentDevlogFlowSection() {
               <p className="education-modal-impression">
                 {selectedEducation.fullDescription || "내용이 아직 없습니다."}
               </p>
-              {selectedEducation.notionUrl && (
-                <a
-                  href={selectedEducation.notionUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              {selectedEducation.id && (
+                <Link
+                  href={`/devlog/education/${selectedEducation.id}`}
                   className="education-blog-link"
                 >
-                  <BlogIcon /> 연습코드 보러가기 ↗
-                </a>
+                  <BlogIcon /> 마크다운 상세 보기 ↗
+                </Link>
               )}
             </div>
           </div>
