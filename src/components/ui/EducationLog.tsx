@@ -8,6 +8,8 @@ import { Pagination } from "@/components/ui/Pagination";
 import { normalizeEducationEntry, sortByDateDesc } from "@/lib/utils";
 import Link from "next/link";
 import { JournalSectionHeader } from "@/components/ui/JournalSectionHeader";
+import { CardThumbnail } from "@/components/ui/CardThumbnail";
+import { getDevlogThumbnail } from "@/lib/thumbnails";
 
 interface EducationEntry {
   id: string;
@@ -84,6 +86,7 @@ export function EducationLog({
             className="devlog-card education-card"
             onClick={() => setSelectedEntry(entry)}
           >
+            <CardThumbnail src={getDevlogThumbnail("education", entry.slug || entry.id.replaceAll("-", ""))} alt="" className="devlog-card-thumbnail" />
             <div className="education-card-header">
               <span className="education-round">{entry.round}</span>
               <span className="devlog-meta">

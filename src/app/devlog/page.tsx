@@ -17,6 +17,8 @@ import { JournalSectionHeader } from "@/components/ui/JournalSectionHeader";
 import { DevlogSectionHeader } from "@/components/ui/DevlogSectionHeader";
 import educationData from "@/data/notion/education.json";
 import { normalizeEducationEntry } from "@/lib/utils";
+import { CardThumbnail } from "@/components/ui/CardThumbnail";
+import { getDevlogThumbnail } from "@/lib/thumbnails";
 
 type TabKey = DevlogCategory | "journal" | "all";
 type DisplayCategory = DevlogCategory | "education";
@@ -26,7 +28,7 @@ const devlogCategoryLabels: Record<DisplayCategory, string> = {
   tech_study: "기술 학습",
   problem_solving: "문제 해결",
   competition_event: "대회·행사",
-  blog: "개인일지",
+  blog: "일지",
   education: "교육일지",
 };
 
@@ -314,6 +316,9 @@ function DevlogContent() {
                             style={{ textDecoration: "none", color: "inherit" }}
                           >
                             <div className="devlog-card" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                              {entry.category !== "blog" && (
+                                <CardThumbnail src={getDevlogThumbnail(entry.category, entry.id)} alt="" className="devlog-card-thumbnail" />
+                              )}
                               <div className="devlog-card-topline">
                                 <span className="devlog-card-category">{devlogCategoryLabels[entry.category]}</span>
                                 <div className="devlog-meta">

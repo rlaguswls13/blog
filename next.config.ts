@@ -7,6 +7,10 @@ const resolvedBasePath = rawBasePath === "ROOT" ? "" : rawBasePath || "";
 
 const nextConfig: NextConfig = {
   output: "export",
+  transpilePackages: ["@blog/ga4-analytics"],
+  env: {
+    NEXT_PUBLIC_BASE_PATH: process.env.NODE_ENV === "production" ? resolvedBasePath : "",
+  },
   images: {
     unoptimized: true,
   },

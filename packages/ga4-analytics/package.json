@@ -1,0 +1,14 @@
+{
+  "name": "@blog/ga4-analytics",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./react": "./src/google-analytics.tsx",
+    ".": "./src/google-analytics.tsx"
+  },
+  "peerDependencies": {
+    "next": ">=15",
+    "react": ">=18"
+  }
+}

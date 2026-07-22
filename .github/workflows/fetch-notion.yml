@@ -88,6 +88,8 @@ jobs:
         env:
           BASE_PATH: ${{ steps.resolve-pages-path.outputs.base_path }}
           ADSENSE_ACCOUNT: ${{ vars.ADSENSE_ACCOUNT }}
+          GA4_PROPERTY_ID: ${{ vars.GA4_PROPERTY_ID }}
+          GISCUS_GITHUB_TOKEN: ${{ secrets.GISCUS_GITHUB_TOKEN }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run build:no-fetch
 
       # 6. 빌드 결과물 업로드 (배포 전 아티팩트화)

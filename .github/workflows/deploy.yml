@@ -104,6 +104,8 @@ jobs:
         env:
           BASE_PATH: ${{ steps.resolve-pages-path.outputs.base_path }}
           ADSENSE_ACCOUNT: ${{ vars.ADSENSE_ACCOUNT }}
+          GA4_PROPERTY_ID: ${{ vars.GA4_PROPERTY_ID }}
+          GISCUS_GITHUB_TOKEN: ${{ secrets.GISCUS_GITHUB_TOKEN }}
         run: ${{ steps.detect-package-manager.outputs.manager }} run build:no-fetch
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

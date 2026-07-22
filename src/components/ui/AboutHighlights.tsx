@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 interface HighlightItem {
   title: string;
@@ -10,7 +10,6 @@ interface HighlightItem {
 const GRID_SIZE = 4; // items per "page" in 2×2
 
 export function AboutHighlights({ items }: { items: HighlightItem[] }) {
-  const [page, setPage] = useState(0);
   const [isJumping, setIsJumping] = useState(false);
 
   const totalPages = Math.ceil(items.length / GRID_SIZE);
@@ -27,17 +26,17 @@ export function AboutHighlights({ items }: { items: HighlightItem[] }) {
   // trackPage: 1-based within displayPages (0 = clone-last, N+1 = clone-first)
   const [trackPage, setTrackPage] = useState(1);
 
-  const goNext = useCallback(() => {
+  const goNext = () => {
     if (!needsCarousel) return;
     setIsJumping(false);
     setTrackPage((p) => Math.min(p + 1, totalPages + 1));
-  }, [needsCarousel, totalPages]);
+  };
 
-  const goPrev = useCallback(() => {
+  const goPrev = () => {
     if (!needsCarousel) return;
     setIsJumping(false);
     setTrackPage((p) => Math.max(p - 1, 0));
-  }, [needsCarousel]);
+  };
 
   useEffect(() => {
     if (!isJumping) return;
@@ -62,7 +61,7 @@ export function AboutHighlights({ items }: { items: HighlightItem[] }) {
     : 0;
   const activeDot = needsCarousel
     ? (effective - 1 + totalPages) % totalPages
-    : page;
+    : 0;
 
   if (!needsCarousel) {
     // Simple 2×2 grid, no carousel

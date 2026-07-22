@@ -10,6 +10,8 @@ import type { Project } from "@/types";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useEffect, useMemo } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { CardThumbnail } from "@/components/ui/CardThumbnail";
+import { getProjectThumbnail } from "@/lib/thumbnails";
 
 function ProjectsContent() {
   const searchParams = useSearchParams();
@@ -147,6 +149,7 @@ function ProjectsContent() {
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <div className="project-card" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                    <CardThumbnail src={getProjectThumbnail(p.id)} alt="" className="project-card-thumbnail" />
                     <div className="item-title">{p.title}</div>
                     <p className="project-period">
                       <CalendarIcon /> {formatPeriods(p.periods)} {calculateTotalPeriod(p.periods)}

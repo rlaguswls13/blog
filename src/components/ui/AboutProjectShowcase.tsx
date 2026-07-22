@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Project } from "@/types";
 import { formatMiniPeriod } from "@/lib/utils";
+import { getProjectThumbnail } from "@/lib/thumbnails";
+import { CardThumbnail } from "@/components/ui/CardThumbnail";
 
 function ProjectGroup({ title, eyebrow, projects, startIndex }: { title: string; eyebrow: string; projects: Project[]; startIndex: number }) {
   return (
@@ -13,8 +15,8 @@ function ProjectGroup({ title, eyebrow, projects, startIndex }: { title: string;
         {projects.map((project, index) => (
           <Link key={project.id} href={`/projects/${project.id}`} className="about-work-card">
             <div className={`about-work-thumbnail work-thumb-${(startIndex + index) % 6}`}>
+              <CardThumbnail src={getProjectThumbnail(project.id)} alt="" className="about-work-thumbnail-image" />
               <span>{String(startIndex + index + 1).padStart(2, "0")}</span>
-              <div className="about-work-diagram"><i /><i /><i /></div>
               <b>{project.tags[0]}</b>
             </div>
             <div className="about-work-body">

@@ -114,7 +114,40 @@ export function truncateMiddle(str: string, maxLength: number = 25): string {
   return str.substring(0, frontChars) + "..." + str.substring(str.length - backChars);
 }
 
-export function extractNotionText(richTextArray?: any[]): string {
+type NotionRichText = {
+  plain_text?: string;
+  text?: {
+    content?: string;
+  };
+};
+
+type NotionProperty = {
+  rich_text?: NotionRichText[];
+  title?: NotionRichText[];
+  date?: {
+    start?: string;
+  };
+  multi_select?: Array<{
+    name?: string;
+  }>;
+};
+
+type EducationEntryInput = {
+  id?: string;
+  title?: string;
+  slug?: string;
+  round?: string;
+  date?: string;
+  keywords?: string[];
+  tags?: string[];
+  impression?: string;
+  description?: string;
+  blogTitle?: string;
+  notionUrl?: string;
+  properties?: Record<string, NotionProperty>;
+};
+
+export function extractNotionText(richTextArray?: NotionRichText[]): string {
   if (!richTextArray || !Array.isArray(richTextArray)) return "";
   return richTextArray
     .map((item) => item?.plain_text || item?.text?.content || "")
@@ -122,33 +155,34 @@ export function extractNotionText(richTextArray?: any[]): string {
     .trim();
 }
 
-export function normalizeEducationEntry(entry: any) {
-  if (!entry) return null;
-  const props = entry.properties || {};
+export function normalizeEducationEntry(entry: unknown) {
+  if (!entry || typeof entry !== "object") return null;
+  const source = entry as EducationEntryInput;
+  const props = source.properties || {};
 
   const roundProp = props["회차"]?.rich_text;
-  const round = extractNotionText(roundProp) || entry.round || entry.title || "교육일지";
+  const round = extractNotionText(roundProp) || source.round || source.title || "교육일지";
 
   const dateProp = props["교육일"]?.date?.start;
-  const date = dateProp || entry.date || "";
+  const date = dateProp || source.date || "";
 
   const keywordsProp = props["키워드"]?.multi_select;
   const keywords = Array.isArray(keywordsProp)
-    ? keywordsProp.map((ms: any) => ms.name)
-    : entry.keywords || entry.tags || [];
+    ? keywordsProp.flatMap((item) => (item.name ? [item.name] : []))
+    : source.keywords || source.tags || [];
 
   const impressionProp = props["느낀점"]?.rich_text;
-  const impression = extractNotionText(impressionProp) || entry.impression || entry.description || "";
+  const impression = extractNotionText(impressionProp) || source.impression || source.description || "";
 
   const blogTitleProp = props["연습 코드"]?.title;
-  const blogTitle = extractNotionText(blogTitleProp) || entry.blogTitle || entry.title || "제목 없음";
+  const blogTitle = extractNotionText(blogTitleProp) || source.blogTitle || source.title || "제목 없음";
 
-  const slug = entry.slug || entry.id?.replace(/-/g, "") || "";
-  const notionUrl = entry.notionUrl || (slug ? `https://notion.so/${slug}` : "");
+  const slug = source.slug || source.id?.replace(/-/g, "") || "";
+  const notionUrl = source.notionUrl || (slug ? `https://notion.so/${slug}` : "");
 
   return {
-    id: entry.id,
-    title: entry.title || blogTitle,
+    id: source.id || slug,
+    title: source.title || blogTitle,
     slug,
     round,
     date,

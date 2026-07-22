@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+/playwright-report/
+/test-results/
 
 # next.js
 /.next/
@@ -22,9 +24,29 @@
 
 # misc
 .DS_Store
+Thumbs.db
+Desktop.ini
 *.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.mobileprovision
+*.bak
+*.orig
+*.swp
+*~
+
+# local credentials and secrets
+/credentials/
+/secrets/
+credentials*.json
+service-account*.json
 
 # debug
+*.log
+/logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -43,6 +65,18 @@ next-env.d.ts
 # IDEs and editors
 /.idea/
 /.vscode/
+/.fleet/
+/.codex/
+/.agents/
+*.iml
+
+# local caches and temporary work
+/tmp/
+/.eslintcache
+/.stylelintcache
+/.venv/
+**/__pycache__/
+*.py[cod]
 
 # generated data
 /src/data/education.json

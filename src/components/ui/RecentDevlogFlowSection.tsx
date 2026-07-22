@@ -34,7 +34,7 @@ const DEVLOG_TAB_ORDER: { key: DevlogCategory | "education_log" | "blog"; label:
   { key: "problem_solving", label: "문제 해결 기록" },
   { key: "competition_event", label: "대회/행사" },
   { key: "education_log", label: "교육일지" },
-  { key: "blog", label: "블로그" },
+  { key: "blog", label: "일지" },
 ];
 
 const CARDS_PER_VIEW = 3;
@@ -76,7 +76,7 @@ function chunkArray<T>(items: T[], chunkSize: number): T[][] {
 
 function normalizeDevlogSections(): FlowSection[] {
   const devlogMap = devlogData as Record<DevlogCategory, DevlogEntry[]>;
-  const rawEduList = Array.isArray(educationData) ? (educationData as any[]) : [];
+  const rawEduList: unknown[] = Array.isArray(educationData) ? educationData : [];
   const education = rawEduList
     .map((rawItem) => normalizeEducationEntry(rawItem))
     .filter((entry): entry is NonNullable<ReturnType<typeof normalizeEducationEntry>> => entry !== null)

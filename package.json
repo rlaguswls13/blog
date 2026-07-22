@@ -6,13 +6,15 @@
     "dev": "node scripts/fetch-notion.mjs && next dev",
     "dev:no-fetch": "next dev",
     "fetch-notion": "node scripts/fetch-notion.mjs",
-    "build": "node scripts/fetch-notion.mjs && next build",
-    "build:no-fetch": "next build",
+    "fetch-engagement": "node scripts/fetch-engagement.mjs",
+    "build": "node scripts/fetch-notion.mjs && node scripts/fetch-engagement.mjs && next build",
+    "build:no-fetch": "node scripts/fetch-engagement.mjs && next build",
     "start": "next start",
     "build:run": "node scripts/fetch-notion.mjs && next build && next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@blog/ga4-analytics": "file:packages/ga4-analytics",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.2.6",

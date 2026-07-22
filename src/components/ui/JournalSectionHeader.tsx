@@ -37,19 +37,19 @@ export function JournalSectionHeader({ categoryKey, title, count }: JournalSecti
             </button>
 
             <div className="section-title education-sync-modal-title">
-              <RefreshIcon style={{ color: "var(--accent-primary)" }} /> Notion {title} 동기화 안내
+              <RefreshIcon style={{ color: "var(--accent-primary)" }} /> {title} 동기화 안내
             </div>
 
             <div className="education-sync-modal-body">
               <p>{title}는 {sourceDescription}에서 가져옵니다.</p>
               <div className="education-sync-info-box">
-                <h4><ClockIcon /> 1시간 단위 자동 동기화</h4>
+                <h4><ClockIcon /> 1일 1회 이상 동기화</h4>
                 <p>
-                  API 토큰은 환경 변수로 보호하며, GitHub Actions가 Notion의 변경 사항을 확인해 정적 페이지를 다시 생성합니다.
+                  GitHub Actions이 변경 사항을 확인해 정적 페이지를 다시 생성합니다.
                 </p>
               </div>
               <p>
-                환경 변수의 카테고리 key는 <strong>{categoryKey}</strong>이며, 새 글은 다음 자동 빌드 이후 사이트에 반영됩니다.
+                새 글은 최대 1일 이후 사이트에 반영됩니다.
               </p>
             </div>
           </div>
