@@ -124,20 +124,20 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - name: Validate configuration
+        id: validate-sync
         env:
           TARGET_REPO: ${{ vars.TARGET_REPO }}
           TARGET_REPO_PAT: ${{ secrets.COMMERCIAL_REPO_PAT }}
         run: |
-          test -n "$TARGET_REPO" || {
-            echo "::error::TARGET_REPO is missing"
+          if [ -z "$TARGET_REPO" ] || [ -z "$TARGET_REPO_PAT" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Target repository sync skipped because its configuration is incomplete."
             exit 0
-          }
+          fi
 
-          test -n "$TARGET_REPO_PAT" || {
-            echo "::error::COMMERCIAL_REPO_PAT is missing"
-            exit 0
-          }
+          echo "enabled=true" >> "$GITHUB_OUTPUT"
       - name: Push to target repository
+        if: steps.validate-sync.outputs.enabled == 'true'
         env:
           TARGET_REPO: ${{ vars.TARGET_REPO }}
           TARGET_REPO_PAT: ${{ secrets.COMMERCIAL_REPO_PAT }}
