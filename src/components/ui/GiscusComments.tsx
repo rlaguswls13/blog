@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { LoadingPlaceholder } from "@/components/ui/DeferredContent";
+import { siteConfig } from "@/lib/site";
 
 function getThemeUrl(theme: "light" | "dark") {
   const devlogPathIndex = window.location.pathname.indexOf("/devlog/");
@@ -22,7 +23,7 @@ function getCurrentGiscusTheme() {
   return getThemeUrl(getCurrentTheme());
 }
 
-export function GiscusComments() {
+export function GiscusComments({ term }: { term?: string } = {}) {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -67,17 +68,18 @@ export function GiscusComments() {
     script.src = "https://giscus.app/client.js";
     script.async = true;
     script.crossOrigin = "anonymous";
-    script.setAttribute("data-repo", "rlaguswls13/giscus-blog");
-    script.setAttribute("data-repo-id", "R_kgDOTe9p7Q");
-    script.setAttribute("data-category", "Announcements");
-    script.setAttribute("data-category-id", "DIC_kwDOTe9p7c4DBpNR");
-    script.setAttribute("data-mapping", "pathname");
+    script.setAttribute("data-repo", siteConfig.giscus.repository);
+    script.setAttribute("data-repo-id", siteConfig.giscus.repositoryId);
+    script.setAttribute("data-category", siteConfig.giscus.category);
+    script.setAttribute("data-category-id", siteConfig.giscus.categoryId);
+    script.setAttribute("data-mapping", term ? "specific" : "pathname");
+    if (term) script.setAttribute("data-term", term);
     script.setAttribute("data-strict", "0");
     script.setAttribute("data-reactions-enabled", "0");
     script.setAttribute("data-emit-metadata", "0");
     script.setAttribute("data-input-position", "bottom");
     script.setAttribute("data-theme", getCurrentGiscusTheme());
-    script.setAttribute("data-lang", "ko");
+    script.setAttribute("data-lang", siteConfig.giscus.language);
     container.appendChild(script);
 
     const syncTheme = () => {
@@ -107,7 +109,7 @@ export function GiscusComments() {
       currentFrame?.removeEventListener("load", syncTheme);
       container.replaceChildren();
     };
-  }, [shouldLoad]);
+  }, [shouldLoad, term]);
 
   return (
     <section ref={sectionRef} className="comments-section render-lazy" aria-labelledby="comments-title">

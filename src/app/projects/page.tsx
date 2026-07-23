@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import projectsData from "@/data/projects.json";
+import projectsData from "@/data/pages/main/projects.json";
 import { TagList } from "@/components/ui/TagBadge";
 import { formatPeriods, calculateTotalPeriod, sortByDateDesc } from "@/lib/utils";
 import Link from "next/link";

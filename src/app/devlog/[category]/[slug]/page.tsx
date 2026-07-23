@@ -1,0 +1,177 @@
+import fs from "fs";
+import path from "path";
+import type { Metadata } from "next";
+import { isValidElement, type ComponentPropsWithoutRef } from "react";
+import matter from "gray-matter";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import rehypePrettyCode from "rehype-pretty-code";
+import { DevlogBackLink } from "@/components/layout/DevlogBackLink";
+import { TagList } from "@/components/ui/TagBadge";
+import { CalendarIcon } from "@/components/ui/Icons";
+import { Indent } from "@/components/ui/Indent";
+import { LazyMdxDiagram, type LazyMdxDiagramName } from "@/components/ui/LazyMdxDiagram";
+import { CodePopup } from "@/components/layout/CodePopup";
+import { Collapsible } from "@/components/ui/Collapsible";
+import { MdxImageFigure } from "@/components/ui/MdxImageFigure";
+import { NotionImage } from "@/components/ui/notion/NotionImage";
+import { NotionTable } from "@/components/ui/notion/NotionTable";
+import { NotionToggle } from "@/components/ui/notion/NotionToggle";
+import { NotionCallout } from "@/components/ui/notion/NotionCallout";
+import { NotionDivider } from "@/components/ui/notion/NotionDivider";
+import { NotionIndent } from "@/components/ui/notion/NotionIndent";
+import { NotionCode } from "@/components/ui/notion/NotionCode";
+import { GiscusComments } from "@/components/ui/GiscusComments";
+import recommendationData from "@/data/indexes/devlog-recommendations.json";
+import { RelatedDevlogs, type RelatedDevlogItem } from "@/components/ui/RelatedDevlogs";
+import { getDevlogIdBySlug } from "@/lib/devlog-slugs";
+
+type DevlogPageIndexItem = {
+  category: string;
+  id: string;
+  slug: string;
+  sourceFile: string;
+  title: string;
+  date: string;
+  href: string;
+  discussionTerm: string;
+};
+
+const pageIndex = recommendationData.pages as DevlogPageIndexItem[];
+
+type PrettyCodeFigureProps = ComponentPropsWithoutRef<"figure"> & {
+  "data-rehype-pretty-code-figure"?: string;
+};
+
+const lazyDiagram = (name: LazyMdxDiagramName) => function LazyDiagramSlot() {
+  return <LazyMdxDiagram name={name} />;
+};
+
+const components = {
+  G1GCMemory: lazyDiagram("G1GCMemory"),
+  KahaDBBlocks: lazyDiagram("KahaDBBlocks"),
+  QuartzMechanism: lazyDiagram("QuartzMechanism"),
+  QuartzHAClustering: lazyDiagram("QuartzHAClustering"),
+  QuartzSharding: lazyDiagram("QuartzSharding"),
+  Indent,
+  ApiFlowDiagram: lazyDiagram("ApiFlowDiagram"),
+  DbBottleneckDiagram: lazyDiagram("DbBottleneckDiagram"),
+  MqPriorityDiagram: lazyDiagram("MqPriorityDiagram"),
+  TimeoutPolicyDiagram: lazyDiagram("TimeoutPolicyDiagram"),
+  PubSubArchitecture: lazyDiagram("PubSubArchitecture"),
+  EventBusSimulator: lazyDiagram("EventBusSimulator"),
+  StorageArchitectureDiagram: lazyDiagram("StorageArchitectureDiagram"),
+  StorageNetworkDiagram: lazyDiagram("StorageNetworkDiagram"),
+  StoragePhysicalDiagram: lazyDiagram("StoragePhysicalDiagram"),
+  ContainerVsVmDiagram: lazyDiagram("ContainerVsVmDiagram"),
+  K8sSecurityDiagram: lazyDiagram("K8sSecurityDiagram"),
+  CodePopup,
+  Collapsible,
+  MdxImageFigure,
+  NotionImage,
+  NotionTable,
+  NotionToggle,
+  NotionCallout,
+  NotionDivider,
+  NotionIndent,
+  figure: (props: PrettyCodeFigureProps) => {
+    if (props["data-rehype-pretty-code-figure"] !== undefined) {
+      const language = isValidElement<{ "data-language"?: string }>(props.children)
+        ? props.children.props["data-language"] || "text"
+        : "text";
+      return <NotionCode language={language}>{props.children}</NotionCode>;
+    }
+    return <figure {...props} />;
+  },
+};
+
+export async function generateStaticParams() {
+  return pageIndex.map((entry) => ({ category: entry.category, slug: entry.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string; slug: string }>;
+}): Promise<Metadata> {
+  const { category, slug } = await params;
+  const id = getDevlogIdBySlug(category, slug);
+  const entry = pageIndex.find((item) => item.category === category && item.id === id);
+  if (!entry) return {};
+
+  return {
+    title: `${entry.title} | TECH LOG`,
+    description: `${entry.title}에 관한 Devlog 기록입니다.`,
+    alternates: { canonical: entry.href },
+    openGraph: {
+      title: entry.title,
+      url: entry.href,
+      type: "article",
+    },
+  };
+}
+
+export default async function DevlogDetailPage({
+  params,
+}: {
+  params: Promise<{ category: string; slug: string }>;
+}) {
+  const { category, slug } = await params;
+  const id = getDevlogIdBySlug(category, slug);
+  const pageEntry = pageIndex.find((item) => item.category === category && item.id === id);
+  if (!pageEntry) return <div>Devlog not found</div>;
+
+  const filePath = path.join(
+    /* turbopackIgnore: true */ process.cwd(),
+    pageEntry.sourceFile,
+  );
+
+  let fileContent;
+  try {
+    fileContent = fs.readFileSync(filePath, "utf8");
+  } catch {
+    return <div>Devlog not found</div>;
+  }
+
+  const { data, content } = matter(fileContent);
+  const recommendationItems = recommendationData.items as Record<string, RelatedDevlogItem[]>;
+  const relatedDevlogs = recommendationItems[`${category}/${pageEntry.id}`] || [];
+
+  return (
+    <article className="detail-content-page devlog-detail-page">
+      <DevlogBackLink category={category} />
+      <header className="detail-page-heading project-card" style={{ marginBottom: "40px" }}>
+        <span className="page-heading-eyebrow">DEVLOG · {category.replaceAll("_", " ")}</span>
+        <div className="devlog-meta" style={{ marginBottom: "15px" }}>
+          <span><CalendarIcon /> {data.date}</span>
+        </div>
+        <h1 className="page-title">
+          {data.title}
+        </h1>
+        {data.tags && <TagList tags={data.tags} />}
+      </header>
+
+      <RelatedDevlogs items={relatedDevlogs} />
+
+      <div className="mdx-content">
+        <MDXRemote
+          source={content}
+          components={components}
+          options={{
+            mdxOptions: {
+              rehypePlugins: [
+                [
+                  rehypePrettyCode,
+                  {
+                    theme: "github-dark-dimmed",
+                    keepBackground: true,
+                  },
+                ],
+              ],
+            },
+          }}
+        />
+      </div>
+      <GiscusComments term={pageEntry.discussionTerm} />
+    </article>
+  );
+}

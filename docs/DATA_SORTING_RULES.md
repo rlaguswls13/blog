@@ -52,8 +52,8 @@
 최신순으로 결정된다.
 
 - 구현: `src/app/page.tsx`의 `compareByEngagement`
-- 통계 생성: `scripts/fetch-engagement.mjs`
-- 통계 저장: `src/data/engagement.json`
+- 통계 생성: `scripts/engagement/fetch.mjs`
+- 통계 저장: `src/data/indexes/engagement.json`
 
 ### Home — 인기 태그
 

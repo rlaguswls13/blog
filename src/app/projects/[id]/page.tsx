@@ -1,5 +1,5 @@
-import projectsMeta from "@/data/projects.json";
-import projectDetails from "@/data/project-detail.json";
+import projectDetails from "@/data/pages/detail/project-detail.json";
+import projectsMeta from "@/data/pages/main/projects.json";
 import type { Project, ProjectDetail } from "@/types";
 import ProjectDetailClient from "./ProjectDetailClient";
 

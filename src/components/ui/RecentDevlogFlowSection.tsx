@@ -2,13 +2,15 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import devlogData from "@/data/devlog.json";
-import educationData from "@/data/notion/education.json";
+import devlogData from "@/data/indexes/devlog.json";
+import personalData from "@/data/pages/main/notion/personal.json";
+import educationData from "@/data/pages/main/notion/education.json";
 import type { DevlogEntry, DevlogCategory } from "@/types";
 import { TagList } from "@/components/ui/TagBadge";
 import { BlogIcon, CalendarIcon, CloseIcon, CommentIcon } from "@/components/ui/Icons";
 
 import { normalizeEducationEntry } from "@/lib/utils";
+import { getDevlogHref, getDevlogStorageId } from "@/lib/devlog-slugs";
 
 type FlowItem = {
   id: string;
@@ -34,7 +36,7 @@ const DEVLOG_TAB_ORDER: { key: DevlogCategory | "education_log" | "blog"; label:
   { key: "problem_solving", label: "문제 해결 기록" },
   { key: "competition_event", label: "대회/행사" },
   { key: "education_log", label: "교육일지" },
-  { key: "blog", label: "일지" },
+  { key: "blog", label: "개인일지" },
 ];
 
 const CARDS_PER_VIEW = 3;
@@ -84,7 +86,7 @@ function normalizeDevlogSections(): FlowSection[] {
       const rawSummary = entry.impression?.trim() || entry.blogTitle?.trim() || "작성중";
 
       return {
-        id: entry.id,
+        id: getDevlogStorageId("education", entry.id),
         title: entry.round || entry.blogTitle || "교육일지",
         date: entry.date,
         description: truncateText(rawSummary, 50),
@@ -109,13 +111,14 @@ function normalizeDevlogSections(): FlowSection[] {
       };
     }
 
-    const list = (devlogMap[key as DevlogCategory] || [])
+    const sourceEntries = key === "blog" ? personalData : devlogMap[key as DevlogCategory] || [];
+    const list = (sourceEntries as DevlogEntry[])
       .map((entry) => ({
         id: entry.id,
         title: entry.title,
         date: entry.date || "",
         description: entry.description || "",
-        href: `/devlog/${key}/${entry.id}`,
+        href: getDevlogHref(key, entry.id),
       }))
       .sort((a, b) => parseFlexibleDate(b.date) - parseFlexibleDate(a.date));
 
@@ -365,7 +368,7 @@ export function RecentDevlogFlowSection() {
               </p>
               {selectedEducation.id && (
                 <Link
-                  href={`/devlog/education/${selectedEducation.id}`}
+                  href={getDevlogHref("education", selectedEducation.id)}
                   className="education-blog-link"
                 >
                   <BlogIcon /> 마크다운 상세 보기 ↗

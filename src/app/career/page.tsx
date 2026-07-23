@@ -1,4 +1,4 @@
-import resumeData from "@/data/resume.json";
+import resumeData from "@/data/pages/main/resume.json";
 import { TimelineItem } from "@/components/ui/Timeline";
 import { PageHeader } from "@/components/layout/PageHeader";
 

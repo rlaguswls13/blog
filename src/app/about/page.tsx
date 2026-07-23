@@ -1,5 +1,5 @@
-import profileData from "@/data/profile.json";
-import projectsData from "@/data/projects.json";
+import profileData from "@/data/pages/main/profile.json";
+import projectsData from "@/data/pages/main/projects.json";
 import { SkillBar } from "@/components/ui/SkillBar";
 import Image from "next/image";
 import type { Project, Skill } from "@/types";

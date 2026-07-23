@@ -1,0 +1,15 @@
+{
+  "name": "@blog/ga4-analytics",
+  "description": "Browser-side GA4 integration for the blog",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./react": "./src/google-analytics.tsx",
+    ".": "./src/google-analytics.tsx"
+  },
+  "peerDependencies": {
+    "next": ">=15",
+    "react": ">=18"
+  }
+}

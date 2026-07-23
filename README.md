@@ -75,9 +75,11 @@ blog/
 ├─ docs/                            # 상세 기술/운영 문서
 ├─ public/images/                   # 프로필·콘텐츠 이미지
 ├─ scripts/
-│  ├─ fetch-notion.mjs             # Notion 동기화 진입점
-│  ├─ handlers/                    # 콘텐츠 유형별 변환 처리
-│  └─ lib/                         # Notion API·정규화·MDX 변환
+│  ├─ ga4/                         # GA4 로컬 패키지
+│  ├─ slug/                        # Devlog slug 생성·검증
+│  ├─ notion/                      # Notion 동기화·변환
+│  ├─ engagement/                  # Giscus 참여 통계 수집
+│  └─ recommendations/             # Devlog 추천 데이터 생성
 ├─ src/
 │  ├─ app/                         # App Router 페이지와 전역 스타일
 │  │  ├─ about/                    # 개발자 프로필과 경험 소개
@@ -91,7 +93,11 @@ blog/
 │  │  ├─ layout/                   # Navbar, 테마, 공통 뒤로가기 UI
 │  │  └─ ui/                       # 카드, 탭, 캐러셀, Notion 렌더러 등
 │  ├─ content/devlog/              # MDX 기술 콘텐츠
-│  ├─ data/                        # 화면용 JSON 데이터와 Notion 메타데이터
+│  ├─ data/
+│  │  ├─ config/                  # 공개 사이트 설정·slug 매핑
+│  │  ├─ pages/main/              # 메인·목록 화면 데이터
+│  │  ├─ pages/detail/            # 상세 화면 데이터
+│  │  └─ indexes/                 # 조회용 사전 계산 인덱스·캐시
 │  ├─ lib/                         # 공통 유틸리티와 Notion 타입
 │  └─ types/                       # 애플리케이션 TypeScript 타입
 ├─ next.config.ts                  # static export, basePath, 이미지 설정
@@ -101,7 +107,7 @@ blog/
 
 ## 콘텐츠 흐름
 
-1. `scripts/fetch-notion.mjs`가 Notion 페이지 메타데이터를 조회합니다.
+1. `scripts/notion/fetch.mjs`가 Notion 페이지 메타데이터를 조회합니다.
 2. `.cache/notion/manifest.json`의 `last_edited_time`과 비교해 변경된 페이지만 가져옵니다.
 3. 블록을 내부 모델과 MDX로 변환하고 이미지를 `public/images/notion/`에 로컬화합니다.
 4. 앱은 `src/data`와 `src/content/devlog`의 정적 데이터를 읽어 페이지를 생성합니다.

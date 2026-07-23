@@ -1,0 +1,10 @@
+[
+  {
+    "key": "education",
+    "label": "교육일지"
+  },
+  {
+    "key": "personal",
+    "label": "개인일지"
+  }
+]

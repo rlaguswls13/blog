@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import educationData from "@/data/notion/education.json";
+import educationData from "@/data/pages/main/notion/education.json";
 import { CalendarIcon, BlogIcon, CommentIcon, CloseIcon } from "@/components/ui/Icons";
 import { TagList } from "@/components/ui/TagBadge";
 import { Pagination } from "@/components/ui/Pagination";
@@ -10,6 +10,7 @@ import Link from "next/link";
 import { JournalSectionHeader } from "@/components/ui/JournalSectionHeader";
 import { CardThumbnail } from "@/components/ui/CardThumbnail";
 import { getDevlogThumbnail } from "@/lib/thumbnails";
+import { getDevlogHref } from "@/lib/devlog-slugs";
 
 interface EducationEntry {
   id: string;
@@ -86,7 +87,7 @@ export function EducationLog({
             className="devlog-card education-card"
             onClick={() => setSelectedEntry(entry)}
           >
-            <CardThumbnail src={getDevlogThumbnail("education", entry.slug || entry.id.replaceAll("-", ""))} alt="" className="devlog-card-thumbnail" priority={index === 0} />
+            <CardThumbnail src={getDevlogThumbnail("education", entry.id)} alt="" className="devlog-card-thumbnail" priority={index === 0} />
             <div className="education-card-header">
               <span className="education-round">{entry.round}</span>
               <span className="devlog-meta">
@@ -110,7 +111,7 @@ export function EducationLog({
 
             {entry.slug && (
               <Link
-                href={`/devlog/education/${entry.slug}?tab=journal&journal=education`}
+                href={`${getDevlogHref("education", entry.id)}?tab=journal&journal=education`}
                 className="education-blog-link"
                 onClick={(e) => e.stopPropagation()}
               >
@@ -175,7 +176,7 @@ export function EducationLog({
 
             {selectedEntry.slug && (
               <Link
-                href={`/devlog/education/${selectedEntry.slug}?tab=journal&journal=education`}
+                href={`${getDevlogHref("education", selectedEntry.id)}?tab=journal&journal=education`}
                 className="education-blog-link"
               >
                 <BlogIcon /> 상세내용 ↗

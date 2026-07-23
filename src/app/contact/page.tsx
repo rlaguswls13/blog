@@ -1,5 +1,5 @@
 "use client";
-import contactData from "@/data/contact.json";
+import contactData from "@/data/pages/main/contact.json";
 import Image from "next/image";
 import { GithubIcon, PhoneIcon, MailIcon } from "@/components/ui/Icons";
 import contactPicture from "../../../public/images/2022_picture.jpg";

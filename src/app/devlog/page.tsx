@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, Suspense, useMemo } from "react";
-import devlogData from "@/data/devlog.json";
+import devlogData from "@/data/indexes/devlog.json";
+import personalData from "@/data/pages/main/notion/personal.json";
 import { TabGroup } from "@/components/ui/TabGroup";
 import { TagList } from "@/components/ui/TagBadge";
 import { CalendarIcon, SearchIcon } from "@/components/ui/Icons";
@@ -12,13 +13,14 @@ import { Pagination } from "@/components/ui/Pagination";
 import { useSearchParams, useRouter } from "next/navigation";
 import type { DevlogCategory, DevlogEntry } from "@/types";
 import { PageHeader } from "@/components/layout/PageHeader";
-import journalCategories from "@/data/journal-categories.json";
+import journalCategories from "@/data/pages/main/journal-categories.json";
 import { JournalSectionHeader } from "@/components/ui/JournalSectionHeader";
 import { DevlogSectionHeader } from "@/components/ui/DevlogSectionHeader";
-import educationData from "@/data/notion/education.json";
+import educationData from "@/data/pages/main/notion/education.json";
 import { normalizeEducationEntry } from "@/lib/utils";
 import { CardThumbnail } from "@/components/ui/CardThumbnail";
 import { getDevlogThumbnail } from "@/lib/thumbnails";
+import { getDevlogHref, getDevlogStorageId } from "@/lib/devlog-slugs";
 import { LoadingPlaceholder } from "@/components/ui/DeferredContent";
 
 type TabKey = DevlogCategory | "journal" | "all";
@@ -29,7 +31,7 @@ const devlogCategoryLabels: Record<DisplayCategory, string> = {
   tech_study: "기술 학습",
   problem_solving: "문제 해결",
   competition_event: "대회·행사",
-  blog: "일지",
+  blog: "개인일지",
   education: "교육일지",
 };
 
@@ -63,7 +65,7 @@ function DevlogContent() {
   const initialTab = requestedTab === "blog" || requestedTab === "education_log" ? "journal" : requestedTab;
   const initialPkg = searchParams.get("pkg") || "All";
   const initialJournal = searchParams.get("journal")
-    || (requestedTab === "blog" ? "blog" : requestedTab === "education_log" ? "education" : "")
+    || (requestedTab === "blog" ? "personal" : requestedTab === "education_log" ? "education" : "")
     || journalCategories[0]?.key
     || "education";
   const initialSearch = searchParams.get("q") || "";
@@ -101,15 +103,22 @@ function DevlogContent() {
     }
 
     if (activeTab === "all") {
-      const contentCategories: DevlogCategory[] = ["tech_study", "problem_solving", "competition_event", "blog"];
+      const contentCategories: Exclude<DevlogCategory, "blog">[] = [
+        "tech_study",
+        "problem_solving",
+        "competition_event",
+      ];
       entries = contentCategories.flatMap((category) =>
         ((devlogData[category] || []) as DevlogEntry[]).map((entry) => ({ ...entry, category })),
+      );
+      entries.push(
+        ...(personalData as DevlogEntry[]).map((entry) => ({ ...entry, category: "blog" as const })),
       );
       const educationEntries: DisplayEntry[] = (educationData as unknown[])
         .map((entry) => normalizeEducationEntry(entry))
         .filter((entry): entry is NonNullable<ReturnType<typeof normalizeEducationEntry>> => entry !== null)
         .map((entry) => ({
-          id: entry.slug || entry.id,
+          id: getDevlogStorageId("education", entry.id),
           title: entry.blogTitle || entry.title,
           date: entry.date.replace(/-/g, "."),
           tags: entry.keywords,
@@ -126,11 +135,12 @@ function DevlogContent() {
         ...sortByDateDesc(journalEntries),
       ];
     } else if (activeTab === "journal") {
-      if (activeJournal !== "blog") return [];
-      entries = ((devlogData.blog || []) as DevlogEntry[]).map((entry) => ({ ...entry, category: "blog" }));
+      if (activeJournal !== "personal") return [];
+      entries = (personalData as DevlogEntry[]).map((entry) => ({ ...entry, category: "blog" }));
     } else {
       const category = activeTab as DevlogCategory;
-      entries = ((devlogData[category] || []) as DevlogEntry[]).map((entry) => ({ ...entry, category }));
+      const categoryEntries = category === "blog" ? personalData : devlogData[category] || [];
+      entries = (categoryEntries as DevlogEntry[]).map((entry) => ({ ...entry, category }));
     }
     return sortByDateDesc(entries);
   }, [activeTab, activeJournal]);
@@ -312,7 +322,7 @@ function DevlogContent() {
                         {paginatedEntries.map((entry, index) => (
                           <Link
                             key={entry.id}
-                            href={`/devlog/${entry.category}/${entry.id}?pkg=${activePkg}&page=${currentPage}`}
+                            href={`${getDevlogHref(entry.category, entry.id)}?pkg=${activePkg}&page=${currentPage}`}
                             className="devlog-card-link"
                             style={{ textDecoration: "none", color: "inherit" }}
                           >

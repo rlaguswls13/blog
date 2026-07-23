@@ -2,15 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import devlogData from "@/data/devlog.json";
-import educationData from "@/data/notion/education.json";
-import engagementData from "@/data/engagement.json";
+import devlogData from "@/data/indexes/devlog.json";
+import engagementData from "@/data/indexes/engagement.json";
+import personalData from "@/data/pages/main/notion/personal.json";
+import educationData from "@/data/pages/main/notion/education.json";
 import type { DevlogCategory, DevlogEntry } from "@/types";
 import { CalendarIcon, CloseIcon, CommentIcon } from "@/components/ui/Icons";
 import { TagList } from "@/components/ui/TagBadge";
 import { normalizeEducationEntry, parseDate, sortByDateDesc } from "@/lib/utils";
 import { CardThumbnail } from "@/components/ui/CardThumbnail";
 import { getDevlogThumbnail } from "@/lib/thumbnails";
+import { getDevlogHref, getDevlogStorageId } from "@/lib/devlog-slugs";
 
 type HomeContentCategory = DevlogCategory | "education";
 type HomeFilter = Exclude<DevlogCategory, "blog"> | "journal";
@@ -21,7 +23,7 @@ const contentCategoryInfo: Record<HomeContentCategory, { label: string; descript
   tech_study: { label: "기술 학습", description: "새롭게 익힌 기술과 핵심 개념" },
   problem_solving: { label: "문제 해결", description: "실무 장애 분석과 개선 과정" },
   competition_event: { label: "대회·행사", description: "도전과 경험에서 얻은 인사이트" },
-  blog: { label: "일지", description: "개발과 커리어에 대한 생각과 기록" },
+  blog: { label: "개인일지", description: "개발과 커리어에 대한 생각과 기록" },
   education: { label: "교육일지", description: "Notion에 기록한 교육과 학습 내용" },
 };
 
@@ -32,15 +34,22 @@ const filterInfo: Record<HomeFilter, { label: string; description: string }> = {
   competition_event: contentCategoryInfo.competition_event,
   journal: { label: "일지", description: "Notion에 기록한 교육과 개인 기록" },
 };
-const devlogCategories: DevlogCategory[] = ["tech_study", "problem_solving", "competition_event", "blog"];
-const devlogEntries: HomeEntry[] = devlogCategories.flatMap((category) =>
+const devlogCategories: Exclude<DevlogCategory, "blog">[] = [
+  "tech_study",
+  "problem_solving",
+  "competition_event",
+];
+const fixedDevlogEntries: HomeEntry[] = devlogCategories.flatMap((category) =>
   ((devlogData[category] || []) as DevlogEntry[]).map((entry) => ({ ...entry, category })),
 );
+const blogEntries: HomeEntry[] = (personalData as DevlogEntry[])
+  .map((entry) => ({ ...entry, category: "blog" }));
+const devlogEntries: HomeEntry[] = [...fixedDevlogEntries, ...blogEntries];
 const educationEntries: HomeEntry[] = (educationData as unknown[])
   .map((entry) => normalizeEducationEntry(entry))
   .filter((entry): entry is NonNullable<ReturnType<typeof normalizeEducationEntry>> => entry !== null)
   .map((entry) => ({
-    id: entry.slug || entry.id.replace(/-/g, ""),
+    id: getDevlogStorageId("education", entry.id),
     title: entry.blogTitle || entry.title,
     date: entry.date,
     tags: entry.keywords,
@@ -61,7 +70,7 @@ const sidebarTags = sortedTags.slice(0, SIDEBAR_TAG_LIMIT);
 const engagementPosts = engagementData.posts as Record<string, Engagement>;
 
 function getEngagement(entry: HomeEntry): Engagement {
-  return engagementPosts[`/devlog/${entry.category}/${entry.id}`] || { comments: 0 };
+  return engagementPosts[getDevlogHref(entry.category, entry.id)] || { comments: 0 };
 }
 
 function compareByEngagement(left: HomeEntry, right: HomeEntry) {
@@ -102,7 +111,7 @@ export default function TechBlogHome() {
       : `/devlog?tab=${activeCategory}&pkg=All&page=1`;
 
   const getFilterCount = (filter: HomeFilter) => filter === "journal"
-    ? educationEntries.length + ((devlogData.blog || []) as DevlogEntry[]).length
+    ? educationEntries.length + blogEntries.length
     : ((devlogData[filter] || []) as DevlogEntry[]).length;
 
   return (
@@ -157,7 +166,7 @@ export default function TechBlogHome() {
             {visibleEntries.map((entry, index) => {
               const engagement = getEngagement(entry);
               return (
-                <Link key={`${entry.category}-${entry.id}`} href={`/devlog/${entry.category}/${entry.id}`} className="tech-post-card">
+                <Link key={`${entry.category}-${entry.id}`} href={getDevlogHref(entry.category, entry.id)} className="tech-post-card">
                   {entry.category !== "blog" && (
                     <div className={`tech-post-cover cover-${index + 1}`}>
                       <CardThumbnail src={getDevlogThumbnail(entry.category, entry.id)} alt="" className="tech-post-cover-image" priority={index < 3} />
@@ -222,7 +231,7 @@ export default function TechBlogHome() {
               {popularEntries.slice(0, 5).map((entry, index) => {
                 const engagement = getEngagement(entry);
                 return (
-                  <Link key={`${entry.category}-${entry.id}`} href={`/devlog/${entry.category}/${entry.id}`}>
+                  <Link key={`${entry.category}-${entry.id}`} href={getDevlogHref(entry.category, entry.id)}>
                     <span>{String(index + 1).padStart(2, "0")}</span>
                     <div>
                       <strong>{entry.title}</strong>

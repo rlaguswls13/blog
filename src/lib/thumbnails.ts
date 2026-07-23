@@ -1,3 +1,5 @@
+import { getDevlogStorageId } from "@/lib/devlog-slugs";
+
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export function getProjectThumbnail(id: string) {
@@ -5,5 +7,5 @@ export function getProjectThumbnail(id: string) {
 }
 
 export function getDevlogThumbnail(category: string, id: string) {
-  return `${basePath}/thumnail/devlog/${category}/${id}.webp`;
+  return `${basePath}/thumnail/devlog/${category}/${getDevlogStorageId(category, id)}.webp`;
 }

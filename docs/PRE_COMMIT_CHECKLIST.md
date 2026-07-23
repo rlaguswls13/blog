@@ -10,7 +10,7 @@
 - `.cache`, `.idea`, `.next`, `out`, `node_modules`, `tsconfig.tsbuildinfo`, `next-env.d.ts`는 무시됩니다.
 - `.agents/AGENTS.md`는 기존 커밋에 포함돼 있지만 현재 작업 트리에서 삭제된 상태입니다. 기존 내용에서는 키·토큰·개인 절대경로가 발견되지 않았습니다. 삭제가 의도한 변경인지 확인한 뒤 이번 커밋에 포함해야 합니다.
 - 추적·미추적 후보 282개에서 개인 키와 주요 서비스 토큰 형식을 검사했으며 실제 비밀값은 발견되지 않았습니다.
-- `src/data/codePopupContent.ts`의 비밀번호 형태 문자열은 Tomcat 보안 설명을 위한 예시이며 실제 계정 정보가 아닙니다.
+- `src/data/pages/detail/codePopupContent.ts`의 비밀번호 형태 문자열은 Tomcat 보안 설명을 위한 예시이며 실제 계정 정보가 아닙니다.
 - `public/thumnail`에는 현재 데이터에서 참조하는 WebP 81개만 존재합니다.
 - 일반 `일지(blog)`에는 썸네일을 사용하지 않습니다.
 
