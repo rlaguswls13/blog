@@ -1,53 +1,87 @@
-# 설치 및 관리 가이드
+# 개발 및 운영 가이드
 
-본 문서는 포트폴리오 프로젝트의 로컬 개발 환경 구성, 빌드 절차, 그리고 CI/CD 자동 배포 관리에 관한 상세 실행 가이드를 제공합니다.
+## 로컬 실행
 
+권장 환경은 Node.js 20과 `package-lock.json` 기준 npm입니다.
 
-## 로컬 개발 환경 구성 및 실행
-
-본 프로젝트는 Node.js 환경에서 작동하는 Next.js 애플리케이션입니다. 아래 순서에 따라 로컬 환경을 구성하고 실행할 수 있습니다.
-
-### 1. 패키지 설치
-프로젝트에 선언된 의존성 패키지들을 로컬 환경에 다운로드합니다.
 ```bash
-npm install
+npm ci
+npm run dev:no-fetch
 ```
 
-### 2. 로컬 개발 서버 구동
-Turbopack 컴파일러를 통해 초고속 핫 리로딩이 적용된 개발 서버를 실행합니다.
+`dev:no-fetch`는 저장된 콘텐츠를 사용하며 slug와 추천 인덱스는 다시 생성합니다. Notion까지 갱신하려면 필요한 환경 변수를 설정한 뒤 실행합니다.
+
 ```bash
 npm run dev
 ```
 
+## 환경 변수
 
-## 정적 파일 빌드 및 추출
+Notion 데이터 소스는 역할이 드러나는 카테고리 접미사를 권장합니다.
 
-GitHub Pages와 같은 정적 웹 호스팅 서비스에 배포하기 위해 순수 HTML, CSS, 자바스크립트 파일 묶음으로 컴파일을 진행합니다.
-
-### 1. 빌드 명령어 실행
-```bash
-npm run build
+```dotenv
+NOTION_TOKEN=...
+NOTION_DATA_SOURCE_ID_EDUCATION=...
+NOTION_DATA_SOURCE_ID_PERSONAL=...
 ```
-- 이 명령어는 소스코드 컴파일, 타입 검사(TypeScript), 그리고 페이지 최적화 과정을 한 번에 수행합니다.
-- 빌드가 성공적으로 완료되면 프로젝트 루트 디렉터리에 out/ 폴더가 새로 생성됩니다.
 
-### 2. 빌드 산출물 관리 및 배포
-- 생성된 out/ 폴더 내부의 모든 파일들은 정적 웹 서버에 그대로 업로드하여 서비스할 수 있는 준비가 완료된 상태입니다.
-- 로컬에서 정적 빌드 결과물이 잘 열리는지 개별적으로 검증할 때 사용할 수 있습니다.
+페이지 ID를 사용한다면 `NOTION_PAGE_ID_EDUCATION`, `NOTION_PAGE_ID_PERSONAL`도 지원합니다. 동기화 스크립트는 `NOTION_PAGE_ID*`, `NOTION_DATA_SOURCE_ID*` 이름과 `category:id` 값도 해석합니다.
 
----
+그 밖의 선택 변수:
 
-## CI/CD 자동 배포 관리
+```dotenv
+BASE_PATH=ROOT
+ADSENSE_ACCOUNT=...
+GA4_PROPERTY_ID=G-...
+GISCUS_GITHUB_TOKEN=...
+```
 
-본 프로젝트는 GitHub Actions를 활용하여 지속적 통합 및 자동 배포가 사전에 구성되어 있습니다.
+공개 사이트/Giscus 기본 설정은 `src/data/config/site.json`에서 관리합니다. `NEXT_PUBLIC_SITE_URL`과 `NEXT_PUBLIC_GISCUS_*` 변수로 환경별 덮어쓰기가 가능합니다. Notion 토큰과 GitHub 토큰이 포함된 로컬 환경 파일은 커밋하지 않습니다.
 
-### 1. 배포 파이프라인 파일 위치
-- 워크플로우 정의서: .github/workflows/deploy.yml
+## 콘텐츠 작업
 
-### 2. 자동 배포 작동 시퀀스
-원격 저장소에 새로운 코드가 커밋되고 푸시될 때마다 다음 단계가 GitHub 가상 러너에서 무인으로 수행됩니다:
-- 트리거 조건: change_ts 브랜치 또는 main 브랜치로 push 이벤트가 수신될 때 파이프라인 작동 시작.
-- 가상 환경 구축: 최신 Ubuntu 환경을 배정받고, 빌드 속도 개선을 위한 패키지 캐싱 옵션이 켜진 Node.js 20 런타임을 세팅합니다.
-- 의존성 설치 및 검증: npm install 및 npm run build 명령을 순차적으로 내려 Next.js 정적 빌드가 깨지지 않는지 컴파일 안정성을 최종 검증합니다.
-- 아티팩트 보관: 정상적으로 정적 내보내기가 완료된 out/ 폴더 내부의 정적 리소스들을 서버 아티팩트로 임시 업로드합니다.
-- 서비스 갱신: GitHub Pages 전용 배포 API가 연동되어 수 초 이내에 정적 웹 서버에 새로운 소스코드를 안전하게 교체 배포합니다.
+### 수동 MDX
+
+1. `src/content/devlog/{category}/{id}.mdx`를 추가하거나 수정합니다.
+2. frontmatter에 공개 주소용 `slug`를 지정합니다.
+3. 썸네일이 필요하면 `public/thumnail/{id}.{ext}`처럼 같은 ID를 사용합니다.
+4. `npm run generate-slugs`를 실행합니다.
+
+파일명은 slug가 아니라 안정적인 ID입니다. `devlog-slugs.json`은 파일명 변경 목록이 아니라 공개 주소 라우팅 맵입니다.
+
+### Notion
+
+```bash
+npm run fetch-notion
+```
+
+- `education` → `src/data/pages/main/notion/education.json`
+- `personal` → `src/data/pages/main/notion/personal.json`
+- 개인일지 콘텐츠의 공개 카테고리/MDX 경로 → `blog`
+- 원격 이미지 → `public/images/notion/`
+
+기존 JSON의 `lastEditedTime`이 같고 ID 이름의 MDX가 존재하면 불필요한 콘텐츠 재변환을 건너뜁니다.
+
+## 데이터 생성 명령
+
+```bash
+npm run generate-slugs
+npm run generate-recommendations
+npm run fetch-engagement
+```
+
+생성 결과는 각각 `src/data/config/devlog-slugs.json`, `src/data/indexes/devlog-recommendations.json`, `src/data/indexes/engagement.json`에 저장됩니다. 고정 Devlog 목록 메타데이터는 별도 조회 데이터인 `src/data/indexes/devlog.json`에서 관리하며 slug 생성 명령이 이 파일을 변경하지는 않습니다.
+
+## 검증
+
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build:no-fetch
+```
+
+외부 동기화까지 검증해야 할 때는 `npm run build`를 사용합니다. 정적 결과물은 `out/`에 생성됩니다.
+
+## 배포
+
+GitHub Actions는 Node.js 20에서 의존성을 설치하고 Notion을 동기화한 다음 로컬 데이터 기반 빌드를 수행해 `out/`을 GitHub Pages에 배포합니다. 사용자 페이지 저장소는 루트 경로를 사용하며, 다른 저장소는 `BASE_PATH` 설정을 확인해야 합니다.

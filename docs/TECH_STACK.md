@@ -1,31 +1,80 @@
-# 기술 스택 및 아키텍처 상세 정의서
+# 기술 스택과 구조
 
-본 문서는 포트폴리오 프로젝트의 기술 아키텍처, 핵심 의존성 패키지, 그리고 마이그레이션 세부 사항에 대한 상세 정보를 제공합니다.
+## 런타임과 프레임워크
 
+| 영역 | 구성 |
+| --- | --- |
+| 런타임 | Node.js 20, npm |
+| 웹 | Next.js 16 App Router, React 19 |
+| 언어 | TypeScript strict mode |
+| 출력 | Next.js static export (`out/`) |
+| 스타일 | Tailwind CSS 4, 전역 CSS 디자인 토큰 |
+| 콘텐츠 | JSON, MDX, gray-matter, next-mdx-remote |
+| 코드 렌더링 | rehype-pretty-code, Shiki |
+| 품질 | ESLint 9, TypeScript compiler |
+| 배포 | GitHub Actions, GitHub Pages |
 
-## 기술 스택 개요
+## 애플리케이션 데이터
 
-### 핵심 프레임워크 및 런타임
+데이터는 사용 화면과 생성 목적에 따라 분리합니다.
 
-### 콘텐츠 파싱 및 렌더링
+```text
+src/data/
+├─ pages/main/       # 메인·목록 화면 원본
+├─ pages/detail/     # 상세 화면 원본
+├─ indexes/          # 조회 성능용 파생 데이터
+└─ config/           # 공개 설정과 ID → slug 맵
+```
 
-### 스타일링 및 레이아웃
+사이트/Giscus 설정 로더는 `src/lib/site.ts`에 있으며 JSON 설정과 환경 변수 덮어쓰기를 결합합니다. 공통 타입은 `src/types/`에 모으고 `src/lib/`에는 런타임 로직만 둡니다.
 
-### 정적 빌드 및 배포
+## 콘텐츠와 라우팅
 
+Devlog의 저장 식별자와 공개 주소를 분리합니다.
 
-## 아키텍처 상세 분석
+```text
+ID 이름의 MDX
+    ↓ frontmatter slug 수집
+devlog-slugs.json (id → slug)
+    ↓ 공개 경로 생성
+/devlog/{category}/{slug}
+    ↓ slug를 ID로 역조회
+ID 이름의 MDX 로드
+```
 
-### 1. 통합 React Canvas 렌더링 엔진
-성능 병목과 리사이징 지연을 유발하던 기존의 레거시 iframe 통합 방식 대신, 커스텀 React Canvas 컴포넌트를 활용한 구조로 완전히 재설계되었습니다.
+이 구조는 제목이나 slug를 바꿔도 원본 파일, 썸네일, Giscus Discussion이 안정적인 ID를 계속 사용하게 합니다.
 
-### 2. MDX 기반 Devlog 파이프라인
-Devlog 시스템은 src/content/devlog/ 디렉터리에 위치한 MDX 파일 구조와 next-mdx-remote 패키지를 결합하여 작동합니다.
+## Notion 파이프라인
 
-### 3. 상태 기반 동적 카테고리 라우팅
+`scripts/notion/fetch.mjs`가 환경 변수에서 데이터 소스를 수집하고 기능별 핸들러에 전달합니다.
 
+- `handlers/education.mjs`: 교육일지 데이터와 MDX 생성
+- `handlers/personal.mjs`: 개인일지 데이터와 MDX 생성
+- 공통 API 조회, 블록 변환, 이미지 저장은 `scripts/notion/lib/`에서 공유
 
-## 빌드 및 컴파일 세부 사양
+Notion 키 `personal`은 데이터 소스의 의미를 명확히 하기 위한 이름입니다. 공개 Devlog 카테고리와 기존 콘텐츠 경로는 호환성을 위해 `blog`입니다.
 
-### Next.js 설정 (next.config.ts)
-정적 웹 호스팅 환경 배포를 위해 Next.js의 코어 설정을 최적화했습니다:
+## 작업 스크립트
+
+```text
+scripts/
+├─ ga4/              # 브라우저 GA4 로컬 패키지
+├─ slug/             # slug 맵과 고정 Devlog 인덱스
+├─ notion/           # Notion 추출·변환
+├─ engagement/       # Giscus 댓글 수
+└─ recommendations/  # 연관 Devlog 인덱스
+```
+
+GA4는 `@blog/ga4-analytics` 로컬 패키지로 애플리케이션에서 사용하며 Next.js가 transpile합니다. 댓글 수와 추천 데이터는 빌드 전에 JSON으로 계산해 브라우저의 외부 조회와 반복 계산을 줄입니다.
+
+## 빌드 흐름
+
+`npm run build`:
+
+1. Notion `education`/`personal` 동기화
+2. ID 이름의 MDX 검증과 ID → slug 맵 생성
+3. 추천 인덱스 생성
+4. Giscus 댓글 수 갱신
+5. Next.js static export
+
+`npm run build:no-fetch`는 1단계만 생략합니다. 참여 통계 요청이 실패하면 기존 인덱스를 유지합니다.
