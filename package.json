@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/fetch-notion.mjs && next dev",
-    "dev:no-fetch": "next dev",
+    "dev": "node scripts/fetch-notion.mjs && node scripts/generate-devlog-recommendations.mjs && next dev",
+    "dev:no-fetch": "node scripts/generate-devlog-recommendations.mjs && next dev",
     "fetch-notion": "node scripts/fetch-notion.mjs",
+    "generate-recommendations": "node scripts/generate-devlog-recommendations.mjs",
     "fetch-engagement": "node scripts/fetch-engagement.mjs",
-    "build": "node scripts/fetch-notion.mjs && node scripts/fetch-engagement.mjs && next build",
-    "build:no-fetch": "node scripts/fetch-engagement.mjs && next build",
+    "build": "node scripts/fetch-notion.mjs && node scripts/generate-devlog-recommendations.mjs && node scripts/fetch-engagement.mjs && next build",
+    "build:no-fetch": "node scripts/generate-devlog-recommendations.mjs && node scripts/fetch-engagement.mjs && next build",
     "start": "next start",
-    "build:run": "node scripts/fetch-notion.mjs && next build && next start",
+    "build:run": "node scripts/fetch-notion.mjs && node scripts/generate-devlog-recommendations.mjs && next build && next start",
     "lint": "eslint"
   },
   "dependencies": {

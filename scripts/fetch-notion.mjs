@@ -86,7 +86,7 @@ function parseNotionSources() {
 function syncJournalCategoryConfig(sources) {
   const labelMap = {
     education: "교육일지",
-    blog: "일지",
+    blog: "개인일지",
   };
   const categories = [...new Set(sources.map((source) => source.category))]
     .filter(Boolean)

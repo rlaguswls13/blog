@@ -20,6 +20,8 @@ import { NotionDivider } from "@/components/ui/notion/NotionDivider";
 import { NotionIndent } from "@/components/ui/notion/NotionIndent";
 import { NotionCode } from "@/components/ui/notion/NotionCode";
 import { GiscusComments } from "@/components/ui/GiscusComments";
+import recommendationData from "@/data/devlog-recommendations.json";
+import { RelatedDevlogs, type RelatedDevlogItem } from "@/components/ui/RelatedDevlogs";
 
 type PrettyCodeFigureProps = ComponentPropsWithoutRef<"figure"> & {
   "data-rehype-pretty-code-figure"?: string;
@@ -141,6 +143,8 @@ export default async function DevlogDetailPage({
   }
 
   const { data, content } = matter(fileContent);
+  const recommendationItems = recommendationData.items as Record<string, RelatedDevlogItem[]>;
+  const relatedDevlogs = recommendationItems[`${category}/${id}`] || [];
 
   return (
     <article className="detail-content-page devlog-detail-page">
@@ -155,6 +159,8 @@ export default async function DevlogDetailPage({
         </h1>
         {data.tags && <TagList tags={data.tags} />}
       </header>
+
+      <RelatedDevlogs items={relatedDevlogs} />
 
       <div className="mdx-content">
         <MDXRemote

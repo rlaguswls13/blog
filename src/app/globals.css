@@ -3325,6 +3325,113 @@ body {
   font-size: 1.05rem;
 }
 
+.related-devlogs {
+  margin: -12px 0 40px;
+  padding: 22px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  box-shadow: var(--card-shadow);
+}
+
+.related-devlogs-heading,
+.related-devlog-topline,
+.related-devlog-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.related-devlogs-heading {
+  margin-bottom: 16px;
+}
+
+.related-devlogs-heading .page-heading-eyebrow {
+  margin-bottom: 5px;
+}
+
+.related-devlogs-heading h2 {
+  margin: 0;
+  font-size: var(--type-section);
+}
+
+.related-devlogs-heading > span {
+  color: var(--text-secondary);
+  font: 700 var(--type-caption) var(--font-mono);
+}
+
+.related-devlogs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.related-devlog-card {
+  display: flex;
+  min-width: 0;
+  min-height: 126px;
+  padding: 15px;
+  flex-direction: column;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.related-devlog-card:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
+.related-devlog-topline {
+  margin-bottom: 10px;
+  color: var(--accent-primary);
+  font: 700 var(--type-caption) var(--font-mono);
+}
+
+.related-devlog-topline b {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.related-devlog-card > strong {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-bottom: 14px;
+  font-size: var(--type-small);
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.related-devlog-meta {
+  min-width: 0;
+  margin-top: auto;
+  color: var(--text-secondary);
+  font-size: var(--type-caption);
+}
+
+.related-devlog-meta span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .related-devlogs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .related-devlog-card {
+    min-height: 112px;
+  }
+}
+
 .comments-section {
   margin-top: 64px;
   padding-top: 30px;
