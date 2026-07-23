@@ -19,6 +19,7 @@ import educationData from "@/data/notion/education.json";
 import { normalizeEducationEntry } from "@/lib/utils";
 import { CardThumbnail } from "@/components/ui/CardThumbnail";
 import { getDevlogThumbnail } from "@/lib/thumbnails";
+import { LoadingPlaceholder } from "@/components/ui/DeferredContent";
 
 type TabKey = DevlogCategory | "journal" | "all";
 type DisplayCategory = DevlogCategory | "education";
@@ -308,7 +309,7 @@ function DevlogContent() {
                   ) : (
                     <>
                       <div className="devlog-grid">
-                        {paginatedEntries.map((entry) => (
+                        {paginatedEntries.map((entry, index) => (
                           <Link
                             key={entry.id}
                             href={`/devlog/${entry.category}/${entry.id}?pkg=${activePkg}&page=${currentPage}`}
@@ -317,7 +318,7 @@ function DevlogContent() {
                           >
                             <div className="devlog-card" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                               {entry.category !== "blog" && (
-                                <CardThumbnail src={getDevlogThumbnail(entry.category, entry.id)} alt="" className="devlog-card-thumbnail" />
+                                <CardThumbnail src={getDevlogThumbnail(entry.category, entry.id)} alt="" className="devlog-card-thumbnail" priority={index === 0} />
                               )}
                               <div className="devlog-card-topline">
                                 <span className="devlog-card-category">{devlogCategoryLabels[entry.category]}</span>
@@ -354,7 +355,7 @@ function DevlogContent() {
 
 export default function DevlogPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingPlaceholder label="일지 목록 불러오는 중" minHeight={360} />}>
       <DevlogContent />
     </Suspense>
   );

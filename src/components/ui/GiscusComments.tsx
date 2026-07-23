@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { LoadingPlaceholder } from "@/components/ui/DeferredContent";
 
 function getThemeUrl(theme: "light" | "dark") {
   const devlogPathIndex = window.location.pathname.indexOf("/devlog/");
@@ -8,18 +9,13 @@ function getThemeUrl(theme: "light" | "dark") {
     ? window.location.pathname.slice(0, devlogPathIndex)
     : "";
 
-  const themeUrl = new URL(
-    `${basePath}/giscus-themes/${theme}.css`,
-    window.location.origin,
-  );
+  const themeUrl = new URL(`${basePath}/giscus-themes/${theme}.css`, window.location.origin);
   themeUrl.searchParams.set("v", "20260721-3");
   return themeUrl.href;
 }
 
 function getCurrentTheme() {
-  return document.documentElement.classList.contains("theme-dark")
-    ? "dark"
-    : "light";
+  return document.documentElement.classList.contains("theme-dark") ? "dark" : "light";
 }
 
 function getCurrentGiscusTheme() {
@@ -27,9 +23,43 @@ function getCurrentGiscusTheme() {
 }
 
 export function GiscusComments() {
+  const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || shouldLoad) return;
+
+    let idleId: number | undefined;
+    let timerId: ReturnType<typeof setTimeout> | undefined;
+    const schedule = () => {
+      if ("requestIdleCallback" in window) {
+        idleId = window.requestIdleCallback(() => setShouldLoad(true), { timeout: 1200 });
+      } else {
+        timerId = setTimeout(() => setShouldLoad(true), 1);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        schedule();
+      },
+      { rootMargin: "240px 0px" },
+    );
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+      if (idleId !== undefined && "cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
+      if (timerId !== undefined) clearTimeout(timerId);
+    };
+  }, [shouldLoad]);
+
+  useEffect(() => {
+    if (!shouldLoad) return;
     const container = containerRef.current;
     if (!container) return;
 
@@ -52,31 +82,22 @@ export function GiscusComments() {
 
     const syncTheme = () => {
       const theme = getCurrentGiscusTheme();
-      script.setAttribute("data-theme", theme);
       const frame = container.querySelector<HTMLIFrameElement>("iframe.giscus-frame");
       if (frame) frame.style.colorScheme = getCurrentTheme();
-      frame?.contentWindow?.postMessage(
-        { giscus: { setConfig: { theme } } },
-        "https://giscus.app",
-      );
+      frame?.contentWindow?.postMessage({ giscus: { setConfig: { theme } } }, "https://giscus.app");
     };
 
     let currentFrame: HTMLIFrameElement | null = null;
     const bindFrameLoad = () => {
       const nextFrame = container.querySelector<HTMLIFrameElement>("iframe.giscus-frame");
       if (nextFrame === currentFrame) return;
-
       currentFrame?.removeEventListener("load", syncTheme);
       currentFrame = nextFrame;
       currentFrame?.addEventListener("load", syncTheme);
     };
 
     const themeObserver = new MutationObserver(syncTheme);
-    themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
     const frameObserver = new MutationObserver(bindFrameLoad);
     frameObserver.observe(container, { childList: true, subtree: true });
 
@@ -86,15 +107,18 @@ export function GiscusComments() {
       currentFrame?.removeEventListener("load", syncTheme);
       container.replaceChildren();
     };
-  }, []);
+  }, [shouldLoad]);
 
   return (
-    <section className="comments-section" aria-labelledby="comments-title">
+    <section ref={sectionRef} className="comments-section render-lazy" aria-labelledby="comments-title">
       <div className="comments-heading">
         <span className="page-heading-eyebrow">DISCUSSION</span>
+        <h2 id="comments-title">댓글</h2>
         <p>GitHub 계정으로 의견이나 질문을 남길 수 있습니다.</p>
       </div>
-      <div ref={containerRef} className="giscus-container" />
+      <div ref={containerRef} className="giscus-container" aria-busy={!shouldLoad}>
+        {!shouldLoad && <LoadingPlaceholder label="댓글 불러오는 중" minHeight={220} />}
+      </div>
     </section>
   );
 }

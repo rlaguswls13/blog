@@ -58,7 +58,7 @@ export default function AboutPage() {
 
       <AboutProjectShowcase projects={projectsData.projects as Project[]} />
 
-      <section style={{ marginTop: "40px" }}>
+      <section className="render-lazy" style={{ marginTop: "40px" }}>
         <div className="about-section-title">Tech / Interests</div>
         <div className="about-interests-grid">
           <div className="others-card">

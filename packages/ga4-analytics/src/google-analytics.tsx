@@ -44,9 +44,9 @@ export function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
     <>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
-      <Script id="ga4-bootstrap" strategy="afterInteractive">
+      <Script id="ga4-bootstrap" strategy="lazyOnload">
         {`window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config','${measurementId}',{anonymize_ip:true});`}
       </Script>
       <RoutePageView measurementId={measurementId} />

@@ -7,23 +7,8 @@ import rehypePrettyCode from "rehype-pretty-code";
 import { DevlogBackLink } from "@/components/layout/DevlogBackLink";
 import { TagList } from "@/components/ui/TagBadge";
 import { CalendarIcon } from "@/components/ui/Icons";
-import { G1GCMemory } from "@/components/diagrams/devlog/java/G1GCMemory";
-import { KahaDBBlocks } from "@/components/diagrams/devlog/messaging/KahaDBBlocks";
-import { QuartzMechanism } from "@/components/diagrams/devlog/spring/QuartzMechanism";
-import { QuartzHAClustering } from "@/components/diagrams/devlog/spring/QuartzHAClustering";
-import { QuartzSharding } from "@/components/diagrams/devlog/spring/QuartzSharding";
 import { Indent } from "@/components/ui/Indent";
-import { ApiFlowDiagram } from "@/components/diagrams/devlog/architecture/ApiFlowDiagram";
-import { DbBottleneckDiagram } from "@/components/diagrams/devlog/architecture/DbBottleneckDiagram";
-import { MqPriorityDiagram } from "@/components/diagrams/devlog/architecture/MqPriorityDiagram";
-import { TimeoutPolicyDiagram } from "@/components/diagrams/devlog/architecture/TimeoutPolicyDiagram";
-import { PubSubArchitecture } from "@/components/diagrams/devlog/architecture/PubSubArchitecture";
-import { EventBusSimulator } from "@/components/diagrams/devlog/architecture/EventBusSimulator";
-import { StorageArchitectureDiagram } from "@/components/diagrams/devlog/architecture/StorageArchitectureDiagram";
-import { StorageNetworkDiagram } from "@/components/diagrams/devlog/storage/StorageNetworkDiagram";
-import { StoragePhysicalDiagram } from "@/components/diagrams/devlog/storage/StoragePhysicalDiagram";
-import { ContainerVsVmDiagram } from "@/components/diagrams/devlog/container/ContainerVsVmDiagram";
-import { K8sSecurityDiagram } from "@/components/diagrams/devlog/container/K8sSecurityDiagram";
+import { LazyMdxDiagram, type LazyMdxDiagramName } from "@/components/ui/LazyMdxDiagram";
 import { CodePopup } from "@/components/layout/CodePopup";
 import { Collapsible } from "@/components/ui/Collapsible";
 import { MdxImageFigure } from "@/components/ui/MdxImageFigure";
@@ -40,24 +25,28 @@ type PrettyCodeFigureProps = ComponentPropsWithoutRef<"figure"> & {
   "data-rehype-pretty-code-figure"?: string;
 };
 
+const lazyDiagram = (name: LazyMdxDiagramName) => function LazyDiagramSlot() {
+  return <LazyMdxDiagram name={name} />;
+};
+
 const components = {
-  G1GCMemory,
-  KahaDBBlocks,
-  QuartzMechanism,
-  QuartzHAClustering,
-  QuartzSharding,
+  G1GCMemory: lazyDiagram("G1GCMemory"),
+  KahaDBBlocks: lazyDiagram("KahaDBBlocks"),
+  QuartzMechanism: lazyDiagram("QuartzMechanism"),
+  QuartzHAClustering: lazyDiagram("QuartzHAClustering"),
+  QuartzSharding: lazyDiagram("QuartzSharding"),
   Indent,
-  ApiFlowDiagram,
-  DbBottleneckDiagram,
-  MqPriorityDiagram,
-  TimeoutPolicyDiagram,
-  PubSubArchitecture,
-  EventBusSimulator,
-  StorageArchitectureDiagram,
-  StorageNetworkDiagram,
-  StoragePhysicalDiagram,
-  ContainerVsVmDiagram,
-  K8sSecurityDiagram,
+  ApiFlowDiagram: lazyDiagram("ApiFlowDiagram"),
+  DbBottleneckDiagram: lazyDiagram("DbBottleneckDiagram"),
+  MqPriorityDiagram: lazyDiagram("MqPriorityDiagram"),
+  TimeoutPolicyDiagram: lazyDiagram("TimeoutPolicyDiagram"),
+  PubSubArchitecture: lazyDiagram("PubSubArchitecture"),
+  EventBusSimulator: lazyDiagram("EventBusSimulator"),
+  StorageArchitectureDiagram: lazyDiagram("StorageArchitectureDiagram"),
+  StorageNetworkDiagram: lazyDiagram("StorageNetworkDiagram"),
+  StoragePhysicalDiagram: lazyDiagram("StoragePhysicalDiagram"),
+  ContainerVsVmDiagram: lazyDiagram("ContainerVsVmDiagram"),
+  K8sSecurityDiagram: lazyDiagram("K8sSecurityDiagram"),
   CodePopup,
   Collapsible,
   MdxImageFigure,

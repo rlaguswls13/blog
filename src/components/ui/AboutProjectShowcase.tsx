@@ -6,7 +6,7 @@ import { CardThumbnail } from "@/components/ui/CardThumbnail";
 
 function ProjectGroup({ title, eyebrow, projects, startIndex }: { title: string; eyebrow: string; projects: Project[]; startIndex: number }) {
   return (
-    <section className="about-work-group">
+    <section className="about-work-group render-lazy">
       <div className="about-work-group-header">
         <div><span>{eyebrow}</span><h3>{title}</h3></div>
         <strong>{projects.length} PROJECTS</strong>
@@ -15,7 +15,7 @@ function ProjectGroup({ title, eyebrow, projects, startIndex }: { title: string;
         {projects.map((project, index) => (
           <Link key={project.id} href={`/projects/${project.id}`} className="about-work-card">
             <div className={`about-work-thumbnail work-thumb-${(startIndex + index) % 6}`}>
-              <CardThumbnail src={getProjectThumbnail(project.id)} alt="" className="about-work-thumbnail-image" />
+              <CardThumbnail src={getProjectThumbnail(project.id)} alt="" className="about-work-thumbnail-image" priority={startIndex + index === 0} />
               <span>{String(startIndex + index + 1).padStart(2, "0")}</span>
               <b>{project.tags[0]}</b>
             </div>

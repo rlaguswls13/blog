@@ -27,7 +27,7 @@ export default function CareerPage() {
         </div>
       </div>
 
-      <div className="grid-2">
+      <div className="grid-2 render-lazy">
         <div className="project-card">
           <div className="section-title">학력</div>
           <div style={{ marginTop: "25px" }}>

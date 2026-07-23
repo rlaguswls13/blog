@@ -1,22 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { ProjectBackLink } from "@/components/layout/ProjectBackLink";
 import { TagList } from "@/components/ui/TagBadge";
 import { CalendarIcon } from "@/components/ui/Icons";
 import { formatPeriods } from "@/lib/utils";
 import type { Project, ProjectDetail } from "@/types";
-import { CloudMigrationFlow } from "@/components/diagrams/projects/CloudMigrationFlow";
-import { ContainerSupport } from "@/components/diagrams/projects/ContainerSupport";
-import { CSPipeline } from "@/components/diagrams/projects/CSPipeline";
-import { DevopsDbArch } from "@/components/diagrams/projects/DevopsDbArch";
-import { DevopsPipeline } from "@/components/diagrams/projects/DevopsPipeline";
-import { EmailHybrid } from "@/components/diagrams/projects/EmailHybrid";
-import { EmailLargeScale } from "@/components/diagrams/projects/EmailLargeScale";
-import { IntegratedPortal } from "@/components/diagrams/projects/IntegratedPortal";
-import { RbacFlow } from "@/components/diagrams/projects/RbacFlow";
-import { SsoFilter } from "@/components/diagrams/projects/SsoFilter";
 import { TabGroup } from "@/components/ui/TabGroup";
+import { DeferredContent, LoadingPlaceholder } from "@/components/ui/DeferredContent";
 
 interface ProjectDetailClientProps {
   meta: Project;
@@ -31,31 +23,14 @@ export default function ProjectDetailClient({
 
   const renderTabDiagram = (flowDiagram: string | undefined) => {
     if (!flowDiagram) return null;
-    const filename = flowDiagram.split("/").pop();
-    switch (filename) {
-      case "email-large-scale.html":
-        return <EmailLargeScale />;
-      case "email-hybrid.html":
-        return <EmailHybrid />;
-      case "sso-filter.html":
-        return <SsoFilter />;
-      case "rbac-flow.html":
-        return <RbacFlow />;
-      case "container-support.html":
-        return <ContainerSupport />;
-      case "cs-pipeline.html":
-        return <CSPipeline />;
-      case "integrated-portal.html":
-        return <IntegratedPortal />;
-      case "cloud-migration-flow.html":
-        return <CloudMigrationFlow />;
-      case "devops-db-arch.html":
-        return <DevopsDbArch />;
-      case "devops-pipeline.html":
-        return <DevopsPipeline />;
-      default:
-        return null;
-    }
+    const filename = flowDiagram.split("/").pop() as keyof typeof projectDiagrams | undefined;
+    if (!filename || !(filename in projectDiagrams)) return null;
+    const Diagram = projectDiagrams[filename];
+    return (
+      <DeferredContent label="다이어그램 불러오는 중" minHeight={280} rootMargin="280px 0px" className="lazy-diagram-slot">
+        <Diagram />
+      </DeferredContent>
+    );
   };
 
   const tabItems = detail.tabs
@@ -135,3 +110,17 @@ export default function ProjectDetailClient({
     </article>
   );
 }
+
+const diagramLoading = () => <LoadingPlaceholder label="다이어그램 불러오는 중" minHeight={280} />;
+const projectDiagrams = {
+  "email-large-scale.html": dynamic(() => import("@/components/diagrams/projects/EmailLargeScale").then((m) => m.EmailLargeScale), { ssr: false, loading: diagramLoading }),
+  "email-hybrid.html": dynamic(() => import("@/components/diagrams/projects/EmailHybrid").then((m) => m.EmailHybrid), { ssr: false, loading: diagramLoading }),
+  "sso-filter.html": dynamic(() => import("@/components/diagrams/projects/SsoFilter").then((m) => m.SsoFilter), { ssr: false, loading: diagramLoading }),
+  "rbac-flow.html": dynamic(() => import("@/components/diagrams/projects/RbacFlow").then((m) => m.RbacFlow), { ssr: false, loading: diagramLoading }),
+  "container-support.html": dynamic(() => import("@/components/diagrams/projects/ContainerSupport").then((m) => m.ContainerSupport), { ssr: false, loading: diagramLoading }),
+  "cs-pipeline.html": dynamic(() => import("@/components/diagrams/projects/CSPipeline").then((m) => m.CSPipeline), { ssr: false, loading: diagramLoading }),
+  "integrated-portal.html": dynamic(() => import("@/components/diagrams/projects/IntegratedPortal").then((m) => m.IntegratedPortal), { ssr: false, loading: diagramLoading }),
+  "cloud-migration-flow.html": dynamic(() => import("@/components/diagrams/projects/CloudMigrationFlow").then((m) => m.CloudMigrationFlow), { ssr: false, loading: diagramLoading }),
+  "devops-db-arch.html": dynamic(() => import("@/components/diagrams/projects/DevopsDbArch").then((m) => m.DevopsDbArch), { ssr: false, loading: diagramLoading }),
+  "devops-pipeline.html": dynamic(() => import("@/components/diagrams/projects/DevopsPipeline").then((m) => m.DevopsPipeline), { ssr: false, loading: diagramLoading }),
+} as const;

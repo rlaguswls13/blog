@@ -80,13 +80,13 @@ export function EducationLog({
       <JournalSectionHeader categoryKey="education" title="교육일지" count={filteredEntries.length} />
 
       <div className="devlog-grid">
-        {currentEntries.map((entry) => (
+        {currentEntries.map((entry, index) => (
           <div
             key={entry.id}
             className="devlog-card education-card"
             onClick={() => setSelectedEntry(entry)}
           >
-            <CardThumbnail src={getDevlogThumbnail("education", entry.slug || entry.id.replaceAll("-", ""))} alt="" className="devlog-card-thumbnail" />
+            <CardThumbnail src={getDevlogThumbnail("education", entry.slug || entry.id.replaceAll("-", ""))} alt="" className="devlog-card-thumbnail" priority={index === 0} />
             <div className="education-card-header">
               <span className="education-round">{entry.round}</span>
               <span className="devlog-meta">

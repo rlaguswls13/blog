@@ -160,7 +160,7 @@ export default function TechBlogHome() {
                 <Link key={`${entry.category}-${entry.id}`} href={`/devlog/${entry.category}/${entry.id}`} className="tech-post-card">
                   {entry.category !== "blog" && (
                     <div className={`tech-post-cover cover-${index + 1}`}>
-                      <CardThumbnail src={getDevlogThumbnail(entry.category, entry.id)} alt="" className="tech-post-cover-image" priority={index === 0} />
+                      <CardThumbnail src={getDevlogThumbnail(entry.category, entry.id)} alt="" className="tech-post-cover-image" priority={index < 3} />
                       <span>{entry.package || contentCategoryInfo[entry.category].label}</span>
                     </div>
                   )}

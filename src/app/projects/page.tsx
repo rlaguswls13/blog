@@ -12,6 +12,7 @@ import { Suspense, useEffect, useMemo } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { CardThumbnail } from "@/components/ui/CardThumbnail";
 import { getProjectThumbnail } from "@/lib/thumbnails";
+import { LoadingPlaceholder } from "@/components/ui/DeferredContent";
 
 function ProjectsContent() {
   const searchParams = useSearchParams();
@@ -142,14 +143,14 @@ function ProjectsContent() {
 
           <main className="devlog-main">
             <div className="projects-grid">
-              {paginatedProjects.map((p) => (
+              {paginatedProjects.map((p, index) => (
                 <Link
                   key={p.id}
                   href={`/projects/${p.id}?page=${currentPage}${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}${activeTab !== "enterprise" ? `&tab=${activeTab}` : ""}`}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <div className="project-card" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-                    <CardThumbnail src={getProjectThumbnail(p.id)} alt="" className="project-card-thumbnail" />
+                    <CardThumbnail src={getProjectThumbnail(p.id)} alt="" className="project-card-thumbnail" priority={index === 0} />
                     <div className="item-title">{p.title}</div>
                     <p className="project-period">
                       <CalendarIcon /> {formatPeriods(p.periods)} {calculateTotalPeriod(p.periods)}
@@ -186,7 +187,7 @@ function ProjectsContent() {
 
 export default function ProjectsPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingPlaceholder label="프로젝트 목록 불러오는 중" minHeight={360} />}>
       <ProjectsContent />
     </Suspense>
   );

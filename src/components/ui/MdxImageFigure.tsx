@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import lipcodeResult from "../../../public/images/2026_lipcoding_result.png";
 
 const imageRegistry = {
@@ -26,6 +29,7 @@ export function MdxImageFigure({
   width = 1200,
   height = 675,
 }: MdxImageFigureProps) {
+  const [loaded, setLoaded] = useState(false);
   const resolvedSrc = imageKey ? imageRegistry[imageKey] : src;
 
   const imageProps =
@@ -48,13 +52,24 @@ export function MdxImageFigure({
         border: "1px solid var(--border-color)",
         boxShadow: "var(--card-shadow)",
       }}
+      className="progressive-image-frame"
+      aria-busy={!loaded}
     >
+      {!loaded && (
+        <div className="image-loading-overlay" role="status">
+          <span aria-hidden="true">{"{ image }"}</span>
+          <small>이미지 불러오는 중</small>
+        </div>
+      )}
       <Image
         src={resolvedSrc}
         alt={alt}
         {...imageProps}
         style={{ width: "100%", height: "auto", display: "block" }}
         priority={priority}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+        onLoad={() => setLoaded(true)}
       />
     </div>
   );
